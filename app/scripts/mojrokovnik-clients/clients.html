@@ -1,0 +1,81 @@
+<div clients-sidenav class="sidenav-section">
+    <div class="topnav-section">
+        <div class="item active" translate>Pravna lica</div>
+        <div class="item" translate>Fizička lica</div>
+    </div>
+
+    <div class="sidenav-item" ng-repeat="client in clients track by client.client_id" ng-class="{active: client.client_id === sClient.client_id}" ng-click="selectClient(client)">
+        {{client.client_name}} {{client.client_surname}}
+        <span class="detail-info">
+            <i ng-if="client.client_city">{{client.client_city}}</i>
+            <i ng-if="client.client_state">, {{client.client_state}}</i>
+        </span>
+    </div>
+    <button class="btn btn--orange" ng-click="showDialog()">
+        <i class="icon-add-client"></i>
+        <span translate>Dodaj novog klijenta</span>
+    </button>
+</div>
+
+<div clients-template class="content-section">
+    <div class="content-searchbar clearfix">
+        <input type="text" class="searchbar pull-right" placeholder="{{'Pretraga...'| translate}}" />
+    </div>
+    <div class="content-shortinfo">
+        <div class="name-info">
+            {{sClient.client_name}} {{sClient.client_surname}}
+            <div class="address-info">{{sClient.client_address}}, {{sClient.client_city}}, {{sClient.client_state}}</div>
+        </div>
+        <div class="btn-group btn-group--inline pull-right">
+            <button class="btn btn--rounded btn--dark" ng-click="showDialog(sClient)" translate>Izmeni podatke</button>
+            <button class="btn btn--rounded btn--dark" ng-click="removeClient(sClient)" translate>Izbriši lice</button>
+        </div>
+    </div>
+    <div class="content-detailedinfo">
+        <div class="content-left">
+            <div class="content-heading" translate>Osnovni podaci</div>
+            <div class="content-details">
+                <div class="columns-two">
+                    <div class="column">
+                        <label translate>Državljanstvo</label>
+                        {{sClient.client_citizenship}}
+                    </div>
+                    <div class="column">
+                        <label translate>Telefon</label>
+                        {{sClient.client_phone}}
+                    </div>
+                </div>
+                <div class="column">
+                    <label translate>Email</label>
+                    {{sClient.client_email}}
+                </div>
+                <div class="columns-two">
+                    <div class="column">
+                        <label translate>JMBG</label>
+                        {{sClient.client_socialNumber}}
+                    </div>
+                    <div class="column">
+                        <label translate>Br. Lične karte</label>
+                        {{sClient.client_idNumber}}
+                    </div>
+                </div>
+                <div class="column">
+                    <label translate>Tekući račun</label>
+                    {{sClient.client_accountNumber}}
+                </div>
+                <div class="column">
+                    <label translate>Komentar</label>
+                    {{sClient.client_comment}}
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="content-heading" translate>Predmeti</div>
+            <div class="content-details">
+                <div class="column" ng-repeat="ucase in cases track by ucase.case_id">
+                    <label>{{ucase.case_name}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

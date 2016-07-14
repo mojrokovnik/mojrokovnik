@@ -1,0 +1,106 @@
+<div cases-sidenav class="sidenav-section">
+    <div class="topnav-section">
+        <div class="item active" translate>Pravna lica</div>
+        <div class="item" translate>Fizička lica</div>
+    </div>
+
+    <div class="sidenav-item" ng-repeat="uCase in cases track by uCase.case_id" ng-class="{active: uCase.case_id === sCase.case_id}" ng-click="selectCase(uCase)">
+        {{uCase.case_name}}
+        <span class="detail-info">
+            <i ng-if="uCase.case_supervisor">{{uCase.case_supervisor}}, </i>
+            <i ng-if="uCase.case_judge">{{uCase.case_judge}}</i>
+        </span>
+    </div>
+    <button class="btn btn--orange" ng-click="showDialog()">
+        <i class="icon-add-client"></i>
+        <span translate>Dodaj novi predmet</span>
+    </button>
+</div>
+<div cases-template class="content-section">
+    <div class="content-searchbar clearfix">
+        <input type="text" class="searchbar pull-right" placeholder="{{'Pretraga...'| translate}}" />
+    </div>
+    <div class="content-shortinfo">
+        <div class="name-info">
+            {{sCase.case_name}}
+            <div class="address-info">{{sCase.case_businessCouncil}} - {{sCase.case_businessLabel}} / {{sCase.case_businessNumber}}</div>
+        </div>
+        <div class="btn-group btn-group--inline pull-right">
+            <button class="btn btn--rounded btn--dark" ng-click="showDialog(sCase)" translate>Izmeni podatke</button>
+            <button class="btn btn--rounded btn--dark" ng-click="removCase(sCase)" translate>Izbriši predmet</button>
+        </div>
+    </div>
+    <div class="content-detailedinfo">
+        <div class="content-left">
+            <div class="content-heading" translate>Osnovni podaci</div>
+            <div class="content-details">
+                <div class="column">
+                    <label translate>Suprotna strana</label>
+                    {{sCase.case_rivalType}} {{sCase.case_rivalName}} {{sCase.case_rivalSurname}}
+                </div>
+                <div class="columns-two">
+                    <div class="column">
+                        <label translate>Vrsta</label>
+                        {{sCase.case_type}}
+                    </div>
+                    <div class="column">
+                        <label translate>Osnov</label>
+                        {{sCase.caseElement}}
+                    </div>
+                </div>
+                <div class="column">
+                    <label translate>Poslovni broj</label>
+                    {{sCase.case_businessCouncil}} - {{sCase.case_businessLabel}} / {{sCase.case_businessNumber}}
+                </div>
+                <div class="columns-two">
+                    <div class="column">
+                        <label translate>Interni broj predmeta</label>
+                        {{sCase.case_number}}
+                    </div>
+                    <div class="column">
+                        <label translate>Nadležni organ</label>
+                        {{sCase.case_supervisor}}
+                    </div>
+                </div>
+                <div class="columns-two">
+                    <div class="column">
+                        <label translate>Broj sudnice / Sobe</label>
+                        {{sCase.case_courtNo}}
+                    </div>
+                    <div class="column">
+                        <label translate>Sudija / Tužilac</label>
+                        {{sCase.case_judge}}
+                    </div>
+                </div>
+                <div class="columns-two">
+                    <div class="column">
+                        <label translate>Vrednost spora</label>
+                        {{sCase.case_value}}
+                    </div>
+                    <div class="column">
+                        <label translate>Status predmeta</label>
+                        {{sCase.case_status}}
+                    </div>
+                </div>
+                <div class="column">
+                    <label translate>Komentar</label>
+                    {{sClient.client_comment}}
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="content-heading" translate>Predmeti</div>
+            <div class="content-details">
+                <div class="column" ng-repeat="ucase in cases track by ucase.case_id">
+                    <label>{{ucase.case_name}}</label>
+                </div>
+            </div>
+            <div class="content-heading" translate>Predmeti</div>
+            <div class="content-details">
+                <div class="column" ng-repeat="ucase in cases track by ucase.case_id">
+                    <label>{{ucase.case_name}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

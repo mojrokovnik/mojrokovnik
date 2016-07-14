@@ -1,0 +1,105 @@
+@import "mixins";
+@import "variables";
+
+.content-searchbar {
+    padding: 0 50px;
+}
+
+.content-shortinfo {
+    padding: 40px 50px 45px 50px;
+    background-color: @white;
+
+    .name-info {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 39px;
+        font-weight: 600;
+        color: @mr-blue;
+    }
+    .address-info {
+        font-size: 15px;
+        font-weight: 400px;
+        color: @text-gray;
+    }
+
+    .btn-group {
+        margin-top: 13px;
+
+        .btn {
+            padding: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+    }
+}
+
+.content-detailedinfo {
+    font-size: 0;
+    .content-left, .content-right {
+        display: inline-block;
+        vertical-align: top;
+        margin: 2.6% 3.3%;
+
+    }
+    .content-left {
+        width: 32%;
+    }
+    .content-right {
+        width: 58%;
+        margin-left: 0;
+    }
+
+    .content-heading {
+        font-size: 15px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 35px;
+        color: @text-gray-light;
+        background-color: @content-heading-bg;
+    }
+    .content-details {
+        padding: 40px 45px;
+        margin-bottom: 3%;
+        background-color: @white;
+
+        .column, .columns-two {
+            padding: 15px 0;
+            border-bottom: 1px solid @mr-gray;
+        }
+
+        > .column:first-of-type {
+            padding-top: 0;
+        }
+
+        .columns-two {
+            &:first-of-type {
+                padding-top: 0;
+            }
+
+            .column {
+                padding-top: 0;
+                padding-left: 30px;
+                border-bottom: 0;
+            }
+            .column:first-of-type {
+                padding-left: 0;
+                padding-right: 15px;
+                border-right: 1px solid @mr-gray;
+            }
+        }
+
+        .column {
+            font-size: 15px;
+            color: @text-gray;
+        }
+
+        label {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            color: @text-blue;
+        }
+    }
+}

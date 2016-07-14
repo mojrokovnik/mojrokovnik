@@ -1,0 +1,96 @@
+<div class="modal-header">
+    <h3 class="modal-title" ng-if="!editMode" translate>Dodaj klijenta</h3>
+    <h3 class="modal-title" ng-if="editMode" translate>Izmeni klijenta</h3>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Ime</label>
+                <input type="text" ng-model="client.client_name">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Prezime</label>
+                <input type="text" ng-model="client.client_surname">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Adresa</label>
+                <input type="text" ng-model="client.client_address">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Grad</label>
+                <input type="text" ng-model="client.client_city">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Država</label>
+                <input type="text" ng-model="client.client_state">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Državljanstvo</label>
+                <input type="text" ng-model="client.client_citizenship">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Telefon</label>
+                <input type="text" ng-model="client.client_phone">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Email</label>
+                <input type="text" ng-model="client.client_email">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>JMBG</label>
+                <input type="text" ng-model="client.client_socialNumber">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Broj lične karte</label>
+                <input type="text" ng-model="client.client_idNumber">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Tekući račun</label>
+                <input type="text" ng-model="client.client_accountNumber">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Komentar</label>
+                <textarea ng-model="client.client_comment"></textarea>
+            </md-input-container>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn--rounded btn--dark" type="button" ng-click="cancel()" translate>Odustani</button>
+    <button class="btn btn--rounded btn--orange" type="button" ng-click="save(client)" translate>Sačuvaj lice</button>
+</div>

@@ -1,0 +1,27 @@
+@import "mixins";
+@import "variables";
+
+#main-container {
+    display: flex;
+
+    #nav-container {
+        .flex-grow(0);
+        width: @navigation-w;
+    }
+
+    #content-container {
+        display: flex;
+        .flex-grow(1);
+        .sidenav-section {
+            .flex-grow(0);
+            width: @sidenav-w;
+        }
+
+        .content-section {
+            .flex-grow(1);
+            background-color: @mr-gray;
+            height: 100vh;
+            overflow: auto;
+        }
+    }
+}

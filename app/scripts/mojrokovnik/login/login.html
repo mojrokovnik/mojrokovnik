@@ -1,0 +1,22 @@
+<div class="login-page" ng-controller="mrLoginCtrl">
+    <form class="login-container">
+        <div class="input-container">
+            <i class="icon-login-user icon-white"></i>
+            <input name="email" type="text" placeholder="Username" ng-model="login.email" autofocus/>
+        </div>
+        <div class="input-container">
+            <i class="icon-login-password icon-white"></i>
+            <input name="password" type="password" placeholder="Password" ng-model="login.password" />
+        </div>
+        <div class="button-container">
+            <button type="submit" class="btn--orange" ng-click="login(login)">
+                <i class="icon-login-password icon-white"></i>
+                Submit
+            </button>
+            <button class="btn--orange" ng-click="register()">
+                <i class="icon-login-register icon-white"></i>
+                Register
+            </button>
+        </div>
+    </form>
+</div>

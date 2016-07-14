@@ -1,0 +1,116 @@
+@import "mixins";
+@import "variables";
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
+a, a:hover, a:focus {
+    color: @white;
+    text-decoration: none;
+}
+
+button, .btn {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 8px 20px;
+    line-height: 12px;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 0;
+    outline: none !important;
+    box-sizing: border-box;
+    &:focus {
+        outline: none !important;
+    }
+    &:hover, &:focus {
+        background-color: rgba(0, 0, 0, 0.235);
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        text-decoration: none;
+        color: #333333;
+    }
+}
+
+.btn--orange {
+    color: @white;
+    background-color: @mr-orange;
+    &:hover, &:focus {
+        color: @white;
+        background-color: #c94224;
+    }
+}
+
+.btn--rounded {
+    padding: 15px;
+    border-radius: 30px;
+}
+
+.btn--dark {
+    color: @white;
+    background-color: @mr-violet;
+    &:hover, &:focus {
+        color: @white;
+        background-color: @mr-blue;
+    }
+}
+
+.btn-group--inline {
+    button, .btn {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+// INPUT FIELDS
+.searchbar {
+    border: 0;
+    padding: 5px;
+    margin: 10px 0;
+    min-width: 250px;
+    border-radius: 30px;
+    text-indent: 15px;
+    border: 1px solid @white;
+    background-color: @white;
+    &:focus {
+        border: 1px solid @mr-orange;
+        outline: none;
+    }
+}
+
+.md-select-value *:first-child {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+// ANGULAR MATERIAL FIXES
+.md-select-menu-container {
+    z-index: 2001;
+}
+
+// ANGULAR TOAST DEFINITIONS
+.md-toast {
+    &.success {
+        background-color: #0CB976;
+    }
+    &.error {
+        background-color: #DE5307;
+    }
+}
+
+// COLUMNS
+.column {
+    width: 100%;
+}
+
+.columns-two {
+    font-size: 0;
+    .column {
+        display: inline-block;
+        vertical-align: middle;
+        width: 50%;
+    }
+}

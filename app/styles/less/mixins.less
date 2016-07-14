@@ -1,0 +1,38 @@
+/* Flex */
+.flex-grow(@value) {
+    -webkit-flex-grow: @value;
+    flex-grow: @value;
+}
+
+.transition(@value) {
+    -webkit-transition: @value;
+    transition: @value;
+}
+
+.arrow-right(@color) {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    right: -5px;
+    top: 50%;
+    margin-top: -5px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid @color;
+    .transition(all .5s);
+}
+
+.arrow-bottom(@color) {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: -5px;
+    left: 50%;
+    margin-left: -5px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid @color;
+    .transition(all .5s);
+}
