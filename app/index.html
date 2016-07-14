@@ -21,9 +21,9 @@
             <nav id="nav-container" mr-main-navigation></nav>
             <div id="content-container" ng-view></div>
         </div> 
-            
+
+        <!-- build:js dist/js//vendor.js -->
         <script src="scripts/bower_components/jquery/dist/jquery.js"></script>
-        
         <script src="scripts/bower_components/angular/angular.js"></script>
         <script src="scripts/bower_components/angular-route/angular-route.js"></script>
         <script src="scripts/bower_components/angular-cookies/angular-cookies.js"></script>
@@ -38,8 +38,9 @@
         <script src="scripts/bower_components/moment/moment.js"></script>
         <script src="scripts/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
         <script src="scripts/bower_components/fullcalendar/dist/lang-all.js"></script>
-        <script src="scripts/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+        <!-- endbuild -->
         
+        <!-- build:js dist/js//app.js -->
         <script src="scripts/config.js"></script>
         <script src="scripts/mojrokovnik/api/api.js"></script>
         <script src="scripts/mojrokovnik/login/login.js"></script>
@@ -51,5 +52,6 @@
         <script src="scripts/mojrokovnik-clients/clients.js"></script>
         <script src="scripts/mojrokovnik-cases/cases.js"></script>
         <script src="scripts/mojrokovnik-calendar/calendar.js"></script>
+        <!-- endbuild -->
     </body>
 </html>
