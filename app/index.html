@@ -7,14 +7,18 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="scripts/bower_components/angular-material/angular-material.css">
-        <link rel="stylesheet" href="scripts/bower_components/bootstrap/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="scripts/bower_components/fullcalendar/dist/fullcalendar.min.css">
-        <link rel="stylesheet" href="scripts/bower_components/normalize-css/normalize.css">
-        <link rel="stylesheet" href="scripts/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+        <!-- build:css css/vendor.min.css -->
+        <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css">
+        <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="../bower_components/fullcalendar/dist/fullcalendar.min.css">
+        <link rel="stylesheet" href="../bower_components/normalize-css/normalize.css">
+        <link rel="stylesheet" href="../bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+        <!-- endbuild -->
 
+        <!-- build:css css/style.min.css -->
         <link rel="stylesheet" href="styles/icons/icons.css">
         <link rel="stylesheet" href="styles/style.css">
+        <!-- endbuild -->
     </head>
     <body>
         <div id="main-container">
@@ -22,25 +26,25 @@
             <div id="content-container" ng-view></div>
         </div> 
 
-        <!-- build:js dist/js//vendor.js -->
-        <script src="scripts/bower_components/jquery/dist/jquery.js"></script>
-        <script src="scripts/bower_components/angular/angular.js"></script>
-        <script src="scripts/bower_components/angular-route/angular-route.js"></script>
-        <script src="scripts/bower_components/angular-cookies/angular-cookies.js"></script>
-        <script src="scripts/bower_components/angular-aria/angular-aria.js"></script>
-        <script src="scripts/bower_components/angular-animate/angular-animate.js"></script>
-        <script src="scripts/bower_components/angular-material/angular-material.js"></script>
-        <script src="scripts/bower_components/angular-sanitize/angular-sanitize.js"></script>
-        <script src="scripts/bower_components/angular-translate/angular-translate.js"></script>
-        <script src="scripts/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-        
-        <script src="scripts/bower_components/underscore/underscore.js"></script>
-        <script src="scripts/bower_components/moment/moment.js"></script>
-        <script src="scripts/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
-        <script src="scripts/bower_components/fullcalendar/dist/lang-all.js"></script>
+        <!-- build:js js/vendor.js -->
+        <script src="../bower_components/jquery/dist/jquery.js"></script>
+        <script src="../bower_components/angular/angular.js"></script>
+        <script src="../bower_components/angular-route/angular-route.js"></script>
+        <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="../bower_components/angular-aria/angular-aria.js"></script>
+        <script src="../bower_components/angular-animate/angular-animate.js"></script>
+        <script src="../bower_components/angular-material/angular-material.js"></script>
+        <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="../bower_components/angular-translate/angular-translate.js"></script>
+        <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+        <script src="../bower_components/underscore/underscore.js"></script>
+        <script src="../bower_components/moment/moment.js"></script>
+        <script src="../bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+        <script src="../bower_components/fullcalendar/dist/lang-all.js"></script>
         <!-- endbuild -->
-        
-        <!-- build:js dist/js//app.js -->
+
+        <!-- build:js js/app.js -->
         <script src="scripts/config.js"></script>
         <script src="scripts/mojrokovnik/api/api.js"></script>
         <script src="scripts/mojrokovnik/login/login.js"></script>
