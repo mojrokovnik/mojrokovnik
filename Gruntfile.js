@@ -4,16 +4,26 @@ module.exports = function (grunt) {
     grunt.config.init({
         useminPrepare: {
             html: 'app/index.html',
-            options: {
-                dest: 'dist'
-            }
+            options: {dest: 'dist'}
         },
         usemin: {
             html: ['dist/index.html']
         },
         copy: {
             html: {
-                src: 'app/index.html', dest: 'dist/index.html'
+                src: 'app/index.html',
+                dest: 'dist/index.html'
+            }
+        },
+        less: {
+            development: {
+                options: {
+                    paths: 'app/styles',
+                    yuicompress: true
+                },
+                files: {
+                    'app/styles/style.css': ['app/**/*.less', '!app/scripts/bower_components/**/*.less']
+                }
             }
         }
     });
