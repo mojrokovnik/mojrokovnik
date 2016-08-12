@@ -83,8 +83,13 @@ module.exports = function (grunt) {
                 tasks: ['less', 'cssmin'],
                 options: {spawn: false}
             },
+            html: {
+                files: ['app/index.html'],
+                tasks: ['build'],
+                options: {spawn: false}
+            },
             templates: {
-                files: ['app/**/*.html'],
+                files: ['app/scripts/**/*.html'],
                 tasks: ['clean:templates', 'copy:templates'],
                 options: {spawn: false}
             },
