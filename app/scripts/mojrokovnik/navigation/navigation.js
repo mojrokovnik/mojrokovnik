@@ -3,7 +3,7 @@
 mrMainNavitagion.$inject = ['$location', 'authentification'];
 function mrMainNavitagion($location, authentification) {
     return {
-        templateUrl: 'scripts/mojrokovnik/navigation/navigation.html',
+        templateUrl: 'assets/templates/navigation.html',
         link: function (scope) {
             scope.visible = authentification.isLoggedIn();
             scope.isCurrentPath = function (value) {

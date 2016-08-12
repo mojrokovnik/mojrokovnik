@@ -50,7 +50,7 @@ function casesCtrl($scope, api, $uibModal) {
             animation: true,
             scope: $scope,
             size: 'lg',
-            templateUrl: 'scripts/mojrokovnik-cases/cases-dialog.html',
+            templateUrl: 'assets/templates/cases-dialog.html',
             controller: casesDialogCtrl
         });
 

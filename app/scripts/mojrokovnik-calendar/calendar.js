@@ -117,7 +117,7 @@ function calendarCtrl($scope, $q, $uibModal, api) {
         $uibModal.open({
             animation: true,
             scope: $scope,
-            templateUrl: 'scripts/mojrokovnik-calendar/calendar-dialog.html',
+            templateUrl: 'assets/templates/calendar-dialog.html',
             controller: calendarDialogCtrl
         });
 

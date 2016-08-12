@@ -39,7 +39,7 @@ function clientsCtrl($scope, api, $uibModal) {
         $uibModal.open({
             animation: true,
             scope: $scope,
-            templateUrl: 'scripts/mojrokovnik-clients/clients-dialog.html',
+            templateUrl: 'assets/templates/clients-dialog.html',
             controller: clientDialogCtrl
         });
     };
