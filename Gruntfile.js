@@ -31,12 +31,6 @@ module.exports = function (grunt) {
                 src: 'app/styles/images/*',
                 dest: 'dist/assets/images/',
                 flatten: true
-            },
-            templates: {
-                expand: true,
-                src: 'app/scripts/**/*.html',
-                dest: 'dist/assets/templates/',
-                flatten: true
             }
         },
         less: {
@@ -60,11 +54,26 @@ module.exports = function (grunt) {
         },
         uglify: {
             options: {
-                beautify: true,
                 sourceMap: true,
+                beautify: true,
                 compress: {
-                    drop_console: true
-                }
+                    drop_console: false
+                },
+                mangle: false
+            }
+        },
+        htmlmin: {
+            templates: {
+                options: {
+                    removeComments: true,
+                    collapseWhitespace: true
+                },
+                files: [{
+                        expand: true,
+                        flatten: true,
+                        src: ['app/scripts/**/*.html'],
+                        dest: 'dist/assets/templates/'
+                    }]
             }
         },
         watch: {
@@ -80,7 +89,7 @@ module.exports = function (grunt) {
             },
             less: {
                 files: ['app/**/*.less'],
-                tasks: ['less', 'cssmin'],
+                tasks: ['less', 'useminPrepare', 'concat', 'cssmin:generated'],
                 options: {spawn: false}
             },
             html: {
@@ -90,7 +99,7 @@ module.exports = function (grunt) {
             },
             templates: {
                 files: ['app/scripts/**/*.html'],
-                tasks: ['clean:templates', 'copy:templates'],
+                tasks: ['clean:templates', 'htmlmin'],
                 options: {spawn: false}
             },
             images: {
@@ -110,6 +119,7 @@ module.exports = function (grunt) {
         'uglify',
         'cssmin',
         'usemin',
+        'htmlmin',
         'watch'
     ]);
 };

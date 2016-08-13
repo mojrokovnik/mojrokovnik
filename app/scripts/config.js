@@ -27,7 +27,7 @@ angular.module('mojrokovnik', [
     'mojrokovnik.login',
     'mojrokovnik.navigation',
     'mojrokovnik.notify',
-//    'mojrokovnik.translate',
+    'mojrokovnik.translate',
     'mojrokovnik.ui',
     'mojrokovnik.clients',
     'mojrokovnik.calendar',
@@ -55,4 +55,12 @@ angular.module('mojrokovnik', [
             templateUrl: 'assets/templates/calendar.html'
         });
     }
-]);
+])
+
+.run(function ($rootScope, $location, authentification) {
+    $rootScope.$on('$routeChangeStart', function (event, next) {
+        if (!authentification.isLoggedIn()) {
+            $location.url('/login');
+        }
+    });
+});
