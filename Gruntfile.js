@@ -76,6 +76,15 @@ module.exports = function (grunt) {
                     }]
             }
         },
+        'http-server': {
+            dev: {
+                host: 'localhost',
+                port: 8100,
+                root: 'dist',
+                runInBackground: true,
+                openBrowser: true
+            }
+        },
         watch: {
             config: {
                 files: ['Gruntfile.js'],
@@ -119,7 +128,17 @@ module.exports = function (grunt) {
         'uglify',
         'cssmin',
         'usemin',
-        'htmlmin',
+        'htmlmin'
+    ]);
+
+    grunt.registerTask('develop', [
+        'build',
+        'http-server',
         'watch'
+    ]);
+
+    grunt.registerTask('server', [
+        'build',
+        'http-server'
     ]);
 };
