@@ -1,21 +1,13 @@
 'use strict';
 
-mojrokovnikAuth.$inject = ['api', '$cookies'];
-function mojrokovnikAuth(api, $cookies) {
-    var self = this;
-
-    api('users').fetch().then(function (user) {
-        if (user) {
-            self.user = user;
-        }
-    });
-
-    this.getUser = function () {
-        return self.user;
+mojrokovnikAuth.$inject = ['$cookies', 'api'];
+function mojrokovnikAuth($cookies, api) {
+    this.getActiveUser = function () {
+        return api('user').fetch();
     };
 
     this.isLoggedIn = function () {
-        return !!$cookies.getObject('user');
+        return !!$cookies.getObject('token');
     };
 }
 

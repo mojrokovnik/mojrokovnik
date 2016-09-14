@@ -3,14 +3,14 @@
 clientsCtrl.$inject = ['$scope', 'api', '$uibModal'];
 function clientsCtrl($scope, api, $uibModal) {
 
-    api('clients').fetch({client_delete: 0}).then(function (clients) {
-        $scope.clients = clients;
-        $scope.sClient = clients[0];
-
-        api('cases').fetch({client_id: clients[0].client_id}).then(function (cases) {
-            $scope.cases = cases;
-        });
-    });
+//    api('clients').fetch({client_delete: 0}).then(function (clients) {
+//        $scope.clients = clients;
+//        $scope.sClient = clients[0];
+//
+//        api('cases').fetch({client_id: clients[0].client_id}).then(function (cases) {
+//            $scope.cases = cases;
+//        });
+//    });
 
     $scope.selectClient = function (client) {
         $scope.sClient = client;

@@ -16,24 +16,14 @@ function mrLogin() {
     };
 }
 
-mrLoginCtrl.$inject = ['$location', '$http', '$cookies', '$scope', 'notify', 'api'];
-function mrLoginCtrl($location, $http, $cookies, $scope, notify, api) {
+mrLoginCtrl.$inject = ['$location', '$scope', '$cookies', 'api', 'authentification'];
+function mrLoginCtrl($location, $scope, $cookies, api, authentification) {
     $scope.login = function (login) {
-        $http({
-            url: '../server/mr-login.php',
-            method: 'POST',
-            params: login
-        }).then(function (response) {
-            if (response.data.login) {
-                api('users').fetch().then(function (user) {
-                    if (user) {
-                        $cookies.putObject('user', user);
-                        $location.url('/clients');
-                    }
-                });
-            } else {
-                notify.error(response.data['msg']);
-            }
+        api().login(login.username, login.password).then(function () {
+            authentification.getActiveUser().then(function (user) {
+                $cookies.putObject('user', user);
+                $location.url('/clients');
+            });
         });
     };
 }

@@ -1,14 +1,10 @@
 'use strict';
 
-mrMainNavitagion.$inject = ['$location', 'authentification'];
-function mrMainNavitagion($location, authentification) {
+mrMainNavitagion.$inject = ['$location'];
+function mrMainNavitagion($location) {
     return {
         templateUrl: 'assets/templates/navigation.html',
         link: function (scope, elem) {
-            if (!authentification.isLoggedIn()) {
-                elem.hide();
-            };
-
             scope.isCurrentPath = function (value) {
                 return $location.$$path === value;
             };
