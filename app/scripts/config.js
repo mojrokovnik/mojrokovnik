@@ -2,7 +2,13 @@
 
 mojrokovnikAuth.$inject = ['$cookies', 'api'];
 function mojrokovnikAuth($cookies, api) {
+    var user;
+
     this.getActiveUser = function () {
+        if (user) {
+            return user;
+        }
+
         return api('user').fetch();
     };
 
@@ -14,13 +20,16 @@ function mojrokovnikAuth($cookies, api) {
 angular.module('mojrokovnik', [
     'ngRoute',
     'ngCookies',
+    'ngAnimate',
     'pascalprecht.translate',
     'mojrokovnik.api',
+    'mojrokovnik.api.token',
     'mojrokovnik.login',
     'mojrokovnik.navigation',
     'mojrokovnik.notify',
     'mojrokovnik.translate',
     'mojrokovnik.ui',
+    'mojrokovnik.ui.modalDialog',
     'mojrokovnik.clients',
     'mojrokovnik.calendar',
     'mojrokovnik.cases'
@@ -31,8 +40,7 @@ angular.module('mojrokovnik', [
 .config(['$locationProvider', '$routeProvider',
     function ($locationProvider, $routeProvider) {
         $locationProvider.hashPrefix('');
-
-        $routeProvider.otherwise({redirectTo: '/client'});
+        $routeProvider.otherwise({redirectTo: '/clients'});
 
         $routeProvider.when('/login', {
             templateUrl: 'assets/templates/login.html'
@@ -48,6 +56,10 @@ angular.module('mojrokovnik', [
         });
     }
 ])
+
+.config(function ($animateProvider) {
+    $animateProvider.classNameFilter(/^(?:(?!ng-animate-disabled).)*$/);
+})
 
 .run(function ($rootScope, $location, authentification) {
     $rootScope.$on('$routeChangeStart', function (event, next) {

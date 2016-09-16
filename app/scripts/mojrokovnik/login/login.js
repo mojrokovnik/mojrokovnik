@@ -19,10 +19,11 @@ function mrLogin() {
 mrLoginCtrl.$inject = ['$location', '$scope', '$cookies', 'api', 'authentification'];
 function mrLoginCtrl($location, $scope, $cookies, api, authentification) {
     $scope.login = function (login) {
-        api().login(login.username, login.password).then(function () {
+        api().login(login.username, login.password).then(function (response) {
+            $location.url('/clients');
+
             authentification.getActiveUser().then(function (user) {
                 $cookies.putObject('user', user);
-                $location.url('/clients');
             });
         });
     };

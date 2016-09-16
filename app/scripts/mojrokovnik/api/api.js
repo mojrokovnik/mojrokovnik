@@ -1,14 +1,8 @@
 'use strict';
 
-apiService.$inject = ['$q', '$http', '$cookies', 'notify'];
-function apiService($q, $http, $cookies, notify) {
-    function isOK(response) {
-        function isErrData(data) {
-            return data && data._status && data._status === 'ERR';
-        }
+apiService.$inject = ['$q', '$http', '$cookies', '$location', 'notify', 'token'];
+function apiService($q, $http, $cookies, $location, notify, token) {
 
-        return response.status >= 200 && response.status < 300 && !isErrData(response.data);
-    }
     /**
      * Call $http once url is resolved
      * @param {Object} config
@@ -30,31 +24,23 @@ function apiService($q, $http, $cookies, notify) {
         return response.status >= 200 && response.status < 300 && !isErrData(response.data);
     }
 
-    function getToken(data) {
-        var token = $cookies.getObject('token');
-
-        if (!data) {
-            var data = {};
-        }
-
-        var tokenAuth = {
-            Authorization: 'Bearer ' + token.access_token
-        };
-
-        return _.extend(data, tokenAuth);
-    }
-
     function errorCallback(response) {
-        console.warn(response);
+        switch (response.status) {
+            case 401:
+                $cookies.remove('token');
+                $cookies.remove('user');
+                $location.url('/login');
+                break;
+        }
     }
 
-    var api = function (table) {
+    var api = function (route) {
         return {
-            fetch: function (params) {
+            fetch: function () {
                 return http({
-                    url: 'http://localhost:8000/' + table,
+                    url: token.resolveUrl(route),
                     method: 'GET',
-                    headers: getToken()
+                    headers: token.getToken()
                 }).then(function (response) {
                     return response;
                 }, function (response) {
@@ -63,45 +49,44 @@ function apiService($q, $http, $cookies, notify) {
             },
             add: function (params) {
                 return http({
-                    url: 'http://localhost:8000/' + table,
+                    url: token.resolveUrl(route),
                     method: 'POST',
-                    params: params
+                    headers: token.getToken(),
+                    data: params
                 }).then(function (response) {
-                    notify.success(response.msg);
+                    notify.success(response.message);
                     return response;
                 }, errorCallback);
             },
             update: function (params) {
                 return http({
-                    url: 'http://localhost:8000/' + table,
+                    url: token.resolveUrl(route, params),
                     method: 'PUT',
-                    params: params
+                    headers: token.getToken(),
+                    data: params
                 }).then(function (response) {
-                    notify.success(response.msg);
+                    notify.success(response.message);
                     return response;
                 }, errorCallback);
             },
-            delete: function (params) {
+            delete: function (item) {
                 return http({
-                    url: 'http://localhost:8000/' + table,
+                    url: token.resolveUrl(route, item),
                     method: 'DELETE',
-                    params: params
+                    headers: token.getToken()
                 }).then(function (response) {
-                    notify.success(response.msg);
+                    notify.success(response.message);
                     return response;
                 }, errorCallback);
             },
             login: function (username, password) {
                 return http({
-                    url: 'http://localhost:8000/oauth/v2/token',
+                    url: token.resolveAuthUrl(),
                     method: 'POST',
-                    data: {
-                        grant_type: 'password',
-                        client_id: '1_3221mw10q4qosgws0ggkgg8k48oc80scos4ck8g00ksgo8gkcs',
-                        client_secret: '5xjbohlmajk088s0800c8ocggkckw0cws4sccc4oowsk8kco8o',
+                    data: token.getAuthCred({
                         username: username,
                         password: password
-                    }
+                    })
                 }).then(function (response) {
                     notify.success('Succesfully logged in');
                     $cookies.putObject('token', response);

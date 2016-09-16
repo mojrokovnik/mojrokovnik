@@ -1,17 +1,17 @@
 <div clients-sidenav class="sidenav-section">
     <div class="topnav-section">
-        <div class="item active" translate>Pravna lica</div>
-        <div class="item" translate>Fizička lica</div>
+        <div class="item ng-animate-disabled" ng-click="switchType('legals')" ng-class="{active: clientType === 'legals'}" translate>Pravna lica</div>
+        <div class="item ng-animate-disabled" ng-click="switchType('individuals')" ng-class="{active: clientType === 'individuals'}" translate>Fizička lica</div>
     </div>
 
-    <div class="sidenav-item" ng-repeat="client in clients track by client.client_id" ng-class="{active: client.client_id === sClient.client_id}" ng-click="selectClient(client)">
-        {{client.client_name}} {{client.client_surname}}
+    <div class="sidenav-item ng-animate-disabled" ng-repeat="client in clients[clientType] track by client.id" ng-class="{active: client.id === selected.id}" ng-click="pickClient(client)">
+        {{client.name}} {{client.surname}} {{client.company_name}}
         <span class="detail-info">
-            <i ng-if="client.client_city">{{client.client_city}}</i>
-            <i ng-if="client.client_state">, {{client.client_state}}</i>
+            <i ng-if="client.city">{{client.city}}</i>
+            <i ng-if="client.state">, {{client.state}}</i>
         </span>
     </div>
-    <button class="btn btn--orange" ng-click="showDialog()">
+    <button class="btn btn--orange" ng-click="addClient()">
         <i class="icon-add-client"></i>
         <span translate>Dodaj novog klijenta</span>
     </button>
@@ -23,52 +23,106 @@
     </div>
     <div class="content-shortinfo">
         <div class="name-info">
-            {{sClient.client_name}} {{sClient.client_surname}}
-            <div class="address-info">{{sClient.client_address}}, {{sClient.client_city}}, {{sClient.client_state}}</div>
+            {{selected.name}} {{selected.surname}} {{selected.company_name}}
+            <div class="address-info">{{selected.address}}, {{selected.city}}, {{selected.state}}</div>
         </div>
         <div class="btn-group btn-group--inline pull-right">
-            <button class="btn btn--rounded btn--dark" ng-click="showDialog(sClient)" translate>Izmeni podatke</button>
-            <button class="btn btn--rounded btn--dark" ng-click="removeClient(sClient)" translate>Izbriši lice</button>
+            <button class="btn btn--rounded btn--dark" ng-click="editClient(selected)" translate>Izmeni podatke</button>
+            <button class="btn btn--rounded btn--dark" ng-click="removeClient(selected)" translate>Izbriši lice</button>
         </div>
     </div>
     <div class="content-detailedinfo">
-        <div class="content-left">
+
+        <div class="content-left" ng-if="clientType === 'legals'">
+            <div class="content-heading" translate>Osnovni podaci</div>
+            <div class="content-details">
+                <div class="columns-two">
+                    <div class="column">
+                        <label translate>PIB</label>
+                        {{selected.vat}}
+                    </div>
+                    <div class="column">
+                        <label translate>Matični broj</label>
+                        {{selected.company_number}}
+                    </div>
+                </div>
+                <div class="column">
+                    <label translate>Pravni zastupnik</label>
+                    {{selected.attorney_name}}
+                </div>
+                <div class="columns-two">
+                    <div class="column">
+                        <label translate>Telefon zastupnika</label>
+                        {{selected.attorney_phone}}
+                    </div>
+                    <div class="column">
+                        <label translate>Adresa zastupnika</label>
+                        {{selected.phone}}
+                    </div>
+                </div>
+                <div class="columns-two">
+                    <div class="column">
+                        <label translate>Grad zastupnika</label>
+                        {{selected.attorney_city}}
+                    </div>
+                    <div class="column">
+                        <label translate>Država zastupnika</label>
+                        {{selected.attorney_state}}
+                    </div>
+                </div>
+                <div class="column">
+                    <label translate>Email</label>
+                    {{selected.email}}
+                </div>
+                <div class="column">
+                    <label translate>Tekući račun</label>
+                    {{selected.account_number}}
+                </div>
+                <div class="column">
+                    <label translate>Komentar</label>
+                    {{selected.comment}}
+                </div>
+            </div>
+        </div>
+
+        <div class="content-left"  ng-if="clientType === 'individuals'">
             <div class="content-heading" translate>Osnovni podaci</div>
             <div class="content-details">
                 <div class="columns-two">
                     <div class="column">
                         <label translate>Državljanstvo</label>
-                        {{sClient.client_citizenship}}
+                        {{selected.citizenship}}
                     </div>
                     <div class="column">
                         <label translate>Telefon</label>
-                        {{sClient.client_phone}}
+                        {{selected.phone}}
                     </div>
                 </div>
                 <div class="column">
                     <label translate>Email</label>
-                    {{sClient.client_email}}
+                    {{selected.email}}
                 </div>
                 <div class="columns-two">
                     <div class="column">
                         <label translate>JMBG</label>
-                        {{sClient.client_socialNumber}}
+                        {{selected.social_number}}
                     </div>
                     <div class="column">
                         <label translate>Br. Lične karte</label>
-                        {{sClient.client_idNumber}}
+                        {{selected.id_number}}
                     </div>
                 </div>
                 <div class="column">
                     <label translate>Tekući račun</label>
-                    {{sClient.client_accountNumber}}
+                    {{selected.account_number}}
                 </div>
                 <div class="column">
                     <label translate>Komentar</label>
-                    {{sClient.client_comment}}
+                    {{selected.comment}}
                 </div>
             </div>
         </div>
+
         <div class="content-right">
             <div class="content-heading" translate>Predmeti</div>
             <div class="content-details">

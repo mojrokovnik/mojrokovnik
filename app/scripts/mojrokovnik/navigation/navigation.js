@@ -1,7 +1,7 @@
 'use strict';
 
-mrMainNavitagion.$inject = ['$location'];
-function mrMainNavitagion($location) {
+mrMainNavitagion.$inject = ['$location', 'authentification'];
+function mrMainNavitagion($location, authentification) {
     return {
         templateUrl: 'assets/templates/navigation.html',
         link: function (scope, elem) {

@@ -55,10 +55,11 @@ module.exports = function (grunt) {
         uglify: {
             options: {
                 sourceMap: true,
-                beautify: true,
-                compress: {
-                    drop_console: false
+                sourceMapIncludeSources: true,
+                sourceMapIn: function (uglifySource) {
+                    return uglifySource + '.map';
                 },
+                beautify: true,
                 mangle: false
             }
         },

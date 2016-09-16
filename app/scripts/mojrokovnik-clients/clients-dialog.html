@@ -3,46 +3,32 @@
     <h3 class="modal-title" ng-if="editMode" translate>Izmeni klijenta</h3>
 </div>
 
-<div class="modal-body">
+<div class="modal-body" ng-show="clientType === 'legals'">
     <div class="row">
         <div class="col-md-6">
             <md-input-container>
-                <label translate>Ime</label>
-                <input type="text" ng-model="client.client_name">
+                <label translate>Ime firme</label>
+                <input type="text" ng-model="client.company_name">
             </md-input-container>
         </div>
-        <div class="col-md-6">
-            <md-input-container>
-                <label translate>Prezime</label>
-                <input type="text" ng-model="client.client_surname">
-            </md-input-container>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Adresa</label>
-                <input type="text" ng-model="client.client_address">
-            </md-input-container>
-        </div>
-        <div class="col-md-6">
-            <md-input-container>
-                <label translate>Grad</label>
-                <input type="text" ng-model="client.client_city">
+                <input type="text" ng-model="client.address">
             </md-input-container>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <md-input-container>
-                <label translate>Država</label>
-                <input type="text" ng-model="client.client_state">
+                <label translate>Grad</label>
+                <input type="text" ng-model="client.city">
             </md-input-container>
         </div>
         <div class="col-md-6">
             <md-input-container>
-                <label translate>Državljanstvo</label>
-                <input type="text" ng-model="client.client_citizenship">
+                <label translate>Država</label>
+                <input type="text" ng-model="client.state">
             </md-input-container>
         </div>
     </div>
@@ -50,27 +36,27 @@
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Telefon</label>
-                <input type="text" ng-model="client.client_phone">
+                <input type="text" ng-model="client.phone">
             </md-input-container>
         </div>
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Email</label>
-                <input type="text" ng-model="client.client_email">
+                <input type="text" ng-model="client.email">
             </md-input-container>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <md-input-container>
-                <label translate>JMBG</label>
-                <input type="text" ng-model="client.client_socialNumber">
+                <label translate>PIB</label>
+                <input type="text" ng-model="client.vat">
             </md-input-container>
         </div>
         <div class="col-md-6">
             <md-input-container>
-                <label translate>Broj lične karte</label>
-                <input type="text" ng-model="client.client_idNumber">
+                <label translate>Matični broj</label>
+                <input type="text" ng-model="client.company_number">
             </md-input-container>
         </div>
     </div>
@@ -78,13 +64,136 @@
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Tekući račun</label>
-                <input type="text" ng-model="client.client_accountNumber">
+                <input type="text" ng-model="client.account_number">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Pravni zastupnik</label>
+                <input type="text" ng-model="client.attorney_name">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Telefon zastupnika</label>
+                <input type="text" ng-model="client.attorney_phone">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Adresa zastpunika</label>
+                <textarea ng-model="client.attorney_address"></textarea>
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Grad zastupnika</label>
+                <input type="text" ng-model="client.attorney_city">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Država zastupnika</label>
+                <textarea ng-model="client.attorney_state"></textarea>
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Komentar</label>
+                <textarea ng-model="client.comment"></textarea>
+            </md-input-container>
+        </div>
+    </div>
+</div>
+
+<div class="modal-body" ng-show="clientType === 'individuals'">
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Ime</label>
+                <input type="text" ng-model="client.name">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Prezime</label>
+                <input type="text" ng-model="client.surname">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Adresa</label>
+                <input type="text" ng-model="client.address">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Grad</label>
+                <input type="text" ng-model="client.city">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Država</label>
+                <input type="text" ng-model="client.state">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Državljanstvo</label>
+                <input type="text" ng-model="client.citizenship">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Telefon</label>
+                <input type="text" ng-model="client.phone">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Email</label>
+                <input type="text" ng-model="client.email">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>JMBG</label>
+                <input type="text" ng-model="client.social_number">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Broj lične karte</label>
+                <input type="text" ng-model="client.id_number">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Tekući račun</label>
+                <input type="text" ng-model="client.account_number">
             </md-input-container>
         </div>
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Komentar</label>
-                <textarea ng-model="client.client_comment"></textarea>
+                <textarea ng-model="client.comment"></textarea>
             </md-input-container>
         </div>
     </div>

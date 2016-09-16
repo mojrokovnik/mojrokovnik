@@ -1,92 +1,167 @@
 'use strict';
 
-clientsCtrl.$inject = ['$scope', 'api', '$uibModal'];
-function clientsCtrl($scope, api, $uibModal) {
+clientsCtrl.$inject = ['$scope', 'clients', 'modalDialog'];
+function clientsCtrl($scope, clients, modalDialog) {
 
-//    api('clients').fetch({client_delete: 0}).then(function (clients) {
-//        $scope.clients = clients;
-//        $scope.sClient = clients[0];
-//
-//        api('cases').fetch({client_id: clients[0].client_id}).then(function (cases) {
-//            $scope.cases = cases;
-//        });
-//    });
+    $scope.clients = {};
+    $scope.clientType = 'individuals';
 
-    $scope.selectClient = function (client) {
-        $scope.sClient = client;
+    // Updating client array from service
+    function updateClients() {
+        $scope.clients[$scope.clientType] = clients.getClients($scope.clientType);
 
-        api('cases').fetch({client_id: client.client_id}).then(function (cases) {
-            $scope.cases = cases;
-        });
-    };
-
-    $scope.removeClient = function (client) {
-        api('clients').delete(client).then(function () {
-            $scope.clients = _.without($scope.clients, client);
-            $scope.sClient = $scope.clients[0];
-        });
-    };
-
-    $scope.showDialog = function (client) {
-        if (client) {
-            $scope.client = client;
-            $scope.editMode = true;
-        } else {
-            delete $scope.client;
-            $scope.editMode = false;
+        if (!$scope.selected) {
+            $scope.selected = _.first($scope.clients[$scope.clientType]);
         }
+    }
 
-        $uibModal.open({
-            animation: true,
-            scope: $scope,
-            templateUrl: 'assets/templates/clients-dialog.html',
-            controller: clientDialogCtrl
-        });
+    $scope.switchType = function (type) {
+        delete $scope.selected;
+        $scope.clientType = type;
+        updateClients();
     };
 
-    /*
-     * Clients Dialog Controller
-     * Controls adding and editing cliens to database
-     */
-    function clientDialogCtrl($uibModalInstance) {
+    updateClients();
+
+    $scope.pickClient = function (client) {
+        $scope.selected = client;
+    };
+
+    $scope.addClient = function () {
+        var params = {
+            scope: $scope,
+            template: 'assets/templates/clients-dialog.html'
+        };
+
+        $scope.editMode = false;
+        delete $scope.client;
+
+        var modal = modalDialog.showModal(params);
+
         $scope.save = function (client) {
-            if ($scope.editMode) {
-                api('clients').update(client).then(function () {
-                    $scope.editMode = false;
-                    $uibModalInstance.close();
-                });
-            } else {
-                api('clients').add(client).then(function () {
-                    $scope.clients.push(client);
-                    $uibModalInstance.close();
-                });
-            }
+            console.log(client);
+            clients.add(client, $scope.clientType).then(function () {
+                modal.close();
+            });
         };
 
         $scope.cancel = function () {
-            $uibModalInstance.dismiss();
+            delete $scope.client;
+            modal.close();
         };
-    }
+    };
+
+    $scope.editClient = function (client) {
+        var params = {
+            scope: $scope,
+            template: 'assets/templates/clients-dialog.html'
+        };
+
+        $scope.editMode = true;
+        $scope.client = client;
+
+        var modal = modalDialog.showModal(params);
+
+        $scope.save = function (client) {
+            clients.update(client, $scope.clientType).then(function () {
+                modal.close();
+            });
+        };
+
+        $scope.close = function () {
+            delete $scope.client;
+            modal.close();
+        };
+    };
+
+    $scope.removeClient = function (client) {
+        clients.remove(client, $scope.clientType).then(function () {
+            $scope.selected = _.first($scope.clients[$scope.clientType]);
+        });
+    };
+
+    $scope.$on('client:legals:updated', updateClients);
+    $scope.$on('client:individuals:updated', updateClients);
+}
+
+clientsService.$inject = ['$rootScope', 'api'];
+function clientsService($rootScope, api) {
+    console.warn('Clients Service initialized');
+
+    var self = this;
+
+    this.clients = {
+        individuals: {}, legals: {}
+    };
+
+    this.getClients = function (type) {
+        var filteredList = _.where(self.clients[type], {active: 1});
+
+        return _.sortBy(filteredList, 'id');
+    };
+
+    this.fetch = function (type) {
+        return api('clients/' + type).fetch().then(function (clients) {
+            self.clients[type] = clients;
+            $rootScope.$broadcast('client:' + type + ':updated');
+        });
+    };
+
+    this.add = function (client, type) {
+        return api('clients/' + type).add(client).then(function (res) {
+            if (res.status !== 200) {
+                return false;
+            }
+
+            self.clients[type].push(res.client);
+            $rootScope.$broadcast('client:' + type + ':updated');
+        });
+    };
+
+    this.update = function (client, type) {
+        return api('clients/' + type).update(client).then(function (res) {
+            if (res.status !== 200) {
+                return false;
+            }
+
+            self.clients[type] = _.reject(self.clients[type], {id: client.id});
+            self.clients[type].push(client);
+
+            $rootScope.$broadcast('client:' + type + ':updated');
+        });
+    };
+
+    this.remove = function (client, type) {
+        return api('clients/' + type).delete(client).then(function (res) {
+            if (res.status !== 200) {
+                return false;
+            }
+
+            self.clients[type] = _.reject(self.clients[type], {id: client.id});
+
+            $rootScope.$broadcast('client:' + type + ':updated');
+        });
+    };
+
+    // Fetch clients on service initialization
+    this.fetch('individuals');
+    this.fetch('legals');
 }
 
 clientsSidenav.$inject = [];
 function clientsSidenav() {
     return {
-        controller: clientsCtrl,
-        link: function (scope, elem, attr, ctrl) {
-        }
+        controller: clientsCtrl
     };
 }
 
 clientsTemplate.$inject = [];
 function clientsTemplate() {
-    return {
-        link: function (scope, elem, attr, ctrl) {
-        }
-    };
+    return {};
 }
 
 angular.module('mojrokovnik.clients', ['ngMaterial'])
+        .service('clients', clientsService)
         .controller('clientsCtrl', clientsCtrl)
         .directive('clientsSidenav', clientsSidenav)
         .directive('clientsTemplate', clientsTemplate);

@@ -92,12 +92,21 @@ button, .btn {
 }
 
 // ANGULAR TOAST DEFINITIONS
-.md-toast {
+._md {
     &.success {
-        background-color: #0CB976;
+        .md-toast-content {
+            background-color: #0CB976;
+        }
     }
     &.error {
-        background-color: #DE5307;
+        .md-toast-content {
+            background-color: #DE5307;
+        }
+    }
+    &.warn {
+        .md-toast-content {
+            background-color: yellowgreen;
+        }
     }
 }
 

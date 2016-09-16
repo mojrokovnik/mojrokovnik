@@ -15,10 +15,14 @@ function notifyService($mdToast) {
     };
 
     function showToast(type, text) {
-        $mdToast.show({
-            template: '<md-toast class="md-toast ' + type + '">' + text + '</md-toast>',
-            position: 'top right'
-        });
+        var toast = $mdToast.simple()
+                .textContent(text)
+                .position('top right')
+                .toastClass(type)
+                .hideDelay(3000);
+
+        $mdToast.show(toast);
+
     }
 }
 
