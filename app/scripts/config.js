@@ -30,6 +30,7 @@ angular.module('mojrokovnik', [
     'mojrokovnik.translate',
     'mojrokovnik.ui',
     'mojrokovnik.ui.modalDialog',
+    'mojrokovnik.ui.typeahead',
     'mojrokovnik.clients',
     'mojrokovnik.calendar',
     'mojrokovnik.cases'

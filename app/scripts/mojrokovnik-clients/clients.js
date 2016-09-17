@@ -30,7 +30,7 @@ function clientsCtrl($scope, clients, modalDialog) {
     $scope.addClient = function () {
         var params = {
             scope: $scope,
-            template: 'assets/templates/clients-dialog.html'
+            templateUrl: 'assets/templates/clients-dialog.html'
         };
 
         $scope.editMode = false;
@@ -39,7 +39,6 @@ function clientsCtrl($scope, clients, modalDialog) {
         var modal = modalDialog.showModal(params);
 
         $scope.save = function (client) {
-            console.log(client);
             clients.add(client, $scope.clientType).then(function () {
                 modal.close();
             });
@@ -54,7 +53,7 @@ function clientsCtrl($scope, clients, modalDialog) {
     $scope.editClient = function (client) {
         var params = {
             scope: $scope,
-            template: 'assets/templates/clients-dialog.html'
+            templateUrl: 'assets/templates/clients-dialog.html'
         };
 
         $scope.editMode = true;
@@ -91,7 +90,7 @@ function clientsService($rootScope, api) {
     var self = this;
 
     this.clients = {
-        individuals: {}, legals: {}
+        individuals: [], legals: []
     };
 
     this.getClients = function (type) {

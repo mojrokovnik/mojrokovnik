@@ -1,17 +1,17 @@
 <div cases-sidenav class="sidenav-section">
     <div class="topnav-section">
-        <div class="item active" translate>Pravna lica</div>
-        <div class="item" translate>Fizička lica</div>
+        <div class="item ng-animate-disabled" ng-click="switchType('legals')" ng-class="{active: caseType === 'legals'}" translate>Pravna lica</div>
+        <div class="item ng-animate-disabled" ng-click="switchType('individuals')" ng-class="{active: caseType === 'individuals'}" translate>Fizička lica</div>
     </div>
 
-    <div class="sidenav-item" ng-repeat="uCase in cases track by uCase.case_id" ng-class="{active: uCase.case_id === sCase.case_id}" ng-click="selectCase(uCase)">
-        {{uCase.case_name}}
+    <div class="sidenav-item ng-animate-disabled" ng-repeat="_case in cases track by _case.id" ng-class="{active: _case.id === selected.id}" ng-click="pickCase(_case)">
+        {{_case.name}}
         <span class="detail-info">
-            <i ng-if="uCase.case_supervisor">{{uCase.case_supervisor}}, </i>
-            <i ng-if="uCase.case_judge">{{uCase.case_judge}}</i>
+            <i ng-if="_case.supervisor">{{_case.supervisor}}, </i>
+            <i ng-if="_case.judge">{{_case.judge}}</i>
         </span>
     </div>
-    <button class="btn btn--orange" ng-click="showDialog()">
+    <button class="btn btn--orange" ng-click="addCase()">
         <i class="icon-add-client"></i>
         <span translate>Dodaj novi predmet</span>
     </button>
@@ -22,12 +22,12 @@
     </div>
     <div class="content-shortinfo">
         <div class="name-info">
-            {{sCase.case_name}}
-            <div class="address-info">{{sCase.case_businessCouncil}} - {{sCase.case_businessLabel}} / {{sCase.case_businessNumber}}</div>
+            {{selected.name}}
+            <div class="address-info">{{selected.legal_council}} - {{selected.legal_label}} / {{selected.legal_number}}</div>
         </div>
         <div class="btn-group btn-group--inline pull-right">
-            <button class="btn btn--rounded btn--dark" ng-click="showDialog(sCase)" translate>Izmeni podatke</button>
-            <button class="btn btn--rounded btn--dark" ng-click="removCase(sCase)" translate>Izbriši predmet</button>
+            <button class="btn btn--rounded btn--dark" ng-click="editCase(selected)" translate>Izmeni podatke</button>
+            <button class="btn btn--rounded btn--dark" ng-click="removeCase(selected)" translate>Izbriši predmet</button>
         </div>
     </div>
     <div class="content-detailedinfo">
@@ -36,71 +36,60 @@
             <div class="content-details">
                 <div class="column">
                     <label translate>Suprotna strana</label>
-                    {{sCase.case_rivalType}} {{sCase.case_rivalName}} {{sCase.case_rivalSurname}}
+                    {{selected.rival_type}} {{selected.rival_name}} {{selected.rival_surname}}
                 </div>
                 <div class="columns-two">
                     <div class="column">
                         <label translate>Vrsta</label>
-                        {{sCase.case_type}}
+                        {{selected.type}}
                     </div>
                     <div class="column">
                         <label translate>Osnov</label>
-                        {{sCase.caseElement}}
+                        {{selected.element}}
                     </div>
                 </div>
                 <div class="column">
                     <label translate>Poslovni broj</label>
-                    {{sCase.case_businessCouncil}} - {{sCase.case_businessLabel}} / {{sCase.case_businessNumber}}
+                    {{selected.legal_council}} - {{selected.legal_label}} / {{selected.legal_number}}
                 </div>
                 <div class="columns-two">
                     <div class="column">
                         <label translate>Interni broj predmeta</label>
-                        {{sCase.case_number}}
+                        {{selected.internal_number}}
                     </div>
                     <div class="column">
                         <label translate>Nadležni organ</label>
-                        {{sCase.case_supervisor}}
+                        {{selected.supervisor}}
                     </div>
                 </div>
                 <div class="columns-two">
                     <div class="column">
                         <label translate>Broj sudnice / Sobe</label>
-                        {{sCase.case_courtNo}}
+                        {{selected.court_number}}
                     </div>
                     <div class="column">
                         <label translate>Sudija / Tužilac</label>
-                        {{sCase.case_judge}}
+                        {{selected.judge}}
                     </div>
                 </div>
                 <div class="columns-two">
                     <div class="column">
                         <label translate>Vrednost spora</label>
-                        {{sCase.case_value}}
+                        {{selected.value}}
                     </div>
                     <div class="column">
                         <label translate>Status predmeta</label>
-                        {{sCase.case_status}}
+                        {{selected.status}}
                     </div>
                 </div>
                 <div class="column">
                     <label translate>Komentar</label>
-                    {{sClient.client_comment}}
+                    {{selected.comment}}
                 </div>
             </div>
         </div>
         <div class="content-right">
-            <div class="content-heading" translate>Predmeti</div>
-            <div class="content-details">
-                <div class="column" ng-repeat="ucase in cases track by ucase.case_id">
-                    <label>{{ucase.case_name}}</label>
-                </div>
-            </div>
-            <div class="content-heading" translate>Predmeti</div>
-            <div class="content-details">
-                <div class="column" ng-repeat="ucase in cases track by ucase.case_id">
-                    <label>{{ucase.case_name}}</label>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
