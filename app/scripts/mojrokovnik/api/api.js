@@ -30,6 +30,7 @@ function apiService($q, $http, $cookies, $location, notify, token) {
                 $cookies.remove('token');
                 $cookies.remove('user');
                 $location.url('/login');
+                return false;
                 break;
         }
     }

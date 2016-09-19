@@ -6,7 +6,6 @@ function casesCtrl($scope, cases, clients, modalDialog) {
     $scope.cases = {};
     $scope.caseType = 'individuals';
 
-    // Updating client array from service
     function updateCases() {
         $scope.cases = cases.getCases($scope.caseType);
 
@@ -92,8 +91,6 @@ function casesCtrl($scope, cases, clients, modalDialog) {
     $scope.defaultData = cases.defaultData;
 
     $scope.$on('cases:updated', updateCases);
-    $scope.$on('client:legals:updated', updateClients);
-    $scope.$on('client:individuals:updated', updateClients);
 }
 
 casesService.$inject = ['$rootScope', 'api'];
@@ -136,6 +133,17 @@ function casesService($rootScope, api) {
 
         return _.sortBy(filteredList, 'id');
     };
+
+    this.getCasesByClient = function (type, id) {
+        var list = self.getCases(type);
+        type = type.slice(0, -1);
+
+        var filteredList = _.filter(list, function (obj) {
+            return obj['client_' + type].id === id;
+        });
+
+        return _.sortBy(filteredList, 'id');
+    }
 
     this.fetch = function () {
         return api('cases').fetch().then(function (cases) {

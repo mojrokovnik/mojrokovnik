@@ -126,8 +126,8 @@
         <div class="content-right">
             <div class="content-heading" translate>Predmeti</div>
             <div class="content-details">
-                <div class="column" ng-repeat="ucase in cases track by ucase.case_id">
-                    <label>{{ucase.case_name}}</label>
+                <div class="column" ng-repeat="_case in getClientCases(selected.id) track by _case.id">
+                    <label>{{_case.name}}</label>
                 </div>
             </div>
         </div>

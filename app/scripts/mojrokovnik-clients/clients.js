@@ -1,12 +1,11 @@
 'use strict';
 
-clientsCtrl.$inject = ['$scope', 'clients', 'modalDialog'];
-function clientsCtrl($scope, clients, modalDialog) {
+clientsCtrl.$inject = ['$scope', 'clients', 'cases', 'modalDialog'];
+function clientsCtrl($scope, clients, cases, modalDialog) {
 
     $scope.clients = {};
     $scope.clientType = 'individuals';
 
-    // Updating client array from service
     function updateClients() {
         $scope.clients[$scope.clientType] = clients.getClients($scope.clientType);
 
@@ -25,6 +24,10 @@ function clientsCtrl($scope, clients, modalDialog) {
 
     $scope.pickClient = function (client) {
         $scope.selected = client;
+    };
+
+    $scope.getClientCases = function (clientId) {
+        return cases.getCasesByClient($scope.clientType, clientId);
     };
 
     $scope.addClient = function () {
