@@ -52,7 +52,7 @@ function casesCtrl($scope, cases, clients, modalDialog) {
         };
 
         $scope.cancel = function () {
-            delete $scope.cases;
+            delete $scope.newcase;
             modal.close();
         };
     };

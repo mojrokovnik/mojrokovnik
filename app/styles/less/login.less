@@ -242,7 +242,7 @@
                     transition: .3s ease;
                     width: 30px;
                 }
-                &:hover {
+                &:hover, &[disabled] {
                     border-color: @mr-violet;
                     span {
                         color: @mr-violet;
@@ -274,6 +274,19 @@
                 }
             }
         }
+
+        .error-container {
+            margin: 14px 0;
+            text-align: center;
+            position: absolute;
+            width: 100%;
+
+            span {
+                color: red;
+                font-size: 16px;
+            }
+        }
+
         .footer {
             color: #d3d3d3;
             font-size: 24px;
@@ -391,12 +404,7 @@
                 &:hover {
                     background: rgba(255, 255, 255, 0.9);
                 }
-                &:active {
-                    before {
-                        display: none;
-                    }
-                }
-                &:focus {
+                &:active, &:focus {
                     before {
                         display: none;
                     }

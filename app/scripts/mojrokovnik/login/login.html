@@ -7,19 +7,28 @@
 
         <div class="card">
             <h1 class="title">Login</h1>
-            <form>
+            <form ng-submit="login()">
                 <div class="input-container">
-                    <input type="text" id="Username" ng-model="login.username" required="required"/>
+                    <input type="text" id="Username" ng-model="username" required="required"/>
                     <label for="Username">Username</label>
                     <div class="bar"></div>
                 </div>
                 <div class="input-container">
-                    <input type="password" id="Password" ng-model="login.password" required="required"/>
+                    <input type="password" id="Password" ng-model="password" required="required"/>
                     <label for="Password">Password</label>
                     <div class="bar"></div>
                 </div>
                 <div class="button-container">
-                    <button tyle="submit" ng-click="login(login)"><span>Go</span></button>
+                    <button type="submit" ng-disabled="isLoading">
+                        <span>Log In</span>
+                        <div class="spinner ng-animate-disabled" ng-show="isLoading">
+                            <div class="dot1"></div>
+                            <div class="dot2"></div>
+                        </div>
+                    </button>
+                </div>
+                <div class="error-container" ng-show="errorMsg">
+                    <span>{{:: errorMsg}}</span>
                 </div>
                 <div class="footer"><a href="#">Forgot your password?</a></div>
             </form>

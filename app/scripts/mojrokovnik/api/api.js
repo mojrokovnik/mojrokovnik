@@ -26,13 +26,18 @@ function apiService($q, $http, $cookies, $location, notify, token) {
 
     function errorCallback(response) {
         switch (response.status) {
+            case -1:
+                return {status: 408, statusText: "Request Timeout"};
+                break;
+
             case 401:
                 $cookies.remove('token');
                 $cookies.remove('user');
                 $location.url('/login');
-                return false;
                 break;
         }
+
+        return response;
     }
 
     var api = function (route) {

@@ -1,24 +1,29 @@
 {
-    "name": "mojrokovnik",
-    "description": "Mojrokovnik Application",
-    "version": "0.0.1",
-    "homepage": "https://github.com/mojrokovnik/mojrokovnik",
-    "license": "MIT",
-    "private": true,
-    "dependencies": {
-        "angular": "~1.5.0",
-        "angular-route": "~1.5.0",
-        "angular-loader": "~1.5.0",
-        "angular-mocks": "~1.5.0",
-        "angular-cookies": "^1.5.7",
-        "angular-material": "^1.1.0",
-        "angular-translate": "^2.11.0",
-        "angular-sanitize": "^1.5.7",
-        "angular-bootstrap": "^1.3.3",
-        "bootstrap": "^3.3.6",
-        "underscore": "^1.8.3",
-        "jquery-3.0.0.min": "https://code.jquery.com/jquery-3.0.0.min.js",
-        "jquery-ui": "^1.12.0",
-        "fullcalendar": "^2.9.0"
-    }
+  "name": "mojrokovnik",
+  "description": "Mojrokovnik Application",
+  "version": "0.0.1",
+  "homepage": "https://github.com/mojrokovnik/mojrokovnik",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.5.0",
+    "angular-route": "~1.5.0",
+    "angular-loader": "~1.5.0",
+    "angular-mocks": "~1.5.0",
+    "angular-cookies": "^1.5.7",
+    "angular-material": "^1.1.0",
+    "angular-translate": "^2.11.0",
+    "angular-sanitize": "^1.5.7",
+    "angular-bootstrap": "^1.3.3",
+    "angular-ui-calendar": "latest",
+    "bootstrap": "^3.3.6",
+    "underscore": "^1.8.3",
+    "jquery-3.0.0.min": "https://code.jquery.com/jquery-3.0.0.min.js",
+    "jquery-ui": "^1.12.0",
+    "fullcalendar": "^3.0.1"
+  },
+  "resolutions": {
+    "fullcalendar": "^3.0.1",
+    "angular": "^1.4.8"
+  }
 }
