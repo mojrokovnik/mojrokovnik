@@ -2,7 +2,6 @@
 
 casesCtrl.$inject = ['$scope', 'cases', 'clients', 'modalDialog'];
 function casesCtrl($scope, cases, clients, modalDialog) {
-
     $scope.cases = {};
     $scope.caseType = 'individuals';
 
@@ -143,12 +142,15 @@ function casesService($rootScope, api) {
         });
 
         return _.sortBy(filteredList, 'id');
-    }
+    };
 
     this.fetch = function () {
         return api('cases').fetch().then(function (cases) {
-            self.cases = cases;
+            if (!cases) {
+                return false;
+            }
 
+            self.cases = cases;
             $rootScope.$broadcast('cases:updated');
         });
     };

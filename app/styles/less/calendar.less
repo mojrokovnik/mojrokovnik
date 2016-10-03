@@ -1,0 +1,78 @@
+@import "mixins";
+@import "variables";
+
+@import "defaults";
+
+.fc-button-group {
+    &:extend(.btn-group--inline);
+
+    button.ui-button {
+        border-radius: 0;
+        &:first-of-type {
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+        }
+        &:last-of-type {
+            border-top-right-radius: 30px;
+            border-bottom-right-radius: 30px;
+        }
+    }
+}
+
+.fc-toolbar {
+    .ui-button {
+        &:extend(.btn, .btn--rounded, .btn--dark);
+        line-height: 2px;
+        box-shadow: none;
+
+        &:hover, &:focus, &.ui-state-active {
+            color: @white;
+            background-color: @mr-blue;
+        }
+    }
+}
+
+// Color of Calendar table
+.fc.ui-widget {
+    th, td, thead, tbody,
+    .fc-divider, .fc-row,
+    .fc-content, .fc-popover,
+    .fc-list-view, .fc-list-heading td {
+        border-color: #ddd;
+    }
+
+    .fc-event {
+        border-radius: 0;
+    }
+}
+
+.ui-icon {
+    display: block;
+    margin-top: -2px;
+    &:after {
+        position: relative;
+    }
+}
+
+.ui-icon-circle-triangle-w:after {
+    content: "\02039";
+    font-size: 200%;
+}
+
+.ui-icon-circle-triangle-e:after {
+    content: "\0203A";
+    font-size: 200%;
+}
+
+// Datepicker
+.bootstrap-datetimepicker-widget {
+    padding: 10px !important;
+
+    .btn {
+        color: @black;
+        &:hover {
+            background-color: transparent;
+            box-shadow: none;
+        }
+    }
+}

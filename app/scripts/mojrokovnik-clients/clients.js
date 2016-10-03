@@ -104,6 +104,10 @@ function clientsService($rootScope, api) {
 
     this.fetch = function (type) {
         return api('clients/' + type).fetch().then(function (clients) {
+            if (!clients) {
+                return false;
+            }
+
             self.clients[type] = clients;
             $rootScope.$broadcast('client:' + type + ':updated');
         });

@@ -7,8 +7,8 @@ function tokenService($cookies) {
         auth_url: 'oauth/v2/token',
         type: 'Bearer',
         grant_type: 'password',
-        client_id: '1_3221mw10q4qosgws0ggkgg8k48oc80scos4ck8g00ksgo8gkcs',
-        client_secret: '5xjbohlmajk088s0800c8ocggkckw0cws4sccc4oowsk8kco8o'
+        client_id: '1_49amhjr484ow48gkwkscckk4ccw4c0ck0sc44g00ckwck088gk',
+        client_secret: '5zqn5z1w0ekocso8wgwgcss0kwkksg4gosckgwso0o8owk44wk'
     };
 
     this.getAuthCred = function (data) {

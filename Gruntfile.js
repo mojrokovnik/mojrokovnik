@@ -23,7 +23,13 @@ module.exports = function (grunt) {
             fonts: {
                 expand: true,
                 src: 'app/styles/fonts/*',
-                dest: 'dist/assets/fonts/',
+                dest: 'dist/fonts/',
+                flatten: true
+            },
+            fontAwesome: {
+                expand: true,
+                src: 'bower_components/font-awesome/fonts/*',
+                dest: 'dist/fonts/',
                 flatten: true
             },
             images: {
