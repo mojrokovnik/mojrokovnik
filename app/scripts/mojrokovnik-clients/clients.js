@@ -109,6 +109,8 @@ function clientsService($rootScope, api) {
             }
 
             self.clients[type] = clients;
+
+            $rootScope.loading = false;
             $rootScope.$broadcast('client:' + type + ':updated');
         });
     };

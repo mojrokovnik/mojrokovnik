@@ -36,36 +36,38 @@ angular.module('mojrokovnik', [
     'mojrokovnik.cases'
 ])
 
-.service('authentification', mojrokovnikAuth)
+        .service('authentification', mojrokovnikAuth)
 
-.config(['$locationProvider', '$routeProvider',
-    function ($locationProvider, $routeProvider) {
-        $locationProvider.hashPrefix('');
-        $routeProvider.otherwise({redirectTo: '/clients'});
+        .config(['$locationProvider', '$routeProvider',
+            function ($locationProvider, $routeProvider) {
+                $locationProvider.hashPrefix('');
+                $routeProvider.otherwise({redirectTo: '/clients'});
 
-        $routeProvider.when('/login', {
-            templateUrl: 'assets/templates/login.html'
-        });
-        $routeProvider.when('/clients', {
-            templateUrl: 'assets/templates/clients.html'
-        });
-        $routeProvider.when('/cases', {
-            templateUrl: 'assets/templates/cases.html'
-        });
-        $routeProvider.when('/calendar', {
-            templateUrl: 'assets/templates/calendar.html'
-        });
-    }
-])
+                $routeProvider.when('/login', {
+                    templateUrl: 'assets/templates/login.html'
+                });
+                $routeProvider.when('/clients', {
+                    templateUrl: 'assets/templates/clients.html'
+                });
+                $routeProvider.when('/cases', {
+                    templateUrl: 'assets/templates/cases.html'
+                });
+                $routeProvider.when('/calendar', {
+                    templateUrl: 'assets/templates/calendar.html'
+                });
+            }
+        ])
 
-.config(function ($animateProvider) {
-    $animateProvider.classNameFilter(/^(?:(?!ng-animate-disabled).)*$/);
-})
+        .config(function ($animateProvider) {
+            $animateProvider.classNameFilter(/^(?:(?!ng-animate-disabled).)*$/);
+        })
 
-.run(function ($rootScope, $location, authentification) {
-    $rootScope.$on('$routeChangeStart', function (event, next) {
-        if (!authentification.isLoggedIn()) {
-            $location.url('/login');
-        }
-    });
-});
+        .run(function ($rootScope, $location, authentification) {
+            $rootScope.loading = true;
+
+            $rootScope.$on('$routeChangeStart', function (event, next) {
+                if (!authentification.isLoggedIn()) {
+                    $location.url('/login');
+                }
+            });
+        });

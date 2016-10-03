@@ -4,6 +4,8 @@
         <div class="item ng-animate-disabled" ng-click="switchType('individuals')" ng-class="{active: clientType === 'individuals'}" translate>Fizička lica</div>
     </div>
 
+    <div class="loader ng-animate-disabled" ng-show="$root.loading">Loading...</div>
+
     <div class="sidenav-item ng-animate-disabled" ng-repeat="client in clients[clientType] track by client.id" ng-class="{active: client.id === selected.id}" ng-click="pickClient(client)">
         {{client.name}} {{client.surname}} {{client.company_name}}
         <span class="detail-info">
