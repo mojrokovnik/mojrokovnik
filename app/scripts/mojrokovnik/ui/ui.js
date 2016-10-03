@@ -1,4 +1,4 @@
-    'use strict';
+'use strict';
 
 datetimePicker.$inject = [];
 function datetimePicker() {

@@ -13,19 +13,21 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
             var _item = {
                 id: item.id,
                 type: item.type,
+                name: item.name,
                 title: '[' + item.type + '] ' + item.name,
                 start: moment(item.datetime),
                 end: moment(item.datetime).add(item.duration, 'minutes'),
                 comment: item.comment,
-                color: item.type === 'Obaveza' ? 'yellow' : 'red',
-                stick: true
+                color: item.type === 'Obaveza' ? '#ffad46' : '#f83a22',
+                stick: true,
+                active: item.active
             };
 
             $scope.calendars.push(_item);
         });
-    }
 
-    $scope.eventSources = [$scope.calendars];
+        $scope.eventSources = [$scope.calendars];
+    }
 
     updateCalendars();
 
@@ -50,21 +52,24 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
         scrollTime: '08:00:00',
         defaultView: 'agendaWeek',
         slotDuration: '00:15:00',
-//        selectable: true,
-//        editable: true,
+        selectable: true,
+        editable: true,
         eventLimit: true,
         theme: true,
         eventClick: function (event) {
-            var item = {
-                id: event.id,
-                type: event.type,
-                name: event.title.substring(10),
-                datetime: event.start._d,
-                duration: event.end ? event.end.diff(event.start, 'minutes') : 0,
-                comment: event.comment
-            };
-
-            $scope.editCalendar(item);
+            $scope.editCalendar(getItem(event, true));
+        },
+        eventResize: function (event) {
+            calendar.update(getItem(event));
+        },
+        eventDrop: function (event) {
+            calendar.update(getItem(event));
+        },
+        select: function (start, end) {
+            $scope.editCalendar({
+                datetime: start._d,
+                duration: end ? end.diff(start, 'minutes') : 0
+            });
         }
     };
 
@@ -121,6 +126,17 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
         };
     };
 
+    function getItem(event, parse) {
+        return {
+            id: event.id,
+            type: event.type,
+            name: event.name,
+            datetime: parse ? event.start : event.start.format('DD-MM-YYYY HH:mm'),
+            duration: event.end ? event.end.diff(event.start, 'minutes') : 0,
+            comment: event.comment,
+            active: event.active
+        };
+    }
 
     $scope.$on('calendars:updated', updateCalendars);
 }
@@ -169,7 +185,7 @@ function calendarService($rootScope, api) {
             }
 
             self.calendars = _.reject(self.calendars, {id: calendar.id});
-            self.calendars.push(calendar);
+            self.calendars.push(res.calendar);
 
             $rootScope.$broadcast('calendars:updated', self.calendars);
         });
