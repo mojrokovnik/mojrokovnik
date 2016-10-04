@@ -10,7 +10,7 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
         $scope.calendars.length = 0;
 
         angular.forEach(data, function (item) {
-            var _item = {
+            $scope.calendars.push({
                 id: item.id,
                 type: item.type,
                 name: item.name,
@@ -21,15 +21,23 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
                 color: item.type === 'Obaveza' ? '#ffad46' : '#f83a22',
                 stick: true,
                 active: item.active
-            };
-
-            $scope.calendars.push(_item);
+            });
         });
 
         $scope.eventSources = [$scope.calendars];
     }
 
+    function updateClients() {
+        $scope.clients = clients.getClients('individuals').concat(clients.getClients('legals'));
+    }
+
+    function updateCases() {
+        $scope.cases = cases.getCases();
+    }
+
     updateCalendars();
+    updateClients();
+    updateCases();
 
     // Initialize Calendar
     $scope.calendarOptions = {
@@ -79,6 +87,9 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
             templateUrl: 'assets/templates/calendar-dialog.html'
         };
 
+        updateClients();
+        updateCases();
+
         $scope.editMode = false;
         delete $scope._calendar;
 
@@ -103,6 +114,9 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
             templateUrl: 'assets/templates/calendar-dialog.html'
         };
 
+        updateClients();
+        updateCases();
+
         $scope.editMode = true;
         $scope._calendar = calendars;
 
@@ -124,6 +138,14 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
                 modal.close();
             });
         };
+    };
+
+    $scope.parseClient = function (client) {
+        if (client.company_name) {
+            return $scope._calendar.client_legal = client.id;
+        }
+
+        return $scope._calendar.client_individual = client.id;
     };
 
     function getItem(event, parse) {

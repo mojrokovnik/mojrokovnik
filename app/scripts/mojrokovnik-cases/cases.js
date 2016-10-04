@@ -63,6 +63,8 @@ function casesCtrl($scope, cases, clients, modalDialog) {
             templateUrl: 'assets/templates/cases-dialog.html'
         };
 
+        updateClients();
+
         $scope.editMode = true;
         $scope.newcase = _case;
 
@@ -124,7 +126,7 @@ function casesService($rootScope, api) {
             filteredList = _.filter(filteredList, function (obj) {
                 return !!obj.client_individual;
             });
-        } else {
+        } else if (type === 'legals') {
             filteredList = _.filter(filteredList, function (obj) {
                 return !!obj.client_legal;
             });
@@ -151,6 +153,8 @@ function casesService($rootScope, api) {
             }
 
             self.cases = cases;
+
+            $rootScope.loading = false;
             $rootScope.$broadcast('cases:updated');
         });
     };

@@ -90,6 +90,11 @@ module.exports = function (grunt) {
                 root: 'dist',
                 runInBackground: true,
                 openBrowser: true
+            },
+            server: {
+                host: 'localhost',
+                port: 8100,
+                root: 'dist'
             }
         },
         watch: {
@@ -140,12 +145,12 @@ module.exports = function (grunt) {
 
     grunt.registerTask('develop', [
         'build',
-        'http-server',
+        'http-server:dev',
         'watch'
     ]);
 
     grunt.registerTask('server', [
         'build',
-        'http-server'
+        'http-server:server'
     ]);
 };

@@ -1,10 +1,13 @@
 <div cases-sidenav class="sidenav-section">
     <div class="topnav-section">
-        <div class="item ng-animate-disabled" ng-click="switchType('legals')" ng-class="{active: caseType === 'legals'}" translate>Pravna lica</div>
+        <div class="item ng-animate-disabled" ng-click="switchType('legals')" ng-class="{active:caseType === 'legals'}" translate>Pravna lica</div>
         <div class="item ng-animate-disabled" ng-click="switchType('individuals')" ng-class="{active: caseType === 'individuals'}" translate>Fizička lica</div>
     </div>
 
-    <div class="sidenav-item ng-animate-disabled" ng-repeat="_case in cases track by _case.id" ng-class="{active: _case.id === selected.id}" ng-click="pickCase(_case)">
+    <div class="loader ng-animate-disabled" ng-show="$root.loading">Loading...</div>
+
+    <div class="sidenav-item ng-animate-disabled" ng-repeat="_case in cases track by _case.id" ng-class="{
+                active: _case.id === selected.id}" ng-click="pickCase(_case)">
         {{_case.name}}
         <span class="detail-info">
             <i ng-if="_case.supervisor">{{_case.supervisor}}, </i>

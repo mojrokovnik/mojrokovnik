@@ -13,6 +13,26 @@
             </md-input-container>
         </div>
     </div>
+    <div class="row" ng-show="_calendar.type === 'Ročište'">
+        <div class="col-md-12">
+            <md-input-container>
+                <label translate>Predmet</label>
+                <md-select ng-model="_calendar.cases">
+                    <md-option ng-repeat="_case in cases" ng-value="_case.id">{{_case.name}}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row" ng-show="_calendar.type === 'Obaveza'">
+        <div class="col-md-12">
+            <md-input-container>
+                <label translate>Klijent</label>
+                <md-select ng-model="_calendar.client" ng-change="parseClient(_calendar.client)">
+                    <md-option ng-repeat="_client in clients" ng-value="_client">{{_client.name ? _client.name : _client.company_name}} {{_client.surname}}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <md-input-container>
@@ -45,7 +65,7 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn--rounded btn--orange" type="button" ng-click="cancel()" translate>Otkaži</button>
-    <button class="btn btn--rounded btn--orange" type="button" ng-click="remove(_calendar)" ng-if="editMode" translate>Obriši</button>
-    <button class="btn btn--rounded btn--dark" type="button" ng-click="save(_calendar)" translate>Sačuvaj</button>
+    <button class="btn btn--rounded btn--dark" type="button" ng-click="cancel()" translate>Otkaži</button>
+    <button class="btn btn--rounded btn--danger" type="button" ng-click="remove(_calendar)" ng-if="editMode" translate>Obriši</button>
+    <button class="btn btn--rounded btn--orange" type="button" ng-click="save(_calendar)" translate>Sačuvaj</button>
 </div>
