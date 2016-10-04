@@ -25,7 +25,8 @@
     "karma-jasmine": "^0.3.8",
     "karma-junit-reporter": "^0.4.1",
     "load-grunt-tasks": "^3.5.0",
-    "protractor": "^3.2.2"
+    "protractor": "^3.2.2",
+    "protractor-console": "^2.0.1"
   },
   "scripts": {
     "postinstall": "bower install",

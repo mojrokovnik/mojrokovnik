@@ -1,4 +1,8 @@
 exports.config = {
+    plugins: [{
+        package: 'protractor-console',
+        logLevels: ['severe']
+    }],
     allScriptsTimeout: 20000,
     specs: [
         '*.js'
