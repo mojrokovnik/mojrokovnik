@@ -11,6 +11,12 @@ describe('mojrokovnik', function () {
 
         browser.sleep(5000);
 
+        browser.manage().logs()
+                .get('browser').then(function (browserLog) {
+            console.log('log: ' +
+                    require('util').inspect(browserLog));
+        });
+
         expect(browser.getLocationAbsUrl()).toMatch("/clients");
     });
 
