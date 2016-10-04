@@ -18,6 +18,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-http-server": "^2.0.0",
     "grunt-usemin": "^3.1.1",
+    "http-server": "^0.9.0",
     "jasmine-core": "^2.4.1",
     "jasmine-spec-reporter": "^2.7.0",
     "karma": "^0.13.22",
@@ -32,7 +33,7 @@
   "scripts": {
     "postinstall": "bower install",
     "prestart": "npm install",
-    "start": "",
+    "start": "http-server -a localhost -p 8100 -c-1 ./dist",
     "pretest": "npm install",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js --single-run",
