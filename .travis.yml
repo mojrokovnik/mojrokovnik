@@ -2,9 +2,6 @@ language: php
 php:
   - '5.6'
 
-env:
-  - TRAVIS_NODE_VERSION="4"
-
 services:
   - mysql
 
@@ -20,7 +17,6 @@ install:
   - php bin/console fos:user:create admin admin@admin.com admin
   - php bin/console server:run localhost:8000 &
   - sleep 1
-  - php bin/console server:status
   - cd ..
 
 before_script:
@@ -32,6 +28,9 @@ before_script:
   - npm install
   - grunt build
   - grunt http-server:server &
+  - cd mojrokovnik-server
+  - php bin/console server:status localhost:8000
+  - cd ..
   - npm run update-webdriver
   - sleep 1
 
