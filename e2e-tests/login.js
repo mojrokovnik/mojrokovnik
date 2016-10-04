@@ -9,6 +9,8 @@ describe('mojrokovnik', function () {
         element(by.model('password')).sendKeys('admin');
         element(by.id('login-btn')).click();
 
+        browser.sleep(5000);
+
         expect(browser.getLocationAbsUrl()).toMatch("/clients");
     });
 
