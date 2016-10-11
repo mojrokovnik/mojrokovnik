@@ -1,7 +1,7 @@
 'use strict';
 
-casesCtrl.$inject = ['$scope', 'cases', 'clients', 'modalDialog'];
-function casesCtrl($scope, cases, clients, modalDialog) {
+casesCtrl.$inject = ['$scope', 'cases', 'clients', 'calendar', 'modalDialog'];
+function casesCtrl($scope, cases, clients, calendar, modalDialog) {
     $scope.cases = {};
     $scope.caseType = 'individuals';
 
@@ -28,6 +28,10 @@ function casesCtrl($scope, cases, clients, modalDialog) {
 
     $scope.pickCase = function (cases) {
         $scope.selected = cases;
+    };
+
+    $scope.getCaseAgenda = function (caseId) {
+        return calendar.getCalendarsByCase(caseId);
     };
 
     $scope.addCase = function () {

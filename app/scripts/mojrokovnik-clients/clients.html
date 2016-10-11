@@ -128,8 +128,21 @@
         <div class="content-right">
             <div class="content-heading" translate>Predmeti</div>
             <div class="content-details">
+                <div class="column" ng-if="!getClientCases(selected.id).length">
+                    <label class="label--info">Trenutno nema predmeta za izabranog klijenta. <a href="#">Dodaj odmah</a></label>
+                </div>
                 <div class="column" ng-repeat="_case in getClientCases(selected.id) track by _case.id">
                     <label>{{_case.name}}</label>
+                </div>
+            </div>
+
+            <div class="content-heading" translate>Agenda</div>
+            <div class="content-details">
+                <div class="column" ng-if="!getClientAgenda(selected.id).length">
+                    <label class="label--info">Nemate budućih obaveza za izabranog klijenta. <a href="#">Dodaj odmah</a></label>
+                </div>
+                <div class="column" ng-repeat="_calendar in getClientAgenda(selected.id) track by _calendar.id">
+                    <label>{{_calendar.datetime| datetime:"Do MMMM YYYY, HH:mm"}} - {{_calendar.name}}</label>
                 </div>
             </div>
         </div>

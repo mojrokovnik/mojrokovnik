@@ -74,14 +74,14 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
             calendar.update(getItem(event));
         },
         select: function (start, end) {
-            $scope.editCalendar({
+            $scope.addCalendar({
                 datetime: start._d,
                 duration: end ? end.diff(start, 'minutes') : 0
             });
         }
     };
 
-    $scope.addCalendar = function () {
+    $scope.addCalendar = function (event) {
         var params = {
             scope: $scope,
             templateUrl: 'assets/templates/calendar-dialog.html'
@@ -92,6 +92,10 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
 
         $scope.editMode = false;
         delete $scope._calendar;
+
+        if (event) {
+            $scope._calendar = event;
+        }
 
         var modal = modalDialog.showModal(params);
 
@@ -175,6 +179,30 @@ function calendarService($rootScope, api) {
         var filteredList = _.where(self.calendars, {active: 1});
 
         return _.sortBy(filteredList, 'id');
+    };
+
+    this.getCalendarsByClient = function (type, id) {
+        var list = self.getCalendars();
+        type = type.slice(0, -1);
+
+        var filteredList = _.filter(list, function (obj) {
+            return obj['client_' + type] &&
+                    obj['client_' + type].id === id &&
+                    moment(obj.datetime).isAfter(moment());
+        });
+
+        return _.sortBy(filteredList, 'datetime');
+    };
+
+    this.getCalendarsByCase = function (id) {
+        var list = self.getCalendars();
+
+        var filteredList = _.filter(list, function (obj) {
+            return obj.cases && obj.cases.id === id &&
+                    moment(obj.datetime).isAfter(moment());
+        });
+
+        return _.sortBy(filteredList, 'datetime');
     };
 
     this.fetch = function () {

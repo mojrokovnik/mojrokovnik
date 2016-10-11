@@ -1,7 +1,7 @@
 'use strict';
 
-clientsCtrl.$inject = ['$scope', 'clients', 'cases', 'modalDialog'];
-function clientsCtrl($scope, clients, cases, modalDialog) {
+clientsCtrl.$inject = ['$scope', 'clients', 'cases', 'calendar', 'modalDialog'];
+function clientsCtrl($scope, clients, cases, calendar, modalDialog) {
 
     $scope.clients = {};
     $scope.clientType = 'individuals';
@@ -28,6 +28,10 @@ function clientsCtrl($scope, clients, cases, modalDialog) {
 
     $scope.getClientCases = function (clientId) {
         return cases.getCasesByClient($scope.clientType, clientId);
+    };
+
+    $scope.getClientAgenda = function (clientId) {
+        return calendar.getCalendarsByClient($scope.clientType, clientId);
     };
 
     $scope.addClient = function () {
@@ -98,6 +102,16 @@ function clientsService($rootScope, api) {
 
     this.getClients = function (type) {
         var filteredList = _.where(self.clients[type], {active: 1});
+
+        return _.sortBy(filteredList, 'id');
+    };
+
+    this.getClientById = function (type, id) {
+        var list = self.getClients(type);
+
+        var filteredList = _.filter(list, function (obj) {
+            return obj.id === id;
+        });
 
         return _.sortBy(filteredList, 'id');
     };

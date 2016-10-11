@@ -6,12 +6,11 @@
 
     <div class="loader ng-animate-disabled" ng-show="$root.loading">Loading...</div>
 
-    <div class="sidenav-item ng-animate-disabled" ng-repeat="_case in cases track by _case.id" ng-class="{
-                active: _case.id === selected.id}" ng-click="pickCase(_case)">
-        {{_case.name}}
+    <div class="sidenav-item ng-animate-disabled" ng-repeat="_case in cases track by _case.id"
+         ng-class="{active: _case.id === selected.id}" ng-click="pickCase(_case)">
+        {{_case.legal_council}} - {{_case.legal_label}} / {{_case.legal_number}}
         <span class="detail-info">
-            <i ng-if="_case.supervisor">{{_case.supervisor}}, </i>
-            <i ng-if="_case.judge">{{_case.judge}}</i>
+            <i>{{_case.name}}</i>
         </span>
     </div>
     <button class="btn btn--orange" ng-click="addCase()">
@@ -25,8 +24,8 @@
     </div>
     <div class="content-shortinfo">
         <div class="name-info">
-            {{selected.name}}
-            <div class="address-info">{{selected.legal_council}} - {{selected.legal_label}} / {{selected.legal_number}}</div>
+            {{selected.legal_council}} - {{selected.legal_label}} / {{selected.legal_number}}
+            <div class="address-info">{{selected.name}}</div>
         </div>
         <div class="btn-group btn-group--inline pull-right">
             <button class="btn btn--rounded btn--dark" ng-click="editCase(selected)" translate>Izmeni podatke</button>
@@ -91,8 +90,17 @@
                 </div>
             </div>
         </div>
-        <div class="content-right">
 
+        <div class="content-right">
+            <div class="content-heading" translate>Agenda</div>
+            <div class="content-details">
+                <div class="column" ng-if="!getCaseAgenda(selected.id).length">
+                    <label class="label--info">Nemate budućih obaveza za izabranog klijenta. <a href="#">Dodaj odmah</a></label>
+                </div>
+                <div class="column" ng-repeat="_calendar in getCaseAgenda(selected.id) track by _calendar.id">
+                    <label>{{_calendar.datetime| datetime:"Do MMMM YYYY, HH:mm"}} - {{_calendar.name}}</label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
