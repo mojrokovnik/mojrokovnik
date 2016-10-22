@@ -1,7 +1,7 @@
 'use strict';
 
-casesCtrl.$inject = ['$scope', 'cases', 'clients', 'calendar', 'modalDialog'];
-function casesCtrl($scope, cases, clients, calendar, modalDialog) {
+casesCtrl.$inject = ['$scope', 'cases', 'clients', 'calendar', 'documents', 'modalDialog'];
+function casesCtrl($scope, cases, clients, calendar, documents, modalDialog) {
     $scope.cases = {};
     $scope.caseType = 'individuals';
 
@@ -9,12 +9,19 @@ function casesCtrl($scope, cases, clients, calendar, modalDialog) {
         $scope.cases = cases.getCases($scope.caseType);
 
         if (!$scope.selected) {
-            $scope.selected = _.first($scope.cases);
+            $scope.pickCase(_.first($scope.cases));
         }
+
+        updateAssets();
     }
 
     function updateClients() {
         $scope.clients = clients.getClients($scope.caseType);
+    }
+
+    function updateAssets() {
+        $scope.agenda = $scope.selected ? $scope.getAgenda($scope.selected.id) : [];
+        $scope.documents = $scope.selected ? $scope.getDocuments($scope.selected.id) : [];
     }
 
     $scope.switchType = function (type) {
@@ -24,17 +31,21 @@ function casesCtrl($scope, cases, clients, calendar, modalDialog) {
         updateCases();
     };
 
-    updateCases();
-
-    $scope.pickCase = function (cases) {
-        $scope.selected = cases;
+    $scope.pickCase = function (_case) {
+        if (_case) {
+            $scope.selected = _case;
+        }
     };
 
-    $scope.getCaseAgenda = function (caseId) {
-        return calendar.getCalendarsByCase(caseId);
+    $scope.getAgenda = function (_case) {
+        return _case ? calendar.getCalendarsByCase(_case) : false;
     };
 
-    $scope.addCase = function () {
+    $scope.getDocuments = function (_case) {
+        return _case ? documents.getDocuments(_case) : false;
+    };
+
+    $scope.previewCase = function (_case) {
         var params = {
             scope: $scope,
             size: 'lg',
@@ -43,8 +54,47 @@ function casesCtrl($scope, cases, clients, calendar, modalDialog) {
 
         updateClients();
 
-        $scope.editMode = false;
-        delete $scope.newcase;
+        if (_case.client_individual) {
+            _case.client_individual = _case.client_individual.id;
+
+        } else if (_case.client_legal) {
+            _case.client_legal = _case.client_legal.id;
+        }
+
+        $scope.newcase = _case;
+        $scope._preview = true;
+
+        var modal = modalDialog.showModal(params);
+
+        $scope.cancel = function () {
+            delete $scope.newcase;
+            modal.close();
+        };
+    };
+
+    $scope.addCase = function (_client) {
+        var params = {
+            scope: $scope,
+            size: 'lg',
+            templateUrl: 'assets/templates/cases-dialog.html'
+        };
+
+        updateClients();
+
+        $scope._edit = false;
+        $scope._preview = false;
+        $scope.newcase = [];
+
+        if (_client && _client.company_name) {
+            $scope.newcase.client_legal = _client.id;
+            $scope.caseType = 'legals';
+            updateClients();
+
+        } else if (_client && _client.name) {
+            $scope.newcase.client_individual = _client.id;
+            $scope.caseType = 'individuals';
+            updateClients();
+        }
 
         var modal = modalDialog.showModal(params);
 
@@ -67,9 +117,17 @@ function casesCtrl($scope, cases, clients, calendar, modalDialog) {
             templateUrl: 'assets/templates/cases-dialog.html'
         };
 
+        if (_case.client_individual) {
+            _case.client_individual = _case.client_individual.id;
+
+        } else if (_case.client_legal) {
+            _case.client_legal = _case.client_legal.id;
+        }
+
         updateClients();
 
-        $scope.editMode = true;
+        $scope._edit = true;
+        $scope._preview = false;
         $scope.newcase = _case;
 
         var modal = modalDialog.showModal(params);
@@ -95,7 +153,12 @@ function casesCtrl($scope, cases, clients, calendar, modalDialog) {
     // Initialize default data
     $scope.defaultData = cases.defaultData;
 
+    // Initialize cases
+    updateCases();
+
     $scope.$on('cases:updated', updateCases);
+    $scope.$on('calendars:updated', updateAssets);
+    $scope.$on('documents:updated', updateAssets);
 }
 
 casesService.$inject = ['$rootScope', 'api'];

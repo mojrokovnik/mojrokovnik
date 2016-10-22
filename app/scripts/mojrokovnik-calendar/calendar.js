@@ -1,3 +1,5 @@
+/* global moment, _ */
+
 'use strict';
 
 calendarCtrl.$inject = ['$scope', 'modalDialog', 'calendar', 'cases', 'clients'];
@@ -20,6 +22,8 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
                 comment: item.comment,
                 color: item.type === 'Obaveza' ? '#ffad46' : '#f83a22',
                 stick: true,
+                cases: item.cases ? item.cases.id : '',
+                client: item.client_legal && item.client_individual && '',
                 active: item.active
             });
         });
@@ -75,13 +79,13 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
         },
         select: function (start, end) {
             $scope.addCalendar({
-                datetime: start._d,
+                datetime: moment(start).format('DD-MM-YYYY HH:mm'),
                 duration: end ? end.diff(start, 'minutes') : 0
             });
         }
     };
 
-    $scope.addCalendar = function (event) {
+    $scope.addCalendar = function (event, _case) {
         var params = {
             scope: $scope,
             templateUrl: 'assets/templates/calendar-dialog.html'
@@ -95,6 +99,13 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
 
         if (event) {
             $scope._calendar = event;
+        }
+
+        if (_case) {
+            $scope._calendar = {
+                type: 'Ročište',
+                cases: _case.id
+            };
         }
 
         var modal = modalDialog.showModal(params);
@@ -114,12 +125,15 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
     $scope.editCalendar = function (calendars) {
         var params = {
             scope: $scope,
-            size: 'lg',
             templateUrl: 'assets/templates/calendar-dialog.html'
         };
 
         updateClients();
         updateCases();
+
+        if (calendars.datetime) {
+            calendars.datetime = moment(calendars.datetime).format('DD-MM-YYYY HH:mm');
+        }
 
         $scope.editMode = true;
         $scope._calendar = calendars;
@@ -160,6 +174,8 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
             datetime: parse ? event.start : event.start.format('DD-MM-YYYY HH:mm'),
             duration: event.end ? event.end.diff(event.start, 'minutes') : 0,
             comment: event.comment,
+            cases: event.cases,
+            client: event.client,
             active: event.active
         };
     }
@@ -237,7 +253,7 @@ function calendarService($rootScope, api) {
             self.calendars = _.reject(self.calendars, {id: calendar.id});
             self.calendars.push(res.calendar);
 
-            $rootScope.$broadcast('calendars:updated', self.calendars);
+            $rootScope.$broadcast('calendars:updated');
         });
     };
 
@@ -253,7 +269,7 @@ function calendarService($rootScope, api) {
         });
     };
 
-    // Fetch clients on service initialization
+    // Fetch calendars on service initialization
     this.fetch();
 }
 

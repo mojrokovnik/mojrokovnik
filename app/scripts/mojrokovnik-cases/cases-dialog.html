@@ -1,14 +1,14 @@
 <div class="modal-header">
-    <h3 class="modal-title" ng-if="!editMode" translate>Dodaj predmet</h3>
-    <h3 class="modal-title" ng-if="editMode" translate>Izmeni predmet</h3>
+    <h3 class="modal-title" ng-if="!_preview" translate>{{_edit ? 'Izmeni predmet' : 'Dodaj predmet'}}</h3>
+    <h3 class="modal-title" ng-if="_preview" translate>{{newcase.name}}</h3>
 </div>
 
 <div class="modal-body">
-    <div class="row">
+    <div class="row" ng-if="!_preview">
         <div class="col-md-12" ng-show="caseType === 'individuals'">
             <md-input-container>
                 <label translate>Klijent</label>
-                <md-select ng-model="newcase.client_individual">
+                <md-select ng-model="newcase.client_individual" ng-disabled="_preview">
                     <md-option ng-repeat="client in clients" ng-value="client.id">{{client.name}} {{client.surname}}</md-option>
                 </md-select>
             </md-input-container>
@@ -16,7 +16,7 @@
         <div class="col-md-12" ng-show="caseType === 'legals'">
             <md-input-container>
                 <label translate>Klijent</label>
-                <md-select ng-model="newcase.client_legal" ng-show="caseType === 'legals'">
+                <md-select ng-model="newcase.client_legal" ng-disabled="_preview">
                     <md-option ng-repeat="client in clients" ng-value="client.id">{{client.company_name}}</md-option>
                 </md-select>
             </md-input-container>
@@ -26,7 +26,7 @@
         <div class="col-md-4">
             <md-input-container>
                 <label translate>Tip suprotne strane</label>
-                <md-select ng-model="newcase.rival_type">
+                <md-select ng-model="newcase.rival_type" ng-disabled="_preview">
                     <md-option ng-repeat="rivalType in defaultData.rivalType" value="{{rivalType}}">{{rivalType}}</md-option>
                 </md-select>
             </md-input-container>
@@ -34,13 +34,13 @@
         <div class="col-md-4">
             <md-input-container>
                 <label translate>Ime suprotne strane</label>
-                <input type="text" ng-model="newcase.rival_name">
+                <input type="text" ng-model="newcase.rival_name" ng-disabled="_preview" required>
             </md-input-container>
         </div>
         <div class="col-md-4">
             <md-input-container>
                 <label translate>Prezime suprotne strane</label>
-                <input type="text" ng-model="newcase.rival_surname">
+                <input type="text" ng-model="newcase.rival_surname" ng-disabled="_preview">
             </md-input-container>
         </div>
     </div>
@@ -48,7 +48,7 @@
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Vrsta</label>
-                <md-select ng-model="newcase.type">
+                <md-select ng-model="newcase.type" ng-disabled="_preview">
                     <md-option ng-repeat="caseType in defaultData.caseType" value="{{caseType}}">{{caseType}}</md-option>
                 </md-select>
             </md-input-container>
@@ -56,17 +56,17 @@
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Bliže određenje predmeta / Osnov</label>
-                <md-select ng-model="newcase.element">
+                <md-select ng-model="newcase.element" ng-disabled="_preview" required>
                     <md-option ng-repeat="caseElement in defaultData.caseElement" value="{{caseElement}}">{{caseElement}}</md-option>
                 </md-select>
             </md-input-container>
         </div>
     </div>
-    <div class="row">
+    <div class="row" ng-if="!_preview">
         <div class="col-md-12">
             <md-input-container>
                 <label translate>Jedinstveni naziv predmeta</label>
-                <input type="text" ng-model="newcase.name">
+                <input type="text" ng-model="newcase.name" required>
             </md-input-container>
         </div>
     </div>
@@ -74,19 +74,19 @@
         <div class="col-md-4">
             <md-input-container>
                 <label translate>Poslovni broj (veće)</label>
-                <input type="text" ng-model="newcase.legal_council">
+                <input type="text" ng-model="newcase.legal_council" ng-disabled="_preview">
             </md-input-container>
         </div>
         <div class="col-md-4">
             <md-input-container>
                 <label translate>Poslovni broj (oznaka)</label>
-                <input type="text" ng-model="newcase.legal_label">
+                <input type="text" ng-model="newcase.legal_label" ng-disabled="_preview">
             </md-input-container>
         </div>
         <div class="col-md-4">
             <md-input-container>
                 <label translate>Poslovni broj (broj)</label>
-                <input type="text" ng-model="newcase.legal_number">
+                <input type="text" ng-model="newcase.legal_number" ng-disabled="_preview">
             </md-input-container>
         </div>
     </div>
@@ -94,13 +94,13 @@
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Status predmeta</label>
-                <input type="text" ng-model="newcase.status">
+                <input type="text" ng-model="newcase.status" ng-disabled="_preview">
             </md-input-container>
         </div>
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Vrednost spora</label>
-                <input type="text" ng-model="newcase.value">
+                <input type="text" ng-model="newcase.value" ng-disabled="_preview">
             </md-input-container>
         </div>
     </div>
@@ -108,13 +108,13 @@
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Interni broj predmeta</label>
-                <input type="text" ng-model="newcase.internal_number">
+                <input type="text" ng-model="newcase.internal_number" ng-disabled="_preview" required>
             </md-input-container>
         </div>
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Nadležni organ</label>
-                <input type="text" ng-model="newcase.supervisor">
+                <input type="text" ng-model="newcase.supervisor" ng-disabled="_preview">
             </md-input-container>
         </div>
     </div>
@@ -122,21 +122,21 @@
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Broj sudnice / Sobe</label>
-                <input type="text" ng-model="newcase.court_number">
+                <input type="text" ng-model="newcase.court_number" ng-disabled="_preview">
             </md-input-container>
         </div>
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Sudija / Tužilac</label>
-                <input type="text" ng-model="newcase.judge">
+                <input type="text" ng-model="newcase.judge" ng-disabled="_preview">
             </md-input-container>
         </div>
     </div>
-    <div class="row">
+    <div class="row" ng-if="!newcase.comment && !_preview">
         <div class="col-md-12">
             <md-input-container>
                 <label translate>Komentar</label>
-                <textarea ng-model="newcase.comment"></textarea>
+                <textarea ng-model="newcase.comment" ng-disabled="_preview"></textarea>
             </md-input-container>
         </div>
     </div>
@@ -144,5 +144,5 @@
 
 <div class="modal-footer">
     <button class="btn btn--rounded btn--dark" type="button" ng-click="cancel()" translate>Odustani</button>
-    <button class="btn btn--rounded btn--orange" type="button" ng-click="save(newcase)" translate>Sačuvaj predmet</button>
+    <button class="btn btn--rounded btn--orange" type="button" ng-click="save(newcase)" ng-if="!_preview" translate>Sačuvaj predmet</button>
 </div>

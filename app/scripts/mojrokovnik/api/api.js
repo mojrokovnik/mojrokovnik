@@ -94,8 +94,16 @@ function apiService($q, $http, $cookies, $location, notify, token) {
                         password: password
                     })
                 }).then(function (response) {
-                    notify.success('Succesfully logged in');
                     $cookies.putObject('token', response);
+                }, errorCallback);
+            },
+            register: function (params) {
+                return http({
+                    url: token.resolveUrl(route),
+                    method: 'POST',
+                    data: params
+                }).then(function (response) {
+                    return response;
                 }, errorCallback);
             }
         };

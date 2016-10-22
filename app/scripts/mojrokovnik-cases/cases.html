@@ -9,7 +9,7 @@
     <div class="sidenav-item ng-animate-disabled" ng-repeat="_case in cases track by _case.id"
          ng-class="{active: _case.id === selected.id}" ng-click="pickCase(_case)">
         {{_case.legal_council}} - {{_case.legal_label}} / {{_case.legal_number}}
-        <span class="detail-info">
+        <span class="detail-info" title="{{_case.name}}">
             <i>{{_case.name}}</i>
         </span>
     </div>
@@ -18,16 +18,17 @@
         <span translate>Dodaj novi predmet</span>
     </button>
 </div>
+
 <div cases-template class="content-section">
     <div class="content-searchbar clearfix">
         <input type="text" class="searchbar pull-right" placeholder="{{'Pretraga...'| translate}}" />
     </div>
     <div class="content-shortinfo">
-        <div class="name-info">
+        <div class="name-info" ng-if="selected">
             {{selected.legal_council}} - {{selected.legal_label}} / {{selected.legal_number}}
             <div class="address-info">{{selected.name}}</div>
         </div>
-        <div class="btn-group btn-group--inline pull-right">
+        <div class="btn-group btn-group--inline pull-right" ng-if="selected">
             <button class="btn btn--rounded btn--dark" ng-click="editCase(selected)" translate>Izmeni podatke</button>
             <button class="btn btn--rounded btn--dark" ng-click="removeCase(selected)" translate>Izbriši predmet</button>
         </div>
@@ -35,7 +36,10 @@
     <div class="content-detailedinfo">
         <div class="content-left">
             <div class="content-heading" translate>Osnovni podaci</div>
-            <div class="content-details">
+            <div class="content-details" ng-if="!selected">
+                <label class="label--info" translate>Nijedan predmet nije izabran</label>
+            </div>
+            <div class="content-details" ng-if="selected">
                 <div class="column">
                     <label translate>Suprotna strana</label>
                     {{selected.rival_type}} {{selected.rival_name}} {{selected.rival_surname}}
@@ -92,13 +96,37 @@
         </div>
 
         <div class="content-right">
-            <div class="content-heading" translate>Agenda</div>
-            <div class="content-details">
-                <div class="column" ng-if="!getCaseAgenda(selected.id).length">
-                    <label class="label--info">Nemate budućih obaveza za izabranog klijenta. <a href="#">Dodaj odmah</a></label>
+            <div class="content-heading" ng-controller="calendarCtrl">
+                {{ :: 'Agenda' | translate }}
+                <div class="content-heading--actions">
+                    <a ng-click="addCalendar(null, selected)"><i class="fa fa-plus-square-o"></i></a>
                 </div>
-                <div class="column" ng-repeat="_calendar in getCaseAgenda(selected.id) track by _calendar.id">
+            </div>
+            <div class="content-details">
+                <div class="column" ng-if="!agenda.length">
+                    <label class="label--info">Nemate budućih obaveza za izabranog klijenta.</label>
+                </div>
+                <div class="column" ng-repeat="_calendar in agenda track by _calendar.id">
                     <label>{{_calendar.datetime| datetime:"Do MMMM YYYY, HH:mm"}} - {{_calendar.name}}</label>
+                </div>
+            </div>
+
+            <div class="content-heading" ng-controller="documentsCtrl">
+                {{ :: 'Dokumenta' | translate }}
+                <div class="content-heading--actions">
+                    <a ng-click="addDocument(selected)"><i class="fa fa-plus-square-o"></i></a>
+                </div>
+            </div>
+            <div class="content-details" ng-controller="documentsCtrl">
+                <div class="column" ng-if="!documents.length">
+                    <label class="label--info">Trenutno nema dokumenata za izabrani predmet</label>
+                </div>
+                <div class="column column--with-actions" ng-repeat="document in documents track by document.id">
+                    <label><a ng-click="previewDocument(selected, document)">{{ document.name}}</a></label>
+                    <div class="column--actions">
+                        <button class="btn btn--icon" ng-click="editDocument(selected, document)"><i class="fa fa-pencil-square-o"></button>
+                        <button class="btn btn--icon" ng-click="removeDocument(selected, document)"><i class="fa fa-trash-o"></button>
+                    </div>
                 </div>
             </div>
         </div>

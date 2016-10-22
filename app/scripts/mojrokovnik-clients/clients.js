@@ -2,7 +2,6 @@
 
 clientsCtrl.$inject = ['$scope', 'clients', 'cases', 'calendar', 'modalDialog'];
 function clientsCtrl($scope, clients, cases, calendar, modalDialog) {
-
     $scope.clients = {};
     $scope.clientType = 'individuals';
 
@@ -12,26 +11,34 @@ function clientsCtrl($scope, clients, cases, calendar, modalDialog) {
         if (!$scope.selected) {
             $scope.selected = _.first($scope.clients[$scope.clientType]);
         }
+
+        updateAssets();
+    }
+
+    function updateAssets() {
+        $scope.agenda = $scope.selected ? $scope.getAgenda($scope.selected.id) : [];
+        $scope.cases = $scope.selected ? $scope.getCases($scope.selected.id) : [];
     }
 
     $scope.switchType = function (type) {
         delete $scope.selected;
         $scope.clientType = type;
+
         updateClients();
     };
 
-    updateClients();
-
     $scope.pickClient = function (client) {
-        $scope.selected = client;
+        if (client) {
+            $scope.selected = client;
+        }
     };
 
-    $scope.getClientCases = function (clientId) {
-        return cases.getCasesByClient($scope.clientType, clientId);
+    $scope.getCases = function (client) {
+        return client ? cases.getCasesByClient($scope.clientType, client) : false;
     };
 
-    $scope.getClientAgenda = function (clientId) {
-        return calendar.getCalendarsByClient($scope.clientType, clientId);
+    $scope.getAgenda = function (client) {
+        return client ? calendar.getCalendarsByClient($scope.clientType, client) : false;
     };
 
     $scope.addClient = function () {
@@ -86,8 +93,13 @@ function clientsCtrl($scope, clients, cases, calendar, modalDialog) {
         });
     };
 
+    // Initialize clients
+    updateClients();
+
     $scope.$on('client:legals:updated', updateClients);
     $scope.$on('client:individuals:updated', updateClients);
+    $scope.$on('calendars:updated', updateAssets);
+    $scope.$on('cases:updated', updateAssets);
 }
 
 clientsService.$inject = ['$rootScope', 'api'];

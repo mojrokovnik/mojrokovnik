@@ -3,7 +3,7 @@
 tokenService.$inject = ['$cookies'];
 function tokenService($cookies) {
     var params = {
-        server_url: 'http://localhost:8000/',
+        server_url: 'http://api.mojrokovnik.com/',
         auth_url: 'oauth/v2/token',
         type: 'Bearer',
         grant_type: 'password',

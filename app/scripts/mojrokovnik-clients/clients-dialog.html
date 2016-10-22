@@ -5,13 +5,15 @@
 
 <div class="modal-body" ng-show="clientType === 'legals'">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <md-input-container>
                 <label translate>Ime firme</label>
-                <input type="text" ng-model="client.company_name">
+                <input type="text" ng-model="client.company_name" required>
             </md-input-container>
         </div>
-        <div class="col-md-6">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <md-input-container>
                 <label translate>Adresa</label>
                 <input type="text" ng-model="client.address">
@@ -61,16 +63,18 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <md-input-container>
                 <label translate>Tekući račun</label>
                 <input type="text" ng-model="client.account_number">
             </md-input-container>
         </div>
-        <div class="col-md-6">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <md-input-container>
                 <label translate>Pravni zastupnik</label>
-                <input type="text" ng-model="client.attorney_name">
+                <input type="text" ng-model="client.attorney_name" required>
             </md-input-container>
         </div>
     </div>
@@ -103,7 +107,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <md-input-container>
                 <label translate>Komentar</label>
                 <textarea ng-model="client.comment"></textarea>
@@ -117,7 +121,7 @@
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Ime</label>
-                <input type="text" ng-model="client.name">
+                <input type="text" ng-model="client.name" required>
             </md-input-container>
         </div>
         <div class="col-md-6">
@@ -184,13 +188,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <md-input-container>
                 <label translate>Tekući račun</label>
                 <input type="text" ng-model="client.account_number">
             </md-input-container>
         </div>
-        <div class="col-md-6">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <md-input-container>
                 <label translate>Komentar</label>
                 <textarea ng-model="client.comment"></textarea>

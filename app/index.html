@@ -6,6 +6,7 @@
         <title>Mojrokovnik | Advokatska kancelarija na jednom mestu</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="assets/images/favicon.png" />
 
         <!-- build:css css/vendor.min.css -->
         <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css">
@@ -14,6 +15,9 @@
         <link rel="stylesheet" href="../bower_components/normalize-css/normalize.css">
         <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="../bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+        <link rel="stylesheet" href="../bower_components/intl-tel-input/build/css/intlTelInput.css" />
+        <link rel="stylesheet" href="../bower_components/medium-editor/dist/css/medium-editor.min.css" />
+        <link rel="stylesheet" href="../bower_components/medium-editor/dist/css/themes/flat.css" />
         <!-- endbuild -->
 
         <!-- build:css css/style.min.css -->
@@ -22,10 +26,12 @@
         <!-- endbuild -->
     </head>
     <body>
-        <div id="main-container">
+        <div id="main-container" ng-if="!loginPage">
             <nav id="nav-container" mr-main-navigation></nav>
             <div id="content-container" ng-view></div>
-        </div> 
+        </div>
+
+        <div mr-login id="login-page" ng-if="loginPage"></div>
 
         <!-- build:js js/vendor.js -->
         <script src="../bower_components/jquery/dist/jquery.js"></script>
@@ -45,6 +51,8 @@
         <script src="../bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
         <script src="../bower_components/fullcalendar/dist/locale/sr.js"></script>
         <script src="../bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="../bower_components/intl-tel-input/build/js/intlTelInput.min.js"></script>
+        <script src="../bower_components/medium-editor/dist/js/medium-editor.min.js"></script>
         <!-- endbuild -->
 
         <!-- build:js js/app.js -->
@@ -58,10 +66,12 @@
         <script src="scripts/mojrokovnik/ui/ui.js"></script>
         <script src="scripts/mojrokovnik/ui/modal-dialog.js"></script>
         <script src="scripts/mojrokovnik/ui/typeahead.js"></script>
+        <script src="scripts/mojrokovnik/ui/editor.js"></script>
 
         <script src="scripts/mojrokovnik-clients/clients.js"></script>
         <script src="scripts/mojrokovnik-cases/cases.js"></script>
         <script src="scripts/mojrokovnik-calendar/calendar.js"></script>
+        <script src="scripts/mojrokovnik-documents/documents.js"></script>
         <!-- endbuild -->
     </body>
 </html>

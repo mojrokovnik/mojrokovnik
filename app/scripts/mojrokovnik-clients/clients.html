@@ -24,11 +24,11 @@
         <input type="text" class="searchbar pull-right" placeholder="{{'Pretraga...'| translate}}" />
     </div>
     <div class="content-shortinfo">
-        <div class="name-info">
+        <div class="name-info" ng-if="selected">
             {{selected.name}} {{selected.surname}} {{selected.company_name}}
             <div class="address-info">{{selected.address}}, {{selected.city}}, {{selected.state}}</div>
         </div>
-        <div class="btn-group btn-group--inline pull-right">
+        <div class="btn-group btn-group--inline pull-right" ng-if="selected">
             <button class="btn btn--rounded btn--dark" ng-click="editClient(selected)" translate>Izmeni podatke</button>
             <button class="btn btn--rounded btn--dark" ng-click="removeClient(selected)" translate>Izbriši lice</button>
         </div>
@@ -37,7 +37,10 @@
 
         <div class="content-left" ng-if="clientType === 'legals'">
             <div class="content-heading" translate>Osnovni podaci</div>
-            <div class="content-details">
+            <div class="content-details" ng-if="!selected">
+                <label class="label--info" translate>Nijedan klijent nije izabran</label>
+            </div>
+            <div class="content-details" ng-if="selected">
                 <div class="columns-two">
                     <div class="column">
                         <label translate>PIB</label>
@@ -89,7 +92,10 @@
 
         <div class="content-left"  ng-if="clientType === 'individuals'">
             <div class="content-heading" translate>Osnovni podaci</div>
-            <div class="content-details">
+            <div class="content-details" ng-if="!selected">
+                <label class="label--info" translate>Nijedan klijent nije izabran</label>
+            </div>
+            <div class="content-details" ng-if="selected">
                 <div class="columns-two">
                     <div class="column">
                         <label translate>Državljanstvo</label>
@@ -126,22 +132,32 @@
         </div>
 
         <div class="content-right">
-            <div class="content-heading" translate>Predmeti</div>
-            <div class="content-details">
-                <div class="column" ng-if="!getClientCases(selected.id).length">
-                    <label class="label--info">Trenutno nema predmeta za izabranog klijenta. <a href="#">Dodaj odmah</a></label>
+            <div class="content-heading" ng-controller="casesCtrl">
+                {{ :: 'Predmeti' | translate }}
+                <div class="content-heading--actions">
+                    <a ng-click="addCase(selected)"><i class="fa fa-plus-square-o"></i></a>
                 </div>
-                <div class="column" ng-repeat="_case in getClientCases(selected.id) track by _case.id">
-                    <label>{{_case.name}}</label>
+            </div>
+            <div class="content-details" ng-controller="casesCtrl">
+                <div class="column" ng-if="!cases.length">
+                    <label class="label--info">Trenutno nema predmeta za izabranog klijenta.</label>
+                </div>
+                <div class="column" ng-repeat="_case in cases track by _case.id">
+                    <label><a ng-click="previewCase(_case)">{{_case.name}}</a></label>
                 </div>
             </div>
 
-            <div class="content-heading" translate>Agenda</div>
-            <div class="content-details">
-                <div class="column" ng-if="!getClientAgenda(selected.id).length">
-                    <label class="label--info">Nemate budućih obaveza za izabranog klijenta. <a href="#">Dodaj odmah</a></label>
+            <div class="content-heading" ng-controller="calendarCtrl">
+                {{ :: 'Agenda' | translate }}
+                <div class="content-heading--actions">
+                    <a ng-click="addCalendar(null, selected)"><i class="fa fa-plus-square-o"></i></a>
                 </div>
-                <div class="column" ng-repeat="_calendar in getClientAgenda(selected.id) track by _calendar.id">
+            </div>
+            <div class="content-details">
+                <div class="column" ng-if="!agenda.length">
+                    <label class="label--info">Nemate budućih obaveza za izabranog klijenta.</label>
+                </div>
+                <div class="column" ng-repeat="_calendar in agenda track by _calendar.id">
                     <label>{{_calendar.datetime| datetime:"Do MMMM YYYY, HH:mm"}} - {{_calendar.name}}</label>
                 </div>
             </div>

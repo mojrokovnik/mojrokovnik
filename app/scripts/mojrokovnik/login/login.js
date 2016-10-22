@@ -3,7 +3,8 @@
 mrLogin.$inject = [];
 function mrLogin() {
     return {
-        controller: mrLoginCtrl,
+        controller: mrLoginRegisterCtrl,
+        templateUrl: 'assets/templates/login.html',
         link: function (scope, elem, attr, ctrl) {
             elem.find('.toggle').on('click', function () {
                 elem.find('.container').stop().addClass('active');
@@ -16,8 +17,8 @@ function mrLogin() {
     };
 }
 
-mrLoginCtrl.$inject = ['$location', '$scope', '$cookies', 'api', 'authentification'];
-function mrLoginCtrl($location, $scope, $cookies, api, authentification) {
+mrLoginRegisterCtrl.$inject = ['$location', '$scope', '$rootScope', '$cookies', 'api', 'authentification'];
+function mrLoginRegisterCtrl($location, $scope, $rootScope, $cookies, api, authentification) {
     $scope.login = function () {
         $scope.isLoading = true;
         delete $scope.errorMsg;
@@ -37,15 +38,35 @@ function mrLoginCtrl($location, $scope, $cookies, api, authentification) {
                 return false;
             }
 
-            $scope.isLoading = false;
-            $location.url('/clients');
             authentification.getActiveUser().then(function (user) {
-                $cookies.putObject('user', user);
+                $scope.isLoading = false;
+                if (user) {
+                    $rootScope.loginPage = false;
+                    $cookies.putObject('user', user);
+                    return $location.url('/clients');
+                }
+
+                $scope.errorMsg = 'User is not activated!';
             });
+        });
+    };
+
+    $scope.register = function () {
+        $scope.isLoading = true;
+        delete $scope.errorMsg;
+
+        var params = {
+            username: $scope.register.username,
+            email: $scope.register.email,
+            password: $scope.register.password
+        };
+
+        api('users/creates').register(params).then(function (response) {
+            $scope.isLoading = false;
         });
     };
 }
 
 angular.module('mojrokovnik.login', [])
         .directive('mrLogin', mrLogin)
-        .controller('mrLoginCtrl', mrLoginCtrl);
+        .controller('mrLoginRegisterCtrl', mrLoginRegisterCtrl);

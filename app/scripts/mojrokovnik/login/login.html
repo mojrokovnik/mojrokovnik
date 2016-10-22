@@ -1,4 +1,4 @@
-<div mr-login class="login-page">
+<div class="container-fluid">
     <div class="logo">
         <img src="assets/images/logo.png" alt="mojrokovnik" />
     </div>
@@ -35,28 +35,39 @@
         </div>
 
         <div class="card alt">
-            <div class="toggle"></div>
+            <div class="toggle" ng-click="toggleRegister()"></div>
             <h1 class="title">Register
-                <div class="close"></div>
+                <div class="close" ng-click="closeRegister()"></div>
             </h1>
-            <form>
+            <form ng-submit="register()">
                 <div class="input-container">
-                    <input type="text" id="Username" required="required"/>
+                    <input type="text" id="Username" ng-model="register.username" required="required"/>
                     <label for="Username">Username</label>
                     <div class="bar"></div>
                 </div>
                 <div class="input-container">
-                    <input type="password" id="Password" required="required"/>
+                    <input type="text" id="Email" ng-model="register.email" required="required"/>
+                    <label for="Email">Email</label>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container">
+                    <input type="password" id="Password" ng-model="register.password" required="required"/>
                     <label for="Password">Password</label>
                     <div class="bar"></div>
                 </div>
                 <div class="input-container">
-                    <input type="password" id="Repeat Password" required="required"/>
+                    <input type="password" id="Repeat Password" ng-model="register.passwordRepeat" required="required"/>
                     <label for="Repeat Password">Repeat Password</label>
                     <div class="bar"></div>
                 </div>
                 <div class="button-container">
-                    <button type="submit"><span>Next</span></button>
+                    <button type="submit" ng-disabled="isLoading">
+                        <span>Next</span>
+                        <div class="spinner ng-animate-disabled" ng-show="isLoading">
+                            <div class="dot1"></div>
+                            <div class="dot2"></div>
+                        </div>
+                    </button>
                 </div>
             </form>
         </div>

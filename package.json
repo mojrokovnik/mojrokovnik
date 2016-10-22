@@ -20,15 +20,13 @@
     "grunt-usemin": "^3.1.1",
     "http-server": "^0.9.0",
     "jasmine-core": "^2.4.1",
-    "jasmine-spec-reporter": "^2.7.0",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.3",
     "karma-firefox-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.8",
     "karma-junit-reporter": "^0.4.1",
     "load-grunt-tasks": "^3.5.0",
-    "protractor": "^3.2.2",
-    "protractor-console": "^2.0.1"
+    "protractor": "^3.2.2"
   },
   "scripts": {
     "postinstall": "bower install",
