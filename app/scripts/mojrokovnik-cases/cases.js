@@ -1,3 +1,5 @@
+/* global _ */
+
 'use strict';
 
 casesCtrl.$inject = ['$scope', 'cases', 'clients', 'calendar', 'documents', 'modalDialog'];
@@ -216,7 +218,7 @@ function casesService($rootScope, api) {
     this.fetch = function () {
         return api('cases').fetch().then(function (cases) {
             if (!cases) {
-                return false;
+                return $rootScope.loading = false;
             }
 
             self.cases = cases;

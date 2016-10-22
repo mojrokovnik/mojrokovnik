@@ -131,7 +131,7 @@ function clientsService($rootScope, api) {
     this.fetch = function (type) {
         return api('clients/' + type).fetch().then(function (clients) {
             if (!clients) {
-                return false;
+                return $rootScope.loading = false;
             }
 
             self.clients[type] = clients;
