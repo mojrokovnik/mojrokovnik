@@ -15,7 +15,7 @@ install:
 
 before_script:
   - npm install
+  - grunt build
 
 script:
-  - npm start &
-  - npm run protractor
+  - (npm start > /dev/null &) && (npm run protractor)

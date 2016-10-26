@@ -40,13 +40,14 @@ function mrLoginRegisterCtrl($location, $scope, $rootScope, $cookies, api, authe
 
             authentification.getActiveUser().then(function (user) {
                 $scope.isLoading = false;
-                if (user) {
-                    $rootScope.loginPage = false;
-                    $cookies.putObject('user', user);
-                    return $location.url('/clients');
-                }
 
-                $scope.errorMsg = 'User is not activated!';
+                if (!user)
+                    return $scope.errorMsg = 'User is not activated!';
+
+                $rootScope.loginPage = false;
+                $cookies.putObject('user', user);
+
+                return $location.url('/clients');
             });
         });
     };
