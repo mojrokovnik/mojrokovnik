@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="mojrokovnik" class="no-js">
+<html lang="en" class="no-js">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,8 +25,8 @@
         <link rel="stylesheet" href="../.tmp/style.css">
         <!-- endbuild -->
     </head>
-    <body>
-        <div id="main-container" ng-if="!loginPage">
+    <body ng-app="mojrokovnik">
+        <div id="main-container" ng-if="!loginPage" livechat="580f199b277fb7280da7866d">
             <nav id="nav-container" mr-main-navigation></nav>
             <div id="content-container" ng-view></div>
         </div>
@@ -57,6 +57,9 @@
 
         <!-- build:js js/app.js -->
         <script src="scripts/config.js"></script>
+        <script src="scripts/mojrokovnik/livechat/livechat.service.js"></script>
+        <script src="scripts/mojrokovnik/livechat/livechat.directive.js"></script>
+        <script src="scripts/mojrokovnik/api/api.js"></script>
         <script src="scripts/mojrokovnik/api/api.js"></script>
         <script src="scripts/mojrokovnik/api/token_service.js"></script>
         <script src="scripts/mojrokovnik/login/login.js"></script>

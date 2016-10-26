@@ -1,6 +1,6 @@
 module.exports = function (config) {
     config.set({
-        basePath: './app',
+        basePath: './dist',
         files: [
         ],
         autoWatch: true,
@@ -16,6 +16,5 @@ module.exports = function (config) {
             outputFile: 'test_out/unit.xml',
             suite: 'unit'
         }
-
     });
 };
