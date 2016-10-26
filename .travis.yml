@@ -17,4 +17,5 @@ before_script:
   - npm install
 
 script:
-  - (npm start > /dev/null &) && (npm run protractor)
+  - npm start &
+  - npm run protractor

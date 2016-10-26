@@ -5,10 +5,6 @@
 describe('mojrokovnik', function () {
 
     it('can login with default credentials', function () {
-        browser.get('#/login');
-
-        browser.sleep(5000);
-
         element(by.model('username')).sendKeys('admin');
         element(by.model('password')).sendKeys('admin');
         element(by.id('login-btn')).click();
