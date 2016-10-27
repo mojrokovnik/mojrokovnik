@@ -5,7 +5,7 @@
 casesCtrl.$inject = ['$scope', 'cases', 'clients', 'calendar', 'documents', 'modalDialog'];
 function casesCtrl($scope, cases, clients, calendar, documents, modalDialog) {
     $scope.cases = {};
-    $scope.caseType = 'individuals';
+    $scope.caseType = 'legals';
 
     function updateCases() {
         $scope.cases = cases.getCases($scope.caseType);
@@ -36,6 +36,8 @@ function casesCtrl($scope, cases, clients, calendar, documents, modalDialog) {
     $scope.pickCase = function (_case) {
         if (_case) {
             $scope.selected = _case;
+
+            updateAssets();
         }
     };
 
@@ -45,6 +47,13 @@ function casesCtrl($scope, cases, clients, calendar, documents, modalDialog) {
 
     $scope.getDocuments = function (_case) {
         return _case ? documents.getDocuments(_case) : false;
+    };
+
+    $scope.generateCaseName = function (_case) {
+        var client = _.findWhere($scope.clients, {id: _case.client_legal || _case.client_individual});
+        var _client = client.company_name ? client.company_name : client.name + ' ' + client.surname;
+
+        $scope.newcase.name = _client + ' / ' + (_case.rival_name || '') + ' ' + (_case.rival_surname || '') + ' / ' + (_case.type || '');
     };
 
     $scope.previewCase = function (_case) {
@@ -85,7 +94,7 @@ function casesCtrl($scope, cases, clients, calendar, documents, modalDialog) {
 
         $scope._edit = false;
         $scope._preview = false;
-        $scope.newcase = [];
+        $scope.newcase = {};
 
         if (_client && _client.company_name) {
             $scope.newcase.client_legal = _client.id;

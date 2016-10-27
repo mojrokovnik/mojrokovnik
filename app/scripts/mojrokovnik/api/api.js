@@ -26,7 +26,7 @@ function apiService($q, $http, $cookies, $location, notify, token) {
 
     function errorCallback(response) {
         switch (response.status) {
-            case -1:
+            case - 1:
                 return {status: 408, statusText: "Request Timeout"};
                 break;
 
@@ -37,6 +37,8 @@ function apiService($q, $http, $cookies, $location, notify, token) {
                 break;
         }
 
+        notify.error(response.data.error.message);
+        console.log(response.data.error.message);
         return response;
     }
 

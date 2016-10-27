@@ -8,7 +8,7 @@
         <div class="col-md-12" ng-show="caseType === 'individuals'">
             <md-input-container>
                 <label translate>Klijent</label>
-                <md-select ng-model="newcase.client_individual" ng-disabled="_preview">
+                <md-select ng-model="newcase.client_individual" ng-change="generateCaseName(newcase)" ng-disabled="_preview">
                     <md-option ng-repeat="client in clients" ng-value="client.id">{{client.name}} {{client.surname}}</md-option>
                 </md-select>
             </md-input-container>
@@ -16,7 +16,7 @@
         <div class="col-md-12" ng-show="caseType === 'legals'">
             <md-input-container>
                 <label translate>Klijent</label>
-                <md-select ng-model="newcase.client_legal" ng-disabled="_preview">
+                <md-select ng-model="newcase.client_legal" ng-change="generateCaseName(newcase)" ng-disabled="_preview">
                     <md-option ng-repeat="client in clients" ng-value="client.id">{{client.company_name}}</md-option>
                 </md-select>
             </md-input-container>
@@ -34,13 +34,13 @@
         <div class="col-md-4">
             <md-input-container>
                 <label translate>Ime suprotne strane</label>
-                <input type="text" ng-model="newcase.rival_name" ng-disabled="_preview" required>
+                <input type="text" ng-model="newcase.rival_name" ng-disabled="_preview" ng-change="generateCaseName(newcase)" required>
             </md-input-container>
         </div>
         <div class="col-md-4">
             <md-input-container>
                 <label translate>Prezime suprotne strane</label>
-                <input type="text" ng-model="newcase.rival_surname" ng-disabled="_preview">
+                <input type="text" ng-model="newcase.rival_surname" ng-change="generateCaseName(newcase)" ng-disabled="_preview">
             </md-input-container>
         </div>
     </div>
@@ -48,7 +48,7 @@
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Vrsta</label>
-                <md-select ng-model="newcase.type" ng-disabled="_preview">
+                <md-select ng-model="newcase.type" ng-disabled="_preview" ng-change="generateCaseName(newcase)" required>
                     <md-option ng-repeat="caseType in defaultData.caseType" value="{{caseType}}">{{caseType}}</md-option>
                 </md-select>
             </md-input-container>

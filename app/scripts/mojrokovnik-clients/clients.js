@@ -1,9 +1,11 @@
+/* global _ */
+
 'use strict';
 
 clientsCtrl.$inject = ['$scope', 'clients', 'cases', 'calendar', 'modalDialog'];
 function clientsCtrl($scope, clients, cases, calendar, modalDialog) {
     $scope.clients = {};
-    $scope.clientType = 'individuals';
+    $scope.clientType = 'legals';
 
     function updateClients() {
         $scope.clients[$scope.clientType] = clients.getClients($scope.clientType);
@@ -17,7 +19,7 @@ function clientsCtrl($scope, clients, cases, calendar, modalDialog) {
 
     function updateAssets() {
         $scope.agenda = $scope.selected ? $scope.getAgenda($scope.selected.id) : [];
-        $scope.cases = $scope.selected ? $scope.getCases($scope.selected.id) : [];
+        $scope._cases = $scope.selected ? $scope.getCases($scope.selected.id) : [];
     }
 
     $scope.switchType = function (type) {
@@ -28,9 +30,11 @@ function clientsCtrl($scope, clients, cases, calendar, modalDialog) {
     };
 
     $scope.pickClient = function (client) {
-        if (client) {
-            $scope.selected = client;
-        }
+        if (!client)
+            return false;
+
+        $scope.selected = client;
+        updateAssets();
     };
 
     $scope.getCases = function (client) {

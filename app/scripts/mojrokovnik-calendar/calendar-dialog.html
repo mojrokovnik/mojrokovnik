@@ -28,7 +28,9 @@
             <md-input-container>
                 <label translate>Klijent</label>
                 <md-select ng-model="_calendar.client" ng-change="parseClient(_calendar.client)">
-                    <md-option ng-repeat="_client in clients" ng-value="_client">{{_client.name ? _client.name : _client.company_name}} {{_client.surname}}</md-option>
+                    <md-option ng-repeat="_client in clients" ng-value="_client" ng-selected="_client.id === _calendar._client.id && _client.name === _calendar._client.name">
+                        {{_client.name ? _client.name : _client.company_name}} {{_client.surname}}
+                    </md-option>
                 </md-select>
             </md-input-container>
         </div>
@@ -58,7 +60,7 @@
     <div class="row">
         <div class="col-md-12">
             <md-input-container>
-                <label translate>Detaljan opis</label>
+                <label translate>Komentar</label>
                 <input type="text" ng-model="_calendar.comment">
             </md-input-container>
         </div>

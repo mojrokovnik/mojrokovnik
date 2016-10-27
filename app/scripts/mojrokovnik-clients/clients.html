@@ -5,13 +5,17 @@
     </div>
 
     <div class="loader ng-animate-disabled" ng-show="$root.loading">Loading...</div>
+    <div class="sidenav-item--container">
 
-    <div class="sidenav-item ng-animate-disabled" ng-repeat="client in clients[clientType] track by client.id" ng-class="{active: client.id === selected.id}" ng-click="pickClient(client)">
-        {{client.name}} {{client.surname}} {{client.company_name}}
-        <span class="detail-info">
-            <i ng-if="client.city">{{client.city}}</i>
-            <i ng-if="client.state">, {{client.state}}</i>
-        </span>
+        <div class="sidenav-item--no-item" ng-if="!clients[clientType].length" translate>Trenutno nema klijenata</div>
+
+        <div class="sidenav-item ng-animate-disabled" ng-repeat="client in clients[clientType] track by client.id" ng-class="{active: client.id === selected.id}" ng-click="pickClient(client)">
+            {{client.name}} {{client.surname}} {{client.company_name}}
+            <span class="detail-info">
+                <i ng-if="client.city">{{client.city}}</i>
+                <i ng-if="client.state">, {{client.state}}</i>
+            </span>
+        </div>
     </div>
     <button class="btn btn--orange" ng-click="addClient()">
         <i class="icon-add-client"></i>
@@ -26,7 +30,11 @@
     <div class="content-shortinfo">
         <div class="name-info" ng-if="selected">
             {{selected.name}} {{selected.surname}} {{selected.company_name}}
-            <div class="address-info">{{selected.address}}, {{selected.city}}, {{selected.state}}</div>
+            <div class="address-info">
+                <span ng-if="selected.address">{{selected.address}},</span>
+                <span ng-if="selected.city">{{selected.city}},</span>
+                <span ng-if="selected.state">{{selected.state}}</span>
+            </div>
         </div>
         <div class="btn-group btn-group--inline pull-right" ng-if="selected">
             <button class="btn btn--rounded btn--dark" ng-click="editClient(selected)" translate>Izmeni podatke</button>
@@ -41,49 +49,55 @@
                 <label class="label--info" translate>Nijedan klijent nije izabran</label>
             </div>
             <div class="content-details" ng-if="selected">
-                <div class="columns-two">
-                    <div class="column">
+                <div class="columns-two" ng-show="selected.vat || selected.company_number">
+                    <div class="column" ng-show="selected.vat">
                         <label translate>PIB</label>
                         {{selected.vat}}
                     </div>
-                    <div class="column">
+                    <div class="column" ng-show="selected.company_number">
                         <label translate>Matični broj</label>
                         {{selected.company_number}}
                     </div>
                 </div>
-                <div class="column">
+                <div class="columns-two" ng-show="selected.phone || selected.account_number">
+                    <div class="column" ng-show="selected.phone">
+                        <label translate>Telefon</label>
+                        {{selected.phone}}
+                    </div>
+                    <div class="column" ng-show="selected.account_number">
+                        <label translate>Tekući račun</label>
+                        {{selected.account_number}}
+                    </div>
+                </div>
+                <div class="column" ng-show="selected.email">
+                    <label translate>Email</label>
+                    {{selected.email}}
+                </div>
+                <div class="column" ng-show="selected.attorney_name">
                     <label translate>Pravni zastupnik</label>
                     {{selected.attorney_name}}
                 </div>
-                <div class="columns-two">
-                    <div class="column">
+                <div class="columns-two" ng-show="selected.attorney_phone || selected.attorney_address">
+                    <div class="column" ng-show="selected.attorney_phone">
                         <label translate>Telefon zastupnika</label>
                         {{selected.attorney_phone}}
                     </div>
-                    <div class="column">
+                    <div class="column" ng-show="selected.attorney_address">
                         <label translate>Adresa zastupnika</label>
-                        {{selected.phone}}
+                        {{selected.attorney_address}}
                     </div>
                 </div>
-                <div class="columns-two">
-                    <div class="column">
+                <div class="columns-two" ng-show="selected.attorney_city || selected.attorney_state">
+                    <div class="column" ng-show="selected.attorney_city">
                         <label translate>Grad zastupnika</label>
                         {{selected.attorney_city}}
                     </div>
-                    <div class="column">
+                    <div class="column" ng-show="selected.attorney_state">
                         <label translate>Država zastupnika</label>
                         {{selected.attorney_state}}
                     </div>
                 </div>
-                <div class="column">
-                    <label translate>Email</label>
-                    {{selected.email}}
-                </div>
-                <div class="column">
-                    <label translate>Tekući račun</label>
-                    {{selected.account_number}}
-                </div>
-                <div class="column">
+                <div class="column" ng-show="selected.comment">
                     <label translate>Komentar</label>
                     {{selected.comment}}
                 </div>
@@ -96,35 +110,35 @@
                 <label class="label--info" translate>Nijedan klijent nije izabran</label>
             </div>
             <div class="content-details" ng-if="selected">
-                <div class="columns-two">
-                    <div class="column">
+                <div class="columns-two" ng-show="selected.citizenship || selected.phone">
+                    <div class="column" ng-show="selected.citizenship">
                         <label translate>Državljanstvo</label>
                         {{selected.citizenship}}
                     </div>
-                    <div class="column">
+                    <div class="column" ng-show="selected.phone">
                         <label translate>Telefon</label>
                         {{selected.phone}}
                     </div>
                 </div>
-                <div class="column">
+                <div class="column" ng-show="selected.email">
                     <label translate>Email</label>
                     {{selected.email}}
                 </div>
-                <div class="columns-two">
-                    <div class="column">
+                <div class="columns-two" ng-show="selected.social_number || selected.id_number">
+                    <div class="column" ng-show="selected.social_number">
                         <label translate>JMBG</label>
                         {{selected.social_number}}
                     </div>
-                    <div class="column">
+                    <div class="column" ng-show="selected.id_number">
                         <label translate>Br. Lične karte</label>
                         {{selected.id_number}}
                     </div>
                 </div>
-                <div class="column">
+                <div class="column" ng-show="selected.account_number">
                     <label translate>Tekući račun</label>
                     {{selected.account_number}}
                 </div>
-                <div class="column">
+                <div class="column" ng-show="selected.comment">
                     <label translate>Komentar</label>
                     {{selected.comment}}
                 </div>
@@ -134,22 +148,22 @@
         <div class="content-right">
             <div class="content-heading" ng-controller="casesCtrl">
                 {{ :: 'Predmeti' | translate }}
-                <div class="content-heading--actions">
+                <div class="content-heading--actions" ng-show="selected">
                     <a ng-click="addCase(selected)"><i class="fa fa-plus-square-o"></i></a>
                 </div>
             </div>
             <div class="content-details" ng-controller="casesCtrl">
-                <div class="column" ng-if="!cases.length">
+                <div class="column" ng-if="!_cases.length">
                     <label class="label--info">Trenutno nema predmeta za izabranog klijenta.</label>
                 </div>
-                <div class="column" ng-repeat="_case in cases track by _case.id">
+                <div class="column" ng-repeat="_case in _cases track by _case.id">
                     <label><a ng-click="previewCase(_case)">{{_case.name}}</a></label>
                 </div>
             </div>
 
             <div class="content-heading" ng-controller="calendarCtrl">
                 {{ :: 'Agenda' | translate }}
-                <div class="content-heading--actions">
+                <div class="content-heading--actions" ng-show="selected">
                     <a ng-click="addCalendar(null, selected)"><i class="fa fa-plus-square-o"></i></a>
                 </div>
             </div>

@@ -23,7 +23,7 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
                 color: item.type === 'Obaveza' ? '#ffad46' : '#f83a22',
                 stick: true,
                 cases: item.cases ? item.cases.id : '',
-                client: item.client_legal && item.client_individual && '',
+                client: item.client_legal || item.client_individual || '',
                 active: item.active
             });
         });
@@ -85,7 +85,7 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
         }
     };
 
-    $scope.addCalendar = function (event, _case) {
+    $scope.addCalendar = function (event, subject) {
         var params = {
             scope: $scope,
             templateUrl: 'assets/templates/calendar-dialog.html'
@@ -101,10 +101,15 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
             $scope._calendar = event;
         }
 
-        if (_case) {
+        if (subject && subject.element) {
             $scope._calendar = {
                 type: 'Ročište',
-                cases: _case.id
+                cases: subject.id
+            };
+        } else if (subject) {
+            $scope._calendar = {
+                type: 'Obaveza',
+                _client: subject
             };
         }
 
@@ -159,9 +164,11 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
     };
 
     $scope.parseClient = function (client) {
-        if (client.company_name) {
+        if (!client)
+            return false;
+
+        if (client.company_name)
             return $scope._calendar.client_legal = client.id;
-        }
 
         return $scope._calendar.client_individual = client.id;
     };
@@ -175,7 +182,7 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
             duration: event.end ? event.end.diff(event.start, 'minutes') : 0,
             comment: event.comment,
             cases: event.cases,
-            client: event.client,
+            _client: event.client,
             active: event.active
         };
     }
@@ -278,5 +285,5 @@ angular.module('mojrokovnik.calendar', [
     'ui.bootstrap',
     'ui.calendar'
 ])
-        .service('calendar', calendarService)
-        .controller('calendarCtrl', calendarCtrl);
+.service('calendar', calendarService)
+.controller('calendarCtrl', calendarCtrl);

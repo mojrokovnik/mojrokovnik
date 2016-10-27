@@ -6,12 +6,17 @@
 
     <div class="loader ng-animate-disabled" ng-show="$root.loading">Loading...</div>
 
-    <div class="sidenav-item ng-animate-disabled" ng-repeat="_case in cases track by _case.id"
-         ng-class="{active: _case.id === selected.id}" ng-click="pickCase(_case)">
-        {{_case.legal_council}} - {{_case.legal_label}} / {{_case.legal_number}}
-        <span class="detail-info" title="{{_case.name}}">
-            <i>{{_case.name}}</i>
-        </span>
+    <div class="sidenav-item--container">
+
+        <div class="sidenav-item--no-item" ng-if="!cases.length" translate>Trenutno nema predmeta</div>
+
+        <div class="sidenav-item ng-animate-disabled" ng-repeat="_case in cases track by _case.id"
+             ng-class="{active: _case.id === selected.id}" ng-click="pickCase(_case)">
+            {{_case.legal_council + ' - ' + _case.legal_label + ' / ' + _case.legal_number}}
+            <span class="detail-info" title="{{_case.name}}">
+                <i>{{_case.name}}</i>
+            </span>
+        </div>
     </div>
     <button class="btn btn--orange" ng-click="addCase()">
         <i class="icon-add-client"></i>
@@ -25,7 +30,7 @@
     </div>
     <div class="content-shortinfo">
         <div class="name-info" ng-if="selected">
-            {{selected.legal_council}} - {{selected.legal_label}} / {{selected.legal_number}}
+            {{_case.legal_council + ' - ' + _case.legal_label + ' / ' + _case.legal_number}}
             <div class="address-info">{{selected.name}}</div>
         </div>
         <div class="btn-group btn-group--inline pull-right" ng-if="selected">
@@ -44,51 +49,51 @@
                     <label translate>Suprotna strana</label>
                     {{selected.rival_type}} {{selected.rival_name}} {{selected.rival_surname}}
                 </div>
-                <div class="columns-two">
-                    <div class="column">
+                <div class="columns-two" ng-show="selected.type || selected.element">
+                    <div class="column" ng-show="selected.type">
                         <label translate>Vrsta</label>
                         {{selected.type}}
                     </div>
-                    <div class="column">
+                    <div class="column" ng-show="selected.element">
                         <label translate>Osnov</label>
                         {{selected.element}}
                     </div>
                 </div>
-                <div class="column">
+                <div class="column" ng-show="selected.legal_council || selected.legal_label || selected.legal_number">
                     <label translate>Poslovni broj</label>
                     {{selected.legal_council}} - {{selected.legal_label}} / {{selected.legal_number}}
                 </div>
-                <div class="columns-two">
-                    <div class="column">
+                <div class="columns-two" ng-show="selected.internal_number || selected.supervisor">
+                    <div class="column" ng-show="selected.internal_number">
                         <label translate>Interni broj predmeta</label>
                         {{selected.internal_number}}
                     </div>
-                    <div class="column">
+                    <div class="column" ng-show="selected.supervisor">
                         <label translate>Nadležni organ</label>
                         {{selected.supervisor}}
                     </div>
                 </div>
-                <div class="columns-two">
-                    <div class="column">
+                <div class="columns-two" ng-show="selected.court_number || selected.judge">
+                    <div class="column" ng-show="selected.court_number">
                         <label translate>Broj sudnice / Sobe</label>
                         {{selected.court_number}}
                     </div>
-                    <div class="column">
+                    <div class="column" ng-show="selected.judge">
                         <label translate>Sudija / Tužilac</label>
                         {{selected.judge}}
                     </div>
                 </div>
-                <div class="columns-two">
-                    <div class="column">
+                <div class="columns-two" ng-show="selected.value || selected.status">
+                    <div class="column" ng-show="selected.value">
                         <label translate>Vrednost spora</label>
                         {{selected.value}}
                     </div>
-                    <div class="column">
+                    <div class="column" ng-show="selected.status">
                         <label translate>Status predmeta</label>
                         {{selected.status}}
                     </div>
                 </div>
-                <div class="column">
+                <div class="column" ng-show="selected.comment">
                     <label translate>Komentar</label>
                     {{selected.comment}}
                 </div>
@@ -98,7 +103,7 @@
         <div class="content-right">
             <div class="content-heading" ng-controller="calendarCtrl">
                 {{ :: 'Agenda' | translate }}
-                <div class="content-heading--actions">
+                <div class="content-heading--actions" ng-show="selected">
                     <a ng-click="addCalendar(null, selected)"><i class="fa fa-plus-square-o"></i></a>
                 </div>
             </div>
@@ -113,7 +118,7 @@
 
             <div class="content-heading" ng-controller="documentsCtrl">
                 {{ :: 'Dokumenta' | translate }}
-                <div class="content-heading--actions">
+                <div class="content-heading--actions" ng-show="selected">
                     <a ng-click="addDocument(selected)"><i class="fa fa-plus-square-o"></i></a>
                 </div>
             </div>

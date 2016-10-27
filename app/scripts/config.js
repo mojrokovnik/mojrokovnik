@@ -22,6 +22,7 @@ angular.module('mojrokovnik', [
     'ngCookies',
     'ngAnimate',
     'pascalprecht.translate',
+    'mojrokovnik.livechat',
     'mojrokovnik.api',
     'mojrokovnik.api.token',
     'mojrokovnik.login',

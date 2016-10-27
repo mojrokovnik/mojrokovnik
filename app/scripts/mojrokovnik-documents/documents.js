@@ -32,7 +32,7 @@ function documentsCtrl($scope, documents, modalDialog) {
 
         $scope._edit = false;
         $scope._preview = false;
-        delete $scope.document;
+        $scope.document = {};
 
         modal = modalDialog.showModal(params);
 

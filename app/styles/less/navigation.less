@@ -79,7 +79,7 @@
                 opacity: 1;
             }
         }
-        
+
         &:focus {
             outline: none;
         }
@@ -89,6 +89,19 @@
 .sidenav-section {
     background-color: @mr-blue;
     height: 100vh;
+
+    .sidenav-item--container {
+        overflow: auto;
+        height: calc(~'100% - 114px');
+    }
+
+    .sidenav-item--no-item {
+        font-size: 14px;
+        line-height: 20px;
+        padding: 25px 0;
+        text-align: center;
+        color: #384459;
+    }
 
     .sidenav-item {
         font-size: 13px;

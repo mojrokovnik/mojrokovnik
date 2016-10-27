@@ -9,6 +9,7 @@ function editorDirective() {
                 return;
 
             var editor = new MediumEditor(element, {
+                buttonLabels: 'fontawesome',
                 toolbar: {
                     relativeContainer: element.parent()[0],
                     buttons: ['h1', 'h2', 'h3', 'bold', 'italic', 'underline', 'orderedlist', 'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
