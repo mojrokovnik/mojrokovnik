@@ -27,18 +27,23 @@ function apiService($q, $http, $cookies, $location, notify, token) {
     function errorCallback(response) {
         switch (response.status) {
             case - 1:
+                notify.error('Request Timeout');
                 return {status: 408, statusText: "Request Timeout"};
                 break;
 
             case 401:
+                notify.error(response.data.error_description);
                 $cookies.remove('token');
                 $cookies.remove('user');
                 $location.url('/login');
                 break;
+
+            default:
+                if (response.data.error.message)
+                    notify.error(response.data.error.message);
+                break;
         }
 
-        notify.error(response.data.error.message);
-        console.log(response.data.error.message);
         return response;
     }
 
