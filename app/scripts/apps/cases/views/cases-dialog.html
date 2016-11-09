@@ -1,0 +1,123 @@
+<div class="modal-header">
+    <h3 class="modal-title" ng-if="!_preview" translate>{{_edit ? 'Izmeni predmet' : 'Dodaj predmet'}}</h3>
+    <h3 class="modal-title" ng-if="_preview" translate>{{_ncase.name}}</h3>
+</div>
+
+<div class="modal-body">
+    <div class="row" ng-if="!_preview">
+        <div class="col-md-12" ng-show="caseType === 'individuals'">
+            <mr-typeahead data-model="_ncase.client_individual" data-items="clients" data-field="name, surname" data-label="Klijent" data-onchange="generateCaseName(_ncase)" required="true"></mr-typeahead>
+        </div>
+        <div class="col-md-12" ng-show="caseType === 'legals'">
+            <mr-typeahead model="_ncase.client_legal" items="clients" field="company_name" data-label="Klijent" data-onchange="generateCaseName(_ncase)" required="true"></mr-typeahead>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <mr-typeahead data-model="_ncase.rival_type" data-items="defaultData.rivalType" data-label="Tip suprotne strane"></mr-typeahead>
+        </div>
+        <div class="col-md-4">
+            <md-input-container>
+                <label translate>Ime suprotne strane</label>
+                <input type="text" ng-model="_ncase.rival_name" ng-disabled="_preview" ng-change="generateCaseName(_ncase)" required>
+            </md-input-container>
+        </div>
+        <div class="col-md-4">
+            <md-input-container>
+                <label translate>Prezime suprotne strane</label>
+                <input type="text" ng-model="_ncase.rival_surname" ng-change="generateCaseName(_ncase)" ng-disabled="_preview">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <mr-typeahead model="_ncase.type" items="defaultData.caseType" label="Vrsta" data-onchange="generateCaseName(_ncase)" required="true"></mr-typeahead>
+        </div>
+        <div class="col-md-6">
+            <mr-typeahead model="_ncase.element" items="defaultData.caseElement" label="Bliže određenje predmeta / Osnov" required="true"></mr-typeahead>
+        </div>
+    </div>
+    <div class="row" ng-if="!_preview">
+        <div class="col-md-12">
+            <md-input-container>
+                <label translate>Jedinstveni naziv predmeta</label>
+                <input type="text" ng-model="_ncase.name" required>
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <md-input-container>
+                <label translate>Poslovni broj (veće)</label>
+                <input type="text" ng-model="_ncase.legal_council" ng-disabled="_preview">
+            </md-input-container>
+        </div>
+        <div class="col-md-4">
+            <md-input-container>
+                <label translate>Poslovni broj (oznaka)</label>
+                <input type="text" ng-model="_ncase.legal_label" ng-disabled="_preview">
+            </md-input-container>
+        </div>
+        <div class="col-md-4">
+            <md-input-container>
+                <label translate>Poslovni broj (broj)</label>
+                <input type="text" ng-model="_ncase.legal_number" ng-disabled="_preview">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Status predmeta</label>
+                <input type="text" ng-model="_ncase.status" ng-disabled="_preview">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Vrednost spora</label>
+                <input type="text" ng-model="_ncase.value" ng-disabled="_preview">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Interni broj predmeta</label>
+                <input type="text" ng-model="_ncase.internal_number" ng-disabled="_preview" required>
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Nadležni organ</label>
+                <input type="text" ng-model="_ncase.supervisor" ng-disabled="_preview">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Broj sudnice / Sobe</label>
+                <input type="text" ng-model="_ncase.court_number" ng-disabled="_preview">
+            </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <md-input-container>
+                <label translate>Sudija / Tužilac</label>
+                <input type="text" ng-model="_ncase.judge" ng-disabled="_preview">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row" ng-if="!_ncase.comment && !_preview">
+        <div class="col-md-12">
+            <md-input-container>
+                <label translate>Komentar</label>
+                <textarea ng-model="_ncase.comment" ng-disabled="_preview"></textarea>
+            </md-input-container>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn--rounded btn--dark" type="button" ng-click="cancel()" translate>Odustani</button>
+    <button class="btn btn--rounded btn--orange" type="button" ng-click="save(_ncase)" ng-if="!_preview" translate>Sačuvaj predmet</button>
+</div>

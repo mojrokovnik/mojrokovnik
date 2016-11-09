@@ -127,12 +127,14 @@ md-input-container {
 }
 
 // ANGULAR MATERIAL FIXES
-.md-select-menu-container {
-    z-index: 2001;
+.md-select-menu-container,
+.md-autocomplete-suggestions-container {
+    z-index: 2001 !important;
 }
 
 // ANGULAR TOAST DEFINITIONS
 ._md {
+    line-height: 65px;
     &.success {
         .md-toast-content {
             background-color: #0CB976;

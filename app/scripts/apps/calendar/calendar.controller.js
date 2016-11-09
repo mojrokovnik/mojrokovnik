@@ -1,9 +1,9 @@
 /* global moment, _ */
-
 'use strict';
 
 calendarCtrl.$inject = ['$scope', 'modalDialog', 'calendar', 'cases', 'clients'];
 function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
+    var modal;
     $scope.types = ['Ročište', 'Obaveza'];
     $scope.calendars = [];
 
@@ -22,7 +22,7 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
                 comment: item.comment,
                 color: item.type === 'Obaveza' ? '#ffad46' : '#f83a22',
                 stick: true,
-                cases: item.cases ? item.cases.id : '',
+                cases: item.cases,
                 client: item.client_legal || item.client_individual || '',
                 active: item.active
             });
@@ -68,8 +68,9 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
         editable: true,
         eventLimit: true,
         theme: true,
+        defaultTimedEventDuration: '00:15:00',
         eventClick: function (event) {
-            $scope.editCalendar(getItem(event, true));
+            $scope.previewCalendar(getItem(event, true));
         },
         eventResize: function (event) {
             calendar.update(getItem(event));
@@ -85,6 +86,24 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
         }
     };
 
+    $scope.previewCalendar = function (calendar) {
+        var params = {
+            scope: $scope,
+            templateUrl: 'assets/templates/calendar-dialog.html'
+        };
+
+        $scope._edit = false;
+        $scope._preview = true;
+        $scope._calendar = calendar;
+
+        modal = modalDialog.showModal(params);
+
+        $scope.cancel = function () {
+            delete $scope._calendar;
+            modal.close();
+        };
+    };
+
     $scope.addCalendar = function (event, subject) {
         var params = {
             scope: $scope,
@@ -94,7 +113,8 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
         updateClients();
         updateCases();
 
-        $scope.editMode = false;
+        $scope._edit = false;
+        $scope._preview = false;
         delete $scope._calendar;
 
         if (event) {
@@ -113,7 +133,7 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
             };
         }
 
-        var modal = modalDialog.showModal(params);
+        modal = modalDialog.showModal(params);
 
         $scope.save = function (_calendar) {
             calendar.add(_calendar).then(function () {
@@ -140,10 +160,12 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
             calendars.datetime = moment(calendars.datetime).format('DD-MM-YYYY HH:mm');
         }
 
-        $scope.editMode = true;
+        $scope._edit = true;
         $scope._calendar = calendars;
 
-        var modal = modalDialog.showModal(params);
+        $scope._preview ?
+                $scope._preview = false :
+                modal = modalDialog.showModal(params);
 
         $scope.save = function (_calendar) {
             calendar.update(_calendar).then(function () {
@@ -163,16 +185,6 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
         };
     };
 
-    $scope.parseClient = function (client) {
-        if (!client)
-            return false;
-
-        if (client.company_name)
-            return $scope._calendar.client_legal = client.id;
-
-        return $scope._calendar.client_individual = client.id;
-    };
-
     function getItem(event, parse) {
         return {
             id: event.id,
@@ -182,7 +194,7 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
             duration: event.end ? event.end.diff(event.start, 'minutes') : 0,
             comment: event.comment,
             cases: event.cases,
-            _client: event.client,
+            client: event.client,
             active: event.active
         };
     }
@@ -190,100 +202,5 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
     $scope.$on('calendars:updated', updateCalendars);
 }
 
-calendarService.$inject = ['$rootScope', 'api'];
-function calendarService($rootScope, api) {
-    console.warn('Calendar Service initialized');
-
-    var self = this;
-
-    this.calendars = [];
-
-    this.getCalendars = function () {
-        var filteredList = _.where(self.calendars, {active: 1});
-
-        return _.sortBy(filteredList, 'id');
-    };
-
-    this.getCalendarsByClient = function (type, id) {
-        var list = self.getCalendars();
-        type = type.slice(0, -1);
-
-        var filteredList = _.filter(list, function (obj) {
-            return obj['client_' + type] &&
-                    obj['client_' + type].id === id &&
-                    moment(obj.datetime).isAfter(moment());
-        });
-
-        return _.sortBy(filteredList, 'datetime');
-    };
-
-    this.getCalendarsByCase = function (id) {
-        var list = self.getCalendars();
-
-        var filteredList = _.filter(list, function (obj) {
-            return obj.cases && obj.cases.id === id &&
-                    moment(obj.datetime).isAfter(moment());
-        });
-
-        return _.sortBy(filteredList, 'datetime');
-    };
-
-    this.fetch = function () {
-        return api('calendars').fetch().then(function (calendars) {
-            if (!calendars) {
-                return false;
-            }
-
-            self.calendars = calendars;
-            $rootScope.$broadcast('calendars:updated');
-        });
-    };
-
-    this.add = function (calendar) {
-        return api('calendars').add(calendar).then(function (res) {
-            if (res.status !== 200) {
-                return false;
-            }
-
-            self.calendars.push(res.calendar);
-
-            $rootScope.$broadcast('calendars:updated');
-        });
-    };
-
-    this.update = function (calendar) {
-        return api('calendars').update(calendar).then(function (res) {
-            if (res.status !== 200) {
-                return false;
-            }
-
-            self.calendars = _.reject(self.calendars, {id: calendar.id});
-            self.calendars.push(res.calendar);
-
-            $rootScope.$broadcast('calendars:updated');
-        });
-    };
-
-    this.remove = function (calendar) {
-        return api('calendars').delete(calendar).then(function (res) {
-            if (res.status !== 200) {
-                return false;
-            }
-
-            self.calendars = _.reject(self.calendars, {id: calendar.id});
-
-            $rootScope.$broadcast('calendars:updated');
-        });
-    };
-
-    // Fetch calendars on service initialization
-    this.fetch();
-}
-
-angular.module('mojrokovnik.calendar', [
-    'ngMaterial',
-    'ui.bootstrap',
-    'ui.calendar'
-])
-.service('calendar', calendarService)
-.controller('calendarCtrl', calendarCtrl);
+angular.module('mojrokovnik.calendar')
+        .controller('calendarCtrl', calendarCtrl);

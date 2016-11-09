@@ -1,0 +1,65 @@
+<div class="modal-header">
+    <h3 class="modal-title" ng-if="!_preview" translate>{{_edit ? 'Izmeni obavezu' : 'Dodaj obavezu'}}</h3>
+    <h3 class="modal-title" ng-if="_preview">
+        {{_calendar.type}} {{_calendar.datetime| datetime:"Do MMMM YYYY HH:mm"}}{{_calendar.duration ? ', ' : ''}}
+        {{_calendar.duration|| ''}} {{_calendar.duration ? ('minuta' | translate) : ''}}
+    </h3>
+</div>
+<div class="modal-body">
+    <div class="row" ng-show="!_preview">
+        <div class="col-md-12">
+            <md-input-container>
+                <label translate>Tip obaveze</label>
+                <md-select ng-model="_calendar.type" required>
+                    <md-option ng-repeat="_type in types" value="{{_type}}">{{_type}}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row" ng-show="_calendar.type === 'Ročište'&& !_preview">
+        <div class="col-md-12">
+            <mr-typeahead model="_calendar.cases" items="cases" field="name" data-label="Predmet" required="true"></mr-typeahead>
+        </div>
+    </div>
+    <div class="row" ng-show="_calendar.type === 'Obaveza' && !_preview">
+        <div class="col-md-12">
+            <mr-typeahead model="_calendar.client" items="clients" field="name, surname, company_name" data-label="Klijent" required="true"></mr-typeahead>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <md-input-container>
+                <label translate>Naziv obaveze</label>
+                <input type="text" ng-model="_calendar.name" ng-disabled="_preview" required>
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row" ng-if="!_preview">
+        <div class="col-md-8">
+            <md-input-container>
+                <label translate>Datum</label>
+                <input type="text" mr-datetime-picker ng-model="_calendar.datetime" ng-disabled="_preview" required>
+            </md-input-container>
+        </div>
+        <div class="col-md-4">
+            <md-input-container>
+                <label translate>Trajanje</label>
+                <input type="number" ng-model="_calendar.duration" ng-disabled="_preview">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row" ng-hide="_preview && !_calendar.comment">
+        <div class="col-md-12">
+            <md-input-container>
+                <label translate>Komentar</label>
+                <input type="text" ng-model="_calendar.comment" ng-disabled="_preview">
+            </md-input-container>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn--rounded btn--dark" type="button" ng-click="cancel()" translate>Otkaži</button>
+    <button class="btn btn--rounded btn--danger" type="button" ng-click="remove(_calendar)" translate>Obriši</button>
+    <button class="btn btn--rounded btn--orange" type="button" ng-click="editCalendar(_calendar)" ng-if="_preview" translate>Izmeni</button>
+    <button class="btn btn--rounded btn--orange" type="button" ng-click="save(_calendar)" ng-if="!_preview" translate>Sačuvaj</button>
+</div>

@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h3 class="modal-title" ng-if="!_preview" translate>{{_edit ? 'Izmeni dokument' : 'Dodaj dokument'}}</h3>
+    <h3 class="modal-title" ng-if="_preview" translate>{{document.name}}</h3>
+</div>
+
+<div class="modal-body">
+    <div class="row" ng-if="!_preview">
+        <div class="col-md-12">
+            <md-input-container>
+                <label translate>Naziv dokumenta</label>
+                <input type="text" ng-model="document.name" required>
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div mr-editor ng-model="document.content" ng-if="!_preview"></div>
+            <div ng-if="_preview" ng-bind-html="document.content"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn--rounded btn--dark" type="button" ng-click="cancel()" translate>Odustani</button>
+    <button class="btn btn--rounded btn--orange" type="button" ng-click="editDocument(_case, document)" ng-if="_preview" translate>Izmeni</button>
+    <button class="btn btn--rounded btn--orange" type="button" ng-click="save(document)" ng-if="!_preview" translate>Sačuvaj</button>
+</div>

@@ -9,15 +9,14 @@
         <link rel="icon" type="image/png" href="assets/images/favicon.png" />
 
         <!-- build:css css/vendor.min.css -->
-        <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css">
-        <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css">
+        <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="../bower_components/fullcalendar/dist/fullcalendar.min.css">
-        <link rel="stylesheet" href="../bower_components/normalize-css/normalize.css">
         <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="../bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
         <link rel="stylesheet" href="../bower_components/intl-tel-input/build/css/intlTelInput.css" />
         <link rel="stylesheet" href="../bower_components/medium-editor/dist/css/medium-editor.min.css" />
-        <link rel="stylesheet" href="../bower_components/medium-editor/dist/css/themes/flat.css" />
+        <link rel="stylesheet" href="../bower_components/medium-editor/dist/css/themes/flat.min.css" />
         <!-- endbuild -->
 
         <!-- build:css css/style.min.css -->
@@ -26,28 +25,27 @@
         <!-- endbuild -->
     </head>
     <body>
-        <div id="main-container" ng-if="!loginPage">
+        <div id="main-container" ng-if="!loginPage" ng-cloack>
             <nav id="nav-container" mr-main-navigation></nav>
             <div id="content-container" ng-view></div>
         </div>
 
-        <div mr-login id="login-page" ng-if="loginPage"></div>
+        <div mr-login id="login-page" ng-if="loginPage" ng-cloack></div>
 
         <!-- build:js js/vendor.js -->
-        <script src="../bower_components/jquery/dist/jquery.js"></script>
+        <script src="../bower_components/jquery/dist/jquery.min.js"></script>
         <script src="../bower_components/angular/angular.js"></script>
-        <script src="../bower_components/angular-route/angular-route.js"></script>
-        <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
-        <script src="../bower_components/angular-aria/angular-aria.js"></script>
-        <script src="../bower_components/angular-animate/angular-animate.js"></script>
-        <script src="../bower_components/angular-material/angular-material.js"></script>
-        <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
-        <script src="../bower_components/angular-translate/angular-translate.js"></script>
-        <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="../bower_components/angular-route/angular-route.min.js"></script>
+        <script src="../bower_components/angular-cookies/angular-cookies.min.js"></script>
+        <script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+        <script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+        <script src="../bower_components/angular-material/angular-material.min.js"></script>
+        <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="../bower_components/angular-translate/angular-translate.min.js"></script>
+        <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
-        <script src="../bower_components/angular-ui-calendar/src/calendar.js"></script>
-        <script src="../bower_components/underscore/underscore.js"></script>
-        <script src="../bower_components/moment/moment.js"></script>
+        <script src="../bower_components/underscore/underscore-min.js"></script>
+        <script src="../bower_components/moment/min/moment.min.js"></script>
         <script src="../bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
         <script src="../bower_components/fullcalendar/dist/locale/sr.js"></script>
         <script src="../bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
@@ -57,24 +55,32 @@
 
         <!-- build:js js/app.js -->
         <script src="scripts/config.js"></script>
-        <script src="scripts/mojrokovnik/livechat/livechat.service.js"></script>
-        <script src="scripts/mojrokovnik/livechat/livechat.directive.js"></script>
-        <script src="scripts/mojrokovnik/api/api.js"></script>
-        <script src="scripts/mojrokovnik/api/api.js"></script>
-        <script src="scripts/mojrokovnik/api/token_service.js"></script>
-        <script src="scripts/mojrokovnik/login/login.js"></script>
-        <script src="scripts/mojrokovnik/navigation/navigation.js"></script>
-        <script src="scripts/mojrokovnik/notify/notify.js"></script>
-        <script src="scripts/mojrokovnik/translation/translation.js"></script>
-        <script src="scripts/mojrokovnik/ui/ui.js"></script>
-        <script src="scripts/mojrokovnik/ui/modal-dialog.js"></script>
-        <script src="scripts/mojrokovnik/ui/typeahead.js"></script>
-        <script src="scripts/mojrokovnik/ui/editor.js"></script>
 
-        <script src="scripts/mojrokovnik-clients/clients.js"></script>
-        <script src="scripts/mojrokovnik-cases/cases.js"></script>
-        <script src="scripts/mojrokovnik-calendar/calendar.js"></script>
-        <script src="scripts/mojrokovnik-documents/documents.js"></script>
+        <script src="scripts/core/auth/auth.js"></script>
+        <script src="scripts/core/api/api.js"></script>
+        <script src="scripts/core/api/token_service.js"></script>
+        <script src="scripts/core/login/login.js"></script>
+        <script src="scripts/core/navigation/navigation.js"></script>
+        <script src="scripts/core/notify/notify.js"></script>
+        <script src="scripts/core/translation/translation.js"></script>
+        <script src="scripts/core/calendar/calendar.js"></script>
+        <script src="scripts/core/ui/ui.js"></script>
+        <script src="scripts/core/ui/modal-dialog.js"></script>
+        <script src="scripts/core/ui/typeahead.js"></script>
+        <script src="scripts/core/ui/editor.js"></script>
+        <script src="scripts/core/livechat/livechat.service.js"></script>
+        <script src="scripts/core/livechat/livechat.directive.js"></script>
+
+        <script src="scripts/apps/clients/clients.service.js"></script>
+        <script src="scripts/apps/clients/clients.controller.js"></script>
+        <script src="scripts/apps/clients/clients.directive.js"></script>
+        <script src="scripts/apps/cases/cases.service.js"></script>
+        <script src="scripts/apps/cases/cases.controller.js"></script>
+        <script src="scripts/apps/cases/cases.directive.js"></script>
+        <script src="scripts/apps/calendar/calendar.service.js"></script>
+        <script src="scripts/apps/calendar/calendar.controller.js"></script>
+        <script src="scripts/apps/documents/documents.service.js"></script>
+        <script src="scripts/apps/documents/documents.controller.js"></script>
         <!-- endbuild -->
     </body>
 </html>
