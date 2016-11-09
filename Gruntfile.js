@@ -6,7 +6,8 @@ module.exports = function (grunt) {
             options: {force: true},
             structure: ['.tmp', 'dist'],
             templates: ['dist/assets/templates'],
-            images: ['dist/assets/images']
+            images: ['dist/assets/images'],
+            production: ['production']
         },
         useminPrepare: {
             html: 'app/index.html',
@@ -37,6 +38,12 @@ module.exports = function (grunt) {
                 src: 'app/styles/images/*',
                 dest: 'dist/assets/images/',
                 flatten: true
+            },
+            production: {
+                expand: true,
+                cwd: 'dist',
+                src: ['assets/**/*', 'fonts/*', 'index.html'],
+                dest: 'production'
             }
         },
         less: {
@@ -56,17 +63,40 @@ module.exports = function (grunt) {
             options: {sourceMap: true}
         },
         cssmin: {
-            options: {sourceMap: true}
+            generated: {
+                options: {sourceMap: true}
+            },
+            production: {
+                options: {sourceMap: false},
+                files: {
+                    'production/css/style.min.css': ['dist/css/style.min.css'],
+                    'production/css/vendor.min.css': ['dist/css/vendor.min.css']
+                }
+            }
         },
         uglify: {
-            options: {
-                sourceMap: true,
-                sourceMapIncludeSources: true,
-                sourceMapIn: function (uglifySource) {
-                    return uglifySource + '.map';
+            generated: {
+                options: {
+                    sourceMap: true,
+                    sourceMapIncludeSources: true,
+                    sourceMapIn: function (uglifySource) {
+                        return uglifySource + '.map';
+                    },
+                    beautify: true,
+                    mangle: false
+                }
+            },
+            production: {
+                options: {
+                    sourceMap: false,
+                    preserveComments: false,
+                    compress: {drop_console: true},
+                    mangle: false
                 },
-                beautify: true,
-                mangle: false
+                files: {
+                    'production/js/app.js': ['dist/js/app.js'],
+                    'production/js/vendor.js': ['dist/js/vendor.js']
+                }
             }
         },
         htmlmin: {
@@ -137,10 +167,18 @@ module.exports = function (grunt) {
         'copy',
         'useminPrepare',
         'concat',
-        'uglify',
+        'uglify:generated',
         'cssmin',
         'usemin',
         'htmlmin'
+    ]);
+
+    grunt.registerTask('production', [
+        'clean:production',
+        'build',
+        'copy:production',
+        'uglify:production',
+        'cssmin:production'
     ]);
 
     grunt.registerTask('develop', [
