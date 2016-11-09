@@ -92,8 +92,10 @@ function clientsCtrl($scope, clients, cases, calendar, modalDialog) {
     };
 
     $scope.removeClient = function (client) {
-        clients.remove(client, $scope.clientType).then(function () {
-            $scope.selected = _.first($scope.clients[$scope.clientType]);
+        modalDialog.showConfirmation('Da li ste sigurni da želite da obrišete klijenta?').then(function () {
+            return clients.remove(client, $scope.clientType).then(function () {
+                $scope.selected = _.first($scope.clients[$scope.clientType]);
+            });
         });
     };
 

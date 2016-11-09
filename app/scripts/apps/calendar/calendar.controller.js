@@ -124,12 +124,12 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
         if (subject && subject.element) {
             $scope._calendar = {
                 type: 'Ročište',
-                cases: subject.id
+                cases: subject
             };
         } else if (subject) {
             $scope._calendar = {
                 type: 'Obaveza',
-                _client: subject
+                client: subject
             };
         }
 
@@ -179,8 +179,10 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
         };
 
         $scope.remove = function (_calendar) {
-            calendar.remove(_calendar).then(function () {
-                modal.close();
+            modalDialog.showConfirmation('Da li ste sigurni da želite da obrišete obavezu?').then(function () {
+                return calendar.remove(_calendar).then(function () {
+                    modal.close();
+                });
             });
         };
     };

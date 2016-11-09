@@ -1,3 +1,5 @@
+/* global moment */
+
 angular.module('mojrokovnik.ui.calendar', [])
         .constant('uiCalendarConfig', {
             calendars: {}

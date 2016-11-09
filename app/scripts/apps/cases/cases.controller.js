@@ -143,8 +143,10 @@ function casesCtrl($scope, cases, clients, calendar, documents, modalDialog) {
     };
 
     $scope.removeCase = function (_case) {
-        cases.remove(_case).then(function () {
-            $scope.selected = _.first($scope.cases);
+        modalDialog.showConfirmation('Da li ste sigurni da želite da obrišete predmet?').then(function () {
+            return cases.remove(_case).then(function () {
+                $scope.selected = _.first($scope.cases);
+            });
         });
     };
 

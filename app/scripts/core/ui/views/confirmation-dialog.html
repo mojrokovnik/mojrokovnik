@@ -1,11 +1,11 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-md-12">
-            <h1></h1s>
+            <h3>{{confirmation.message}}</h3>
         </div>
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn--rounded btn--orange" type="button" ng-click="confirmation.cancel()" translate>Otkaži</button>
-    <button class="btn btn--rounded btn--dark" type="button" ng-click="confirmation.ok()" translate>OK</button>
+    <button class="btn btn--rounded btn--dark" type="button" ng-click="confirmation.cancel()">{{confirmation.decline}}</button>
+    <button class="btn btn--rounded btn--orange" type="button" ng-click="confirmation.ok()">{{confirmation.accept}}</button>
 </div>

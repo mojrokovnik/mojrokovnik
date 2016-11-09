@@ -76,7 +76,9 @@ function documentsCtrl($scope, documents, modalDialog) {
     };
 
     $scope.removeDocument = function (_case, document) {
-        return documents.remove(_case.id, document);
+        modalDialog.showConfirmation('Da li ste sigurni da želite da obrišete dokument?').then(function () {
+            return documents.remove(_case.id, document);
+        });
     };
 }
 

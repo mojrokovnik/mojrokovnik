@@ -16,14 +16,14 @@
             </md-input-container>
         </div>
     </div>
-    <div class="row" ng-show="_calendar.type === 'Ročište'&& !_preview">
+    <div class="row" ng-show="_calendar.type === 'Ročište'">
         <div class="col-md-12">
-            <mr-typeahead model="_calendar.cases" items="cases" field="name" data-label="Predmet" required="true"></mr-typeahead>
+            <mr-typeahead model="_calendar.cases" items="cases" field="name" data-label="Predmet" required="true" data-disabled="_preview"></mr-typeahead>
         </div>
     </div>
-    <div class="row" ng-show="_calendar.type === 'Obaveza' && !_preview">
+    <div class="row" ng-show="_calendar.type === 'Obaveza'">
         <div class="col-md-12">
-            <mr-typeahead model="_calendar.client" items="clients" field="name, surname, company_name" data-label="Klijent" required="true"></mr-typeahead>
+            <mr-typeahead model="_calendar.client" items="clients" field="name, surname, company_name" data-label="Klijent" required="true" data-disabled="_preview"></mr-typeahead>
         </div>
     </div>
     <div class="row">
@@ -59,7 +59,7 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn--rounded btn--dark" type="button" ng-click="cancel()" translate>Otkaži</button>
-    <button class="btn btn--rounded btn--danger" type="button" ng-click="remove(_calendar)" translate>Obriši</button>
+    <button class="btn btn--rounded btn--danger" type="button" ng-click="remove(_calendar)" ng-if="_edit || _preview" translate>Obriši</button>
     <button class="btn btn--rounded btn--orange" type="button" ng-click="editCalendar(_calendar)" ng-if="_preview" translate>Izmeni</button>
     <button class="btn btn--rounded btn--orange" type="button" ng-click="save(_calendar)" ng-if="!_preview" translate>Sačuvaj</button>
 </div>
