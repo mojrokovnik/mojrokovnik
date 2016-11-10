@@ -57,18 +57,18 @@
                         {{selected.element}}
                     </div>
                 </div>
-                <div class="column" ng-if="selected.legal_council || selected.legal_label || selected.legal_number">
-                    <label translate>Poslovni broj</label>
-                    {{selected.legal_council}} - {{selected.legal_label}} / {{selected.legal_number}}
+                <div class="column" ng-if="selected.supervisor">
+                    <label translate>Nadležni organ</label>
+                    {{selected.supervisor}}
                 </div>
-                <div class="columns-two" ng-if="selected.internal_number || selected.supervisor">
+                <div class="columns-two" ng-if="selected.legal_council || selected.legal_label || selected.legal_number || selected.internal_number">
+                    <div class="column" ng-if="selected.legal_council || selected.legal_label || selected.legal_number">
+                        <label translate>Poslovni broj</label>
+                        {{selected.legal_council}} - {{selected.legal_label}} / {{selected.legal_number}}
+                    </div>
                     <div class="column" ng-if="selected.internal_number">
                         <label translate>Interni broj predmeta</label>
                         {{selected.internal_number}}
-                    </div>
-                    <div class="column" ng-if="selected.supervisor">
-                        <label translate>Nadležni organ</label>
-                        {{selected.supervisor}}
                     </div>
                 </div>
                 <div class="columns-two" ng-if="selected.court_number || selected.judge">

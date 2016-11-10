@@ -105,6 +105,17 @@ md-input-container {
     }
 }
 
+// Convert autocomplete to link
+.link-type {
+    input[type="search"] {
+        cursor: pointer;
+        .transition(color .5s);
+        &:hover {
+            color: @mr-orange;
+        }
+    }
+}
+
 // INPUT FIELDS
 .searchbar {
     border: 0;

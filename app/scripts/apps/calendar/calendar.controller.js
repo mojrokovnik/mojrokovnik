@@ -1,8 +1,8 @@
 /* global moment, _ */
 'use strict';
 
-calendarCtrl.$inject = ['$scope', 'modalDialog', 'calendar', 'cases', 'clients'];
-function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
+calendarCtrl.$inject = ['$scope', '$location', 'modalDialog', 'calendar', 'cases', 'clients'];
+function calendarCtrl($scope, $location, modalDialog, calendar, cases, clients) {
     var modal;
     $scope.types = ['Ročište', 'Obaveza'];
     $scope.calendars = [];
@@ -95,6 +95,14 @@ function calendarCtrl($scope, modalDialog, calendar, cases, clients) {
         $scope._edit = false;
         $scope._preview = true;
         $scope._calendar = calendar;
+
+        $scope.openCase = function (_case) {
+            $location.url('/cases?type=' + (_case.client_legal ? 'legals' : 'individuals') + '&item=' + _case.id);
+        };
+
+        $scope.openClient = function (_client) {
+            $location.url('/clients?type=' + (_client.company_name ? 'legals' : 'individuals') + '&item=' + _client.id);
+        };
 
         modal = modalDialog.showModal(params);
 

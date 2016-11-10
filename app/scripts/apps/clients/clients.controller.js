@@ -2,12 +2,17 @@
 
 'use strict';
 
-clientsCtrl.$inject = ['$scope', 'clients', 'cases', 'calendar', 'modalDialog'];
-function clientsCtrl($scope, clients, cases, calendar, modalDialog) {
+clientsCtrl.$inject = ['$scope', '$location', 'clients', 'cases', 'calendar', 'modalDialog'];
+function clientsCtrl($scope, $location, clients, cases, calendar, modalDialog) {
     $scope.clients = {};
     $scope.clientType = 'legals';
 
     function updateClients() {
+        if (!_.isEmpty($location.search())) {
+            $scope.clientType = $location.search().type;
+            $scope.selected = clients.getClientById($scope.clientType, parseInt($location.search().item));
+        }
+
         $scope.clients[$scope.clientType] = clients.getClients($scope.clientType);
 
         if (!$scope.selected) {

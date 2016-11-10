@@ -51,6 +51,14 @@ function casesService($rootScope, api) {
         return _.sortBy(filteredList, 'id');
     };
 
+    this.getCaseById = function (type, id) {
+        var list = self.getCases(type);
+
+        return _.find(list, function (obj) {
+            return obj.id === id;
+        });
+    };
+
     this.fetch = function () {
         return api('cases').fetch().then(function (cases) {
             if (!cases) {

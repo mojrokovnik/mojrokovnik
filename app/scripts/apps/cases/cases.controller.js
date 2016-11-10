@@ -2,11 +2,16 @@
 
 'use strict';
 
-casesCtrl.$inject = ['$scope', 'cases', 'clients', 'calendar', 'documents', 'modalDialog'];
-function casesCtrl($scope, cases, clients, calendar, documents, modalDialog) {
+casesCtrl.$inject = ['$scope', '$location', 'cases', 'clients', 'calendar', 'documents', 'modalDialog'];
+function casesCtrl($scope, $location, cases, clients, calendar, documents, modalDialog) {
     $scope.caseType = 'legals';
 
     function updateCases() {
+        if (!_.isEmpty($location.search())) {
+            $scope.caseType = $location.search().type;
+            $scope.selected = cases.getCaseById($scope.caseType, parseInt($location.search().item));
+        }
+
         $scope.cases = cases.getCases($scope.caseType);
 
         if (!$scope.selected)

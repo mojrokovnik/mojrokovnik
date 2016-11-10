@@ -19,11 +19,9 @@ function clientsService($rootScope, api) {
     this.getClientById = function (type, id) {
         var list = self.getClients(type);
 
-        var filteredList = _.filter(list, function (obj) {
+        return _.find(list, function (obj) {
             return obj.id === id;
         });
-
-        return _.sortBy(filteredList, 'id');
     };
 
     this.fetch = function (type) {
