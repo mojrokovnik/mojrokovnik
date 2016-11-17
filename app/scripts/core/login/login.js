@@ -62,8 +62,9 @@ function mrLoginRegisterCtrl($location, $scope, $rootScope, $cookies, api, authe
             password: $scope.register.password
         };
 
-        api('users/creates').register(params).then(function (response) {
+        api('register').register(params).then(function (response) {
             $scope.isLoading = false;
+            $scope.confirmationLink = true;
         });
     };
 }

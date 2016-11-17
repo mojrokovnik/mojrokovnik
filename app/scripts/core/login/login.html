@@ -30,7 +30,10 @@
                 <div class="error-container" ng-show="errorMsg">
                     <span>{{:: errorMsg}}</span>
                 </div>
-                <div class="footer"><a href="#">Forgot your password?</a></div>
+                <div class="footer">
+                    <a href="#">Forgot your password?</a>
+                    <a href="#" class="toggle">Register new user</a>
+                </div>
             </form>
         </div>
 
@@ -60,9 +63,10 @@
                     <label for="Repeat Password">Repeat Password</label>
                     <div class="bar"></div>
                 </div>
+                <span ng-show="confirmationLink">Confirmation link is sent to your email address</span>
                 <div class="button-container">
                     <button type="submit" ng-disabled="isLoading">
-                        <span>Next</span>
+                        <span>Register</span>
                         <div class="spinner ng-animate-disabled" ng-show="isLoading">
                             <div class="dot1"></div>
                             <div class="dot2"></div>
