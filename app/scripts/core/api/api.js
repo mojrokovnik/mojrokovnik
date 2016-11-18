@@ -106,7 +106,7 @@ function apiService($q, $http, $cookies, $location, notify, token) {
             },
             register: function (params) {
                 return http({
-                    url: token.resolveUrl(route),
+                    url: token.resolveUrl('register'),
                     method: 'POST',
                     data: params
                 }).then(function (response) {

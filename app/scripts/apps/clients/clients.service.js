@@ -39,7 +39,7 @@ function clientsService($rootScope, api) {
 
     this.add = function (client, type) {
         return api('clients/' + type).add(client).then(function (res) {
-            if (res.status !== 200) {
+            if (res.status !== 201) {
                 return false;
             }
 

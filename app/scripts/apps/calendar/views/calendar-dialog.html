@@ -5,7 +5,8 @@
         {{_calendar.duration|| ''}} {{_calendar.duration ? ('minuta' | translate) : ''}}
     </h3>
 </div>
-<div class="modal-body">
+
+<form name="calendarForm" class="modal-body">
     <div class="row" ng-show="!_preview">
         <div class="col-md-12">
             <md-input-container>
@@ -56,10 +57,11 @@
             </md-input-container>
         </div>
     </div>
-</div>
+</form>
+
 <div class="modal-footer">
     <button class="btn btn--rounded btn--dark" type="button" ng-click="cancel()" translate>Otkaži</button>
     <button class="btn btn--rounded btn--danger" type="button" ng-click="remove(_calendar)" ng-if="_edit || _preview" translate>Obriši</button>
     <button class="btn btn--rounded btn--orange" type="button" ng-click="editCalendar(_calendar)" ng-if="_preview" translate>Izmeni</button>
-    <button class="btn btn--rounded btn--orange" type="button" ng-click="save(_calendar)" ng-if="!_preview" translate>Sačuvaj</button>
+    <button class="btn btn--rounded btn--orange" type="button" ng-click="save(_calendar)" ng-if="!_preview" ng-disabled="calendarForm.$invalid" translate>Sačuvaj</button>
 </div>

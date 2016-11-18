@@ -3,12 +3,12 @@
     <h3 class="modal-title" ng-if="_preview" translate>{{_ncase.name}}</h3>
 </div>
 
-<div class="modal-body">
+<form name="casesForm" class="modal-body">
     <div class="row" ng-if="!_preview">
-        <div class="col-md-12" ng-show="caseType === 'individuals'">
+        <div class="col-md-12" ng-if="caseType === 'individuals'">
             <mr-typeahead data-model="_ncase.client_individual" data-items="clients" data-field="name, surname" data-label="Klijent" data-onchange="generateCaseName(_ncase)" required="true"></mr-typeahead>
         </div>
-        <div class="col-md-12" ng-show="caseType === 'legals'">
+        <div class="col-md-12" ng-if="caseType === 'legals'">
             <mr-typeahead model="_ncase.client_legal" items="clients" field="company_name" data-label="Klijent" data-onchange="generateCaseName(_ncase)" required="true"></mr-typeahead>
         </div>
     </div>
@@ -115,9 +115,9 @@
             </md-input-container>
         </div>
     </div>
-</div>
+</form>
 
 <div class="modal-footer">
     <button class="btn btn--rounded btn--dark" type="button" ng-click="cancel()" translate>Odustani</button>
-    <button class="btn btn--rounded btn--orange" type="button" ng-click="save(_ncase)" ng-if="!_preview" translate>Sačuvaj predmet</button>
+    <button class="btn btn--rounded btn--orange" type="button" ng-click="save(_ncase)" ng-if="!_preview" ng-disabled="casesForm.$invalid" translate>Sačuvaj predmet</button>
 </div>

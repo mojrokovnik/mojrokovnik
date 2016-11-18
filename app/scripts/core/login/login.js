@@ -44,8 +44,9 @@ function mrLoginRegisterCtrl($location, $scope, $rootScope, $cookies, api, authe
                 if (!user)
                     return $scope.errorMsg = 'User is not activated!';
 
-                $rootScope.loginPage = false;
                 $cookies.putObject('user', user);
+
+                delete $rootScope.loginPage;
 
                 return $location.url('/clients');
             });
@@ -62,7 +63,7 @@ function mrLoginRegisterCtrl($location, $scope, $rootScope, $cookies, api, authe
             password: $scope.register.password
         };
 
-        api('register').register(params).then(function (response) {
+        api().register(params).then(function () {
             $scope.isLoading = false;
             $scope.confirmationLink = true;
         });
