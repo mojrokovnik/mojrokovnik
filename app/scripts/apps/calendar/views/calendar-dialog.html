@@ -17,12 +17,12 @@
             </md-input-container>
         </div>
     </div>
-    <div class="row" ng-show="_calendar.type === 'Ročište'">
+    <div class="row" ng-if="_calendar.type === 'Ročište'">
         <div class="col-md-12">
             <mr-typeahead ng-class="{'link-type': _preview}" model="_calendar.cases" items="cases" field="name" data-label="Predmet" required="true" data-disabled="_preview" ng-click="_preview ? openCase(_calendar.cases) : false"></mr-typeahead>
         </div>
     </div>
-    <div class="row" ng-show="_calendar.type === 'Obaveza'">
+    <div class="row" ng-if="_calendar.type === 'Obaveza'">
         <div class="col-md-12">
             <mr-typeahead ng-class="{'link-type': _preview}" model="_calendar.client" items="clients" field="name, surname, company_name" data-label="Klijent" required="true" data-disabled="_preview" ng-click="_preview ? openClient(_calendar.client) : false"></mr-typeahead>
         </div>
