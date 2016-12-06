@@ -86,7 +86,7 @@ function calendarCtrl($scope, $location, modalDialog, calendar, cases, clients) 
         }
     };
 
-    $scope.previewCalendar = function (calendar) {
+    $scope.previewCalendar = function (calendars) {
         var params = {
             scope: $scope,
             templateUrl: 'assets/templates/calendar-dialog.html'
@@ -94,7 +94,7 @@ function calendarCtrl($scope, $location, modalDialog, calendar, cases, clients) 
 
         $scope._edit = false;
         $scope._preview = true;
-        $scope._calendar = calendar;
+        $scope._calendar = calendars;
 
         $scope.openCase = function (_case) {
             $location.url('/cases?type=' + (_case.client_legal ? 'legals' : 'individuals') + '&item=' + _case.id);
@@ -109,6 +109,14 @@ function calendarCtrl($scope, $location, modalDialog, calendar, cases, clients) 
         $scope.cancel = function () {
             delete $scope._calendar;
             modal.close();
+        };
+
+        $scope.remove = function (_calendar) {
+            modalDialog.showConfirmation('Da li ste sigurni da želite da obrišete obavezu?').then(function () {
+                return calendar.remove(_calendar).then(function () {
+                    modal.close();
+                });
+            });
         };
     };
 
