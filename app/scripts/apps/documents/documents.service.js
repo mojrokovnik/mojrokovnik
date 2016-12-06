@@ -38,7 +38,7 @@ function documentsService($rootScope, api) {
 
     this.add = function (_case, document) {
         return api('cases/' + _case + '/documents').add(document).then(function (res) {
-            if (res.status !== 200) {
+            if (res.status !== 201) {
                 return false;
             }
 
@@ -47,6 +47,27 @@ function documentsService($rootScope, api) {
                     self.documents[_case].push(res.document);
 
             $rootScope.$broadcast('documents:updated');
+        });
+    };
+
+    this.upload = function (_case, uploader) {
+        return new Promise(function (resolve, reject) {
+            uploader.uploadAll();
+
+            uploader.onCompleteItem = function (item, response) {
+                !self.documents[_case] ?
+                        self.documents[_case] = [response.document] :
+                        self.documents[_case].push(response.document);
+            };
+
+            uploader.onErrorItem = function () {
+                return reject();
+            };
+
+            uploader.onCompleteAll = function () {
+                $rootScope.$broadcast('documents:updated');
+                return resolve();
+            };
         });
     };
 
@@ -76,5 +97,5 @@ function documentsService($rootScope, api) {
     };
 }
 
-angular.module('mojrokovnik.documents', ['ngSanitize'])
+angular.module('mojrokovnik.documents', ['ngSanitize', 'ngFileSaver', 'angularFileUpload'])
         .service('documents', documentsService);

@@ -112,6 +112,16 @@ function apiService($q, $http, $cookies, $location, notify, token) {
                 }).then(function (response) {
                     return response;
                 }, errorCallback);
+            },
+            download: function (params) {
+                return http({
+                    url: token.resolveUrl(route),
+                    method: 'GET',
+                    headers: token.getToken(),
+                    responseType: 'blob'
+                }).then(function (response) {
+                    return response;
+                }, errorCallback);
             }
         };
     };

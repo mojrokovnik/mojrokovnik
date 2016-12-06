@@ -1,10 +1,17 @@
 'use strict';
 
-documentsCtrl.$inject = ['$scope', 'documents', 'modalDialog'];
-function documentsCtrl($scope, documents, modalDialog) {
+documentsCtrl.$inject = ['$scope', 'documents', 'modalDialog', 'api', 'FileSaver', 'Blob', '$timeout'];
+function documentsCtrl($scope, documents, modalDialog, api, FileSaver, Blob, $timeout) {
     var modal;
 
     $scope.previewDocument = function (_case, _document) {
+        if (_document.url) {
+            return api('cases/' + _case.id + '/documents/' + _document.id + '/file').download().then(function (response) {
+                var data = new Blob([response]);
+                FileSaver.saveAs(data, _document.name);
+            });
+        }
+
         var params = {
             scope: $scope,
             size: 'lg',
@@ -32,6 +39,7 @@ function documentsCtrl($scope, documents, modalDialog) {
 
         $scope._edit = false;
         $scope._preview = false;
+        $scope._case = _case;
         $scope.document = {};
 
         modal = modalDialog.showModal(params);
@@ -39,6 +47,12 @@ function documentsCtrl($scope, documents, modalDialog) {
         $scope.save = function (document) {
             documents.add(_case.id, document).then(function () {
                 modal.close();
+            });
+        };
+
+        $scope.uploadAndSave = function (uploader) {
+            documents.upload(_case.id, uploader).then(function () {
+                $timeout(modal.close, 1500);
             });
         };
 
@@ -81,7 +95,6 @@ function documentsCtrl($scope, documents, modalDialog) {
         });
     };
 }
-
 
 angular.module('mojrokovnik.documents')
         .controller('documentsCtrl', documentsCtrl);

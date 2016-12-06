@@ -78,7 +78,7 @@ function casesService($rootScope, api) {
                 _case.client_individual = _case.client_individual.id;
 
         return api('cases').add(_case).then(function (res) {
-            if (res.status !== 200) {
+            if (res.status !== 201) {
                 return false;
             }
 

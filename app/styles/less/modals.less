@@ -8,3 +8,40 @@
 .modal-header {
     background-color: @content-heading-bg;
 }
+
+.modal-tabs {
+    border-bottom: 1px solid #e5e5e5;
+    margin: -15px -15px 0 -15px;
+    padding: 0;
+    li {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        list-style: none;
+        padding: 10px 5px;
+        margin: 0 10px;
+        
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 20px;
+        text-transform: uppercase;
+        color: @text-gray;
+
+        &.active:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            border-radius: 5px;
+            bottom: -1px; left: 0;
+            background-color: @mr-blue;
+        }
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.tab-container {
+    padding-top: 10px;
+}

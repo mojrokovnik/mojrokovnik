@@ -127,7 +127,7 @@
                 <div class="column column--with-actions" ng-repeat="document in documents track by document.id">
                     <label><a ng-click="previewDocument(selected, document)">{{ document.name}}</a></label>
                     <div class="column--actions">
-                        <button class="btn btn--icon" ng-click="editDocument(selected, document)"><i class="fa fa-pencil-square-o"></button>
+                        <button class="btn btn--icon" ng-if="!document.url" ng-click="editDocument(selected, document)"><i class="fa fa-pencil-square-o"></button>
                         <button class="btn btn--icon" ng-click="removeDocument(selected, document)"><i class="fa fa-trash-o"></button>
                     </div>
                 </div>

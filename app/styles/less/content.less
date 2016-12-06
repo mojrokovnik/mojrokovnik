@@ -147,3 +147,43 @@
         }
     }
 }
+
+.init-upload {
+    text-align: center;
+    margin: 20px;
+
+    span {
+        display: block;
+        font-size: 24px;
+        font-weight: 300;
+        color: @text-gray-light;
+    }
+
+    .or-label {
+        position: relative;
+        font-size: 13px;
+        font-style: italic;
+        margin: 10px 0;
+        color: @black;
+        &:before , &:after {
+            content: "_________";
+            position: absolute;
+            top: -6px;
+            color: #d0d0d0;
+            left: 50%;
+        }
+        &:before { margin-left: -62px; }
+        &:after { margin-left: 15px; }
+    }
+
+    i {
+        font-size: 5em;
+        color: @text-gray-light; 
+        margin-bottom: 20px;
+    }
+
+    label {
+        margin-top: 5px;
+        font-size: 11px;
+    }
+}

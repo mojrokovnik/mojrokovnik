@@ -54,7 +54,7 @@ function calendarService($rootScope, api) {
                 _calendar.cases = _calendar.cases.id;
 
         return api('calendars').add(_calendar).then(function (res) {
-            if (res.status !== 200) {
+            if (res.status !== 201) {
                 return false;
             }
 
