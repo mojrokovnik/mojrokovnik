@@ -26,7 +26,7 @@ function casesCtrl($scope, $location, cases, clients, calendar, documents, modal
 
     function updateAssets() {
         $scope.agenda = $scope.selected ? $scope.getAgenda($scope.selected.id) : [];
-        $scope.documents = $scope.selected ? $scope.getDocuments($scope.selected.id) : [];
+        $scope.documents = $scope.filters = $scope.selected ? $scope.getDocuments($scope.selected.id) : [];
     }
 
     $scope.switchType = function (type) {
@@ -153,6 +153,18 @@ function casesCtrl($scope, $location, cases, clients, calendar, documents, modal
                 $scope.selected = _.first($scope.cases);
             });
         });
+    };
+
+    /*
+     * Search for item
+     * @param {Object} query
+     * @return {Object} list of items
+     */
+    $scope.querySearch = function (query) {
+        return $scope.filters = query ? _.pick($scope.documents, function (value) {
+            return angular.lowercase(value.name)
+                    .indexOf(angular.lowercase(query)) === 0;
+        }) : $scope.documents;
     };
 
     // Initialize default data

@@ -65,6 +65,7 @@
         padding: 35px;
         color: @text-gray-light;
         background-color: @content-heading-bg;
+        box-shadow: 0 0 .7rem 0 rgba(0,0,0,.15);
 
         &--actions {
             float: right;
@@ -80,10 +81,42 @@
             }
         }
     }
+
+    .content-searchbar {
+        font-size: 15px;
+        color: @text-gray;
+        padding: 0;
+        background-color: @white;
+        box-shadow: 0 0 .7rem 0 rgba(0,0,0,.15);
+
+        md-input-container {
+            margin: 0; padding: 0;  
+        }
+
+        input {
+            text-indent: 45px;
+            padding: 20px 0;
+            border-color: @mr-gray;
+            border-width: 0 0 2px;
+        }
+
+        md-icon {
+            margin-left: 15px;
+            margin-top: 5px;
+            color: @text-gray-light;
+        }
+
+        & + .content-details {
+            padding-top: 30px;
+            box-shadow: 0 5px .7rem 0 rgba(0,0,0,.15);
+        }
+    }
+
     .content-details {
         padding: 40px 45px;
         margin-bottom: 3%;
         background-color: @white;
+        box-shadow: 0 0 .7rem 0 rgba(0,0,0,.15);
 
         .column, .columns-two {
             padding: 0 0 15px 0;

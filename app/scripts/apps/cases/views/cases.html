@@ -36,6 +36,7 @@
             <button class="btn btn--rounded btn--dark" ng-click="removeCase(selected)" translate>Izbriši predmet</button>
         </div>
     </div>
+
     <div class="content-detailedinfo">
         <div class="content-left">
             <div class="content-heading" translate>Osnovni podaci</div>
@@ -120,11 +121,18 @@
                     <a ng-click="addDocument(selected)"><i class="fa fa-plus-square-o"></i></a>
                 </div>
             </div>
+            <div class="content-searchbar" ng-if="documents.length">
+                <md-input-container>
+                    <md-icon class="fa fa-search"></md-icon>
+                    <label></label>
+                    <input type="text" ng-model="query" ng-change="querySearch(query)">
+                </md-input-container>
+            </div>
             <div class="content-details" ng-controller="documentsCtrl">
                 <div class="column" ng-if="!documents.length">
-                    <label class="label--info">Trenutno nema dokumenata za izabrani predmet</label>
+                    <label class="label--info" translate>Trenutno nema dokumenata za izabrani predmet</label>
                 </div>
-                <div class="column column--with-actions" ng-repeat="document in documents track by document.id">
+                <div class="column column--with-actions" ng-repeat="document in filters track by document.id">
                     <label><a ng-click="previewDocument(selected, document)">{{ document.name}}</a></label>
                     <div class="column--actions">
                         <button class="btn btn--icon" ng-if="!document.url" ng-click="editDocument(selected, document)"><i class="fa fa-pencil-square-o"></button>
