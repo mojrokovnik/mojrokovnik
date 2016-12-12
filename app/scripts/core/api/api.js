@@ -1,7 +1,7 @@
 'use strict';
 
-apiService.$inject = ['$q', '$http', '$cookies', '$location', 'notify', 'token'];
-function apiService($q, $http, $cookies, $location, notify, token) {
+apiService.$inject = ['$q', '$http', '$cookies', '$location', '$window', 'notify', 'token'];
+function apiService($q, $http, $cookies, $location, $window, notify, token) {
 
     /**
      * Call $http once url is resolved
@@ -36,6 +36,7 @@ function apiService($q, $http, $cookies, $location, notify, token) {
                 $cookies.remove('token');
                 $cookies.remove('user');
                 $location.url('/login');
+                $window.location.reload();
                 break;
 
             default:

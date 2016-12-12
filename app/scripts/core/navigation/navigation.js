@@ -1,7 +1,7 @@
 'use strict';
 
-mrMainNavitagion.$inject = ['$location', '$cookies', '$rootScope'];
-function mrMainNavitagion($location, $cookies, $rootScope) {
+mrMainNavitagion.$inject = ['$location', '$cookies', '$window'];
+function mrMainNavitagion($location, $cookies, $window) {
     return {
         templateUrl: 'assets/templates/navigation.html',
         link: function (scope) {
@@ -13,6 +13,7 @@ function mrMainNavitagion($location, $cookies, $rootScope) {
                 $cookies.remove('token');
                 $cookies.remove('user');
                 $location.url('/login');
+                $window.location.reload();
             };
         }
     };
