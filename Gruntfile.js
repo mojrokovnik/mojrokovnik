@@ -128,35 +128,33 @@ module.exports = function (grunt) {
             }
         },
         watch: {
+            options: {
+                spawn: false,
+                livereload: true
+            },
             config: {
                 files: ['Gruntfile.js'],
-                tasks: ['build'],
-                options: {spawn: false}
+                tasks: ['build']
             },
             uglify: {
                 files: ['app/scripts/**/*.js'],
-                tasks: ['useminPrepare', 'concat', 'uglify:generated', 'usemin'],
-                options: {spawn: false}
+                tasks: ['useminPrepare', 'concat', 'uglify:generated', 'usemin']
             },
             less: {
                 files: ['app/**/*.less'],
-                tasks: ['less', 'useminPrepare', 'concat', 'cssmin:generated'],
-                options: {spawn: false}
+                tasks: ['less', 'useminPrepare', 'concat', 'cssmin:generated']
             },
             html: {
                 files: ['app/index.html'],
-                tasks: ['build'],
-                options: {spawn: false}
+                tasks: ['build']
             },
             templates: {
                 files: ['app/scripts/**/*.html'],
-                tasks: ['clean:templates', 'htmlmin'],
-                options: {spawn: false}
+                tasks: ['clean:templates', 'htmlmin']
             },
             images: {
                 files: ['app/styles/images/*'],
-                tasks: ['clean:images', 'copy:images'],
-                options: {spawn: false}
+                tasks: ['clean:images', 'copy:images']
             }
         }
     });

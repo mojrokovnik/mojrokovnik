@@ -28,8 +28,6 @@
     "medium-editor": "^5.22.1"
   },
   "resolutions": {
-    "fullcalendar": "^3.0.1",
-    "angular": "^1.4.8",
-    "angular-material": "^1.1.0"
+    "angular": ">=1.4.0"
   }
 }
