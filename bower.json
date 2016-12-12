@@ -28,6 +28,6 @@
     "medium-editor": "^5.22.1"
   },
   "resolutions": {
-    "angular": ">=1.4.0"
+    "angular": "1.6.0"
   }
 }
