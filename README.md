@@ -1,4 +1,5 @@
 # Mojrokovnik Application - Easily manage your subjects
+[![Build Status](https://travis-ci.org/mojrokovnik/mojrokovnik.svg?branch=master)](https://travis-ci.org/mojrokovnik/mojrokovnik)
 
 This is client application for Mojrokovnik project.
 
