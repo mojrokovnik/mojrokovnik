@@ -2,7 +2,7 @@
     <div class="logo">
         <img src="assets/images/logo.png" alt="mojrokovnik" />
     </div>
-    <div class="container">
+    <div class="container" ng-class="{active: registerView}">
         <div class="card"></div>
 
         <div class="card">
@@ -27,12 +27,15 @@
                         </div>
                     </button>
                 </div>
-                <div class="error-container" ng-show="errorMsg">
-                    <span>{{:: errorMsg}}</span>
+                <div class="error-container" ng-show="msg.error">
+                    <span>{{:: msg.error}}</span>
+                </div>
+                <div class="success-container" ng-show="msg.success">
+                    <span>{{:: msg.success}}</span>
                 </div>
                 <div class="footer">
                     <a href="#" translate>Zaboravili ste lozinku?</a>
-                    <a href="#" class="toggle" translate>Registruj novog korisnika</a>
+                    <a href="#" ng-click="toggleRegister()" translate>Registruj novog korisnika</a>
                 </div>
             </form>
         </div>
@@ -40,18 +43,20 @@
         <div class="card alt">
             <div class="toggle" ng-click="toggleRegister()"></div>
             <h1 class="title">{{ 'Registracija' | translate }}
-                <div class="close" ng-click="closeRegister()"></div>
+                <div class="close" ng-click="toggleRegister()"></div>
             </h1>
-            <form ng-submit="register()">
-                <div class="input-container">
+            <form name="registrationForm" ng-submit="register()">
+                <div class="input-container" ng-class="{'invalid': msg.error.username}">
                     <input type="text" id="Username" ng-model="register.username" required="required"/>
                     <label for="Username" translate>Korisničko ime</label>
                     <div class="bar"></div>
+                    <span class="error-msg">{{msg.error.username}}</span>
                 </div>
-                <div class="input-container">
-                    <input type="text" id="Email" ng-model="register.email" required="required"/>
+                <div class="input-container" ng-class="{'invalid': msg.error.email || (registrationForm.email.$dirty && registrationForm.email.$invalid)}">
+                    <input type="email" id="Email" ng-model="register.email" name="email" required="required"/>
                     <label for="Email" translate>Email</label>
                     <div class="bar"></div>
+                    <span class="error-msg">{{msg.error.email}}</span>
                 </div>
                 <div class="input-container">
                     <input type="password" id="Password" ng-model="register.password" required="required"/>
@@ -59,11 +64,10 @@
                     <div class="bar"></div>
                 </div>
                 <div class="input-container">
-                    <input type="password" id="Repeat Password" ng-model="register.passwordRepeat" required="required"/>
-                    <label for="Repeat Password" translate>Ponovi lozinku</label>
+                    <input type="password" id="R-Password" ng-model="register.passwordRepeat" required="required"/>
+                    <label for="R-Password" translate>Ponovi lozinku</label>
                     <div class="bar"></div>
                 </div>
-                <span ng-show="confirmationLink">Confirmation link is sent to your email address</span>
                 <div class="button-container">
                     <button type="submit" ng-disabled="isLoading">
                         <span translate>Registruj se</span>

@@ -4,58 +4,38 @@ mrLogin.$inject = [];
 function mrLogin() {
     return {
         controller: mrLoginRegisterCtrl,
-        templateUrl: 'assets/templates/login.html',
-        link: function (scope, elem, attr, ctrl) {
-            elem.find('.toggle').on('click', function () {
-                elem.find('.container').stop().addClass('active');
-            });
-
-            elem.find('.close').on('click', function () {
-                elem.find('.container').stop().removeClass('active');
-            });
-        }
+        templateUrl: 'assets/templates/login.html'
     };
 }
 
 mrLoginRegisterCtrl.$inject = ['$location', '$scope', '$rootScope', '$cookies', 'api', 'authentification'];
 function mrLoginRegisterCtrl($location, $scope, $rootScope, $cookies, api, authentification) {
     $scope.login = function () {
-        $scope.isLoading = true;
-        delete $scope.errorMsg;
+        toggleLoading();
 
         api().login($scope.username, $scope.password).then(function (response) {
-            if (response && response.status >= 400 && response.status < 500) {
-                $scope.isLoading = false;
+            $scope.isLoading = false;
 
-                if (response.status === 400) {
-                    $scope.errorMsg = 'Wrong credentials!';
-                }
+            if (response && response.error)
+                return $scope.msg['error'] = 'Korisničko ime ili lozinka su neispravni!';
 
-                if (response.status === 408) {
-                    $scope.errorMsg = 'Request Timeout!';
-                }
+            if (response && response.status && response.status === 408)
+                return $scope.msg['error'] = 'Nešto je pošlo naopako :( Probajte opet!';
 
-                return false;
-            }
-
-            authentification.getActiveUser().then(function (user) {
-                $scope.isLoading = false;
-
+            return authentification.getActiveUser().then(function (user) {
                 if (!user)
-                    return $scope.errorMsg = 'User is not activated!';
+                    return $scope.msg['error'] = 'Korisnički nalog nije aktiviran. Molim Vas proverite vaše poštansko sanduče!';
 
                 $cookies.putObject('user', user);
 
                 delete $rootScope.loginPage;
-
                 return $location.url('/clients');
             });
         });
     };
 
     $scope.register = function () {
-        $scope.isLoading = true;
-        delete $scope.errorMsg;
+        toggleLoading();
 
         var params = {
             username: $scope.register.username,
@@ -63,11 +43,31 @@ function mrLoginRegisterCtrl($location, $scope, $rootScope, $cookies, api, authe
             password: $scope.register.password
         };
 
-        api().register(params).then(function () {
+        api().register(params).then(function (response) {
             $scope.isLoading = false;
-            $scope.confirmationLink = true;
+
+            if (response.error) {
+                return response.error === 'Username already exist' ?
+                        $scope.msg['error'] = {'username': 'Korisničko ime je zauzeto'} :
+                        $scope.msg['error'] = {'email': 'Email adresa je već registrovana'};
+            }
+
+            $scope.msg['success'] = "Registracija uspešna! Molimo Vas proverite vaše poštansko sanduče";
+            delete $scope.msg['error'];
+            return $scope.registerView = false;
         });
     };
+
+    // Toggle register view
+    $scope.toggleRegister = function () {
+        $scope.registerView = !$scope.registerView;
+    };
+
+    // Toggle loading
+    function toggleLoading() {
+        $scope.isLoading = true;
+        $scope.msg = {};
+    }
 }
 
 angular.module('mojrokovnik.login', [])

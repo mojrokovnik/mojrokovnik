@@ -31,6 +31,11 @@ function apiService($q, $http, $cookies, $location, $window, notify, token) {
                 return {status: 408, statusText: "Request Timeout"};
                 break;
 
+            case 400:
+                if (response.data.error)
+                    return {error: response.data.error};
+                break;
+
             case 401:
                 notify.error(response.data.error_description);
                 $cookies.remove('token');
@@ -45,7 +50,7 @@ function apiService($q, $http, $cookies, $location, $window, notify, token) {
                 break;
         }
 
-        return response;
+        return response.data;
     }
 
     var api = function (route) {
