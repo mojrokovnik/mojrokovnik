@@ -98,6 +98,24 @@
     .sidenav-item--container {
         overflow: auto;
         height: calc(~'100% - 111px');
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+            margin: -1px 0;
+            position: fixed;
+            right: 10px;
+            background-color: @mr-blue;
+            &:hover {
+                background-color: @mr-violet;
+                cursor: pointer;
+            }
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: @mr-orange;
+        }
+
     }
 
     .sidenav-item--no-item {
